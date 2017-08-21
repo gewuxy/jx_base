@@ -28,6 +28,6 @@ dependencies {
     /**
      * Processor
      */
-    provided project(':Android:DI-compiler')
-    annotationProcessor project(':Android:DI-compiler')
+    provided project(deps.ys.di)
+    annotationProcessor project(deps.ys.di)
 }

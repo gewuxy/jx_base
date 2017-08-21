@@ -18,7 +18,7 @@ android {
 }
 
 dependencies {
-    compile project(':Android:Libs:LibNetwork_Rx')
+    compile project(deps.ys.network)
     /**
      * support包相关
      */
@@ -38,6 +38,6 @@ dependencies {
     /**
      * Processor
      */
-    compile project(':Android:DI-compiler')
-    annotationProcessor project(':Android:DI-compiler')
+    compile project(deps.ys.di)
+    annotationProcessor project(deps.ys.di)
 }
