@@ -18,7 +18,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile deps.network.ok
     provided deps.support.annotations
     /**
@@ -29,6 +28,6 @@ dependencies {
     /**
      * Processor
      */
-    provided project(':DI-Compiler')
-    annotationProcessor project(':DI-Compiler')
+    provided project(':Android:DI-compiler')
+    annotationProcessor project(':Android:DI-compiler')
 }
