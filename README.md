@@ -3,5 +3,6 @@
                 'core'   : ':Android:Libs:LibYS_Rx',
                 'network': ':Android:Libs:LibNetwork_Rx',
                 'di'     : ':Android:DI-compiler',
-                'baidu'  : ':Android:Libs:LibBD'
+                'baidu'  : ':Android:Libs:LibBD',
+                'um'     : ':Android:Libs:LibUM',
         ]
