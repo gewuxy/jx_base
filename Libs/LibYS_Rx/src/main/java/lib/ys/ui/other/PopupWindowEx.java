@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.FloatRange;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -16,12 +19,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout.LayoutParams;
 
 import org.json.JSONException;
 
+import lib.network.Network;
 import lib.network.model.NetworkError;
 import lib.network.model.NetworkReq;
 import lib.network.model.NetworkResp;
@@ -29,11 +34,19 @@ import lib.network.model.interfaces.OnNetworkListener;
 import lib.ys.AppEx;
 import lib.ys.ConstantsEx;
 import lib.ys.YSLog;
+import lib.ys.config.AppConfig.RefreshWay;
 import lib.ys.fitter.LayoutFitter;
+import lib.ys.impl.LoadingDialogImpl;
+import lib.ys.ui.decor.DecorViewEx;
+import lib.ys.ui.decor.DecorViewEx.ViewState;
+import lib.ys.ui.dialog.DialogEx;
 import lib.ys.ui.interfaces.impl.NetworkOpt;
+import lib.ys.ui.interfaces.listener.OnRetryClickListener;
 import lib.ys.ui.interfaces.opt.ICommonOpt;
 import lib.ys.ui.interfaces.opt.IInitOpt;
 import lib.ys.ui.interfaces.opt.INetworkOpt;
+import lib.ys.ui.interfaces.opt.IRefreshOpt;
+import lib.ys.util.DeviceUtil;
 import lib.ys.util.LaunchUtil;
 import lib.ys.util.view.ViewUtil;
 import okhttp3.WebSocket;
@@ -44,9 +57,11 @@ abstract public class PopupWindowEx implements
         IInitOpt,
         INetworkOpt,
         ICommonOpt,
+        IRefreshOpt,
         OnNetworkListener,
         OnDismissListener,
-        OnClickListener {
+        OnClickListener,
+        OnRetryClickListener {
 
     protected final String TAG = getClass().getSimpleName();
 
@@ -57,11 +72,14 @@ abstract public class PopupWindowEx implements
     private PopupWindow mPopupWindow;
     private OnDismissListener mOnDismissListener;
 
-    private View mContentView;
     private Context mContext;
     private float mDimAmount = KDefaultDimAmount;
 
     private NetworkOpt mNetworkImpl;
+
+    private DecorViewEx mDecorView;
+    @RefreshWay
+    private int mRefreshWay = getInitRefreshWay();
 
     // 背景变暗
     private boolean mEnableDim = false;
@@ -77,10 +95,14 @@ abstract public class PopupWindowEx implements
 
     private void init() {
         mPopupWindow = new PopupWindow(mContext);
-        mContentView = LayoutInflater.from(mContext).inflate(getContentViewId(), null);
-        LayoutFitter.fit(mContentView);
 
-        mPopupWindow.setContentView(mContentView);
+        mDecorView = new DecorViewEx(mContext, null, getInitRefreshWay(), initLoadingDialog());
+        mDecorView.setContentView(getContentViewId(), getContentHeaderViewId(), getContentFooterViewId());
+        mDecorView.setOnRetryClickListener(this);
+
+        LayoutFitter.fit(mDecorView);
+
+        mPopupWindow.setContentView(mDecorView);
 //        mPopupWindow.setWidth(getWindowWidth());
 //        mPopupWindow.setHeight(getWindowHeight());
         mPopupWindow.setBackgroundDrawable(null);
@@ -99,7 +121,7 @@ abstract public class PopupWindowEx implements
     }
 
     public <T extends View> T findView(@IdRes int id) {
-        return (T) mContentView.findViewById(id);
+        return (T) mDecorView.findViewById(id);
     }
 
     @Nullable
@@ -426,5 +448,172 @@ abstract public class PopupWindowEx implements
 
     @Override
     public void onClick(View v) {
+    }
+
+    @NonNull
+    @RefreshWay
+    public int getInitRefreshWay() {
+        return AppEx.getConfig().getInitRefreshWay();
+    }
+
+    /**
+     * 初始化loading dialog
+     *
+     * @return
+     */
+    protected DialogEx initLoadingDialog() {
+        DialogEx dialog = new LoadingDialogImpl(getContext());
+        dialog.setOnCancelListener(dialog1 -> {
+            stopRefresh();
+            cancelAllNetworkReq();
+        });
+        return dialog;
+    }
+
+    @Override
+    public void stopRefresh() {
+        switch (mRefreshWay) {
+            case RefreshWay.dialog: {
+                stopDialogRefresh();
+            }
+            break;
+            case RefreshWay.embed: {
+                stopEmbedRefresh();
+            }
+            break;
+            case RefreshWay.swipe: {
+                stopSwipeRefresh();
+            }
+            break;
+        }
+    }
+
+    @Override
+    public void stopDialogRefresh() {
+        dismissLoadingDialog();
+    }
+
+    @Override
+    public void stopEmbedRefresh() {
+    }
+
+    @Override
+    public void stopSwipeRefresh() {
+    }
+
+    protected void showLoadingDialog() {
+        if (isShowing()) {
+            mDecorView.showLoadingDialog();
+        }
+    }
+
+    protected void dismissLoadingDialog() {
+        if (isShowing()) {
+            mDecorView.dismissLoadingDialog();
+        }
+    }
+
+    @Override
+    public void refresh(@RefreshWay int way) {
+        mRefreshWay = way;
+
+        switch (way) {
+            case RefreshWay.dialog: {
+                dialogRefresh();
+            }
+            break;
+            case RefreshWay.embed: {
+                embedRefresh();
+            }
+            break;
+            case RefreshWay.swipe: {
+                swipeRefresh();
+            }
+            break;
+        }
+    }
+
+    @Override
+    public void dialogRefresh() {
+        showLoadingDialog();
+    }
+
+    @Override
+    public void embedRefresh() {
+        setViewState(ViewState.loading);
+    }
+
+    @Override
+    public void swipeRefresh() {
+    }
+
+    protected void setBackgroundColor(@ColorInt int color) {
+        mDecorView.setBackgroundColor(color);
+    }
+
+    protected void setBackgroundResource(@DrawableRes int resId) {
+        mDecorView.setBackgroundResource(resId);
+    }
+
+    protected void setBackground(Drawable background) {
+        ViewUtil.setBackground(mDecorView, background);
+    }
+
+    /**
+     * 更改当前视图状态
+     *
+     * @param state
+     */
+    public void setViewState(@DecorViewEx.ViewState int state) {
+        mDecorView.setViewState(state);
+    }
+
+    @Override
+    public boolean onRetryClick() {
+        if (!DeviceUtil.isNetworkEnabled()) {
+            showToast(Network.getConfig().getDisconnectToast());
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean isViewTreeObserverAlive() {
+        return mDecorView.getViewTreeObserver().isAlive();
+    }
+
+    protected ViewTreeObserver getViewTreeObserver() {
+        return mDecorView.getViewTreeObserver();
+    }
+
+    protected boolean addOnPreDrawListener(ViewTreeObserver.OnPreDrawListener listener) {
+        if (isViewTreeObserverAlive()) {
+            getViewTreeObserver().addOnPreDrawListener(listener);
+            return true;
+        }
+        return false;
+    }
+
+    protected void removeOnPreDrawListener(ViewTreeObserver.OnPreDrawListener listener) {
+        if (getViewTreeObserver().isAlive()) {
+            getViewTreeObserver().removeOnPreDrawListener(listener);
+        }
+    }
+
+    protected boolean addOnGlobalLayoutListener(ViewTreeObserver.OnGlobalLayoutListener listener) {
+        if (isViewTreeObserverAlive()) {
+            getViewTreeObserver().addOnGlobalLayoutListener(listener);
+            return true;
+        }
+        return false;
+    }
+
+    protected void removeOnGlobalLayoutListener(ViewTreeObserver.OnGlobalLayoutListener listener) {
+        if (getViewTreeObserver().isAlive()) {
+            if (Build.VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
+                getViewTreeObserver().removeOnGlobalLayoutListener(listener);
+            } else {
+                getViewTreeObserver().removeGlobalOnLayoutListener(listener);
+            }
+        }
     }
 }
