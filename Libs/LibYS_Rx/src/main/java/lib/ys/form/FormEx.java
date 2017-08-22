@@ -324,8 +324,8 @@ abstract public class FormEx<VH extends IViewHolder> implements OnClickListener 
         return (T) mData;
     }
 
-    public Object getOption() {
-        return mOption;
+    public <T> T getOption() {
+        return (T) mOption;
     }
 
     public Object getHost() {

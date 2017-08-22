@@ -66,22 +66,25 @@ public class FileUtil {
      *
      * @param folderPath
      */
-    public static void delOnlyFolderContained(String folderPath) {
+    public static boolean delOnlyFolderContained(String folderPath) {
         try {
-            delAllFile(folderPath); // 删除完里面所有内容
+            return delAllFile(folderPath); // 删除完里面所有内容
         } catch (Exception e) {
             YSLog.e(TAG, e);
         }
+        return false;
     }
 
-    private static void delAllFile(String path) {
+    private static boolean delAllFile(String path) {
         File file = new File(path);
         if (!file.exists()) {
-            return;
+            return false;
         }
+
         if (!file.isDirectory()) {
-            return;
+            return false;
         }
+
         String[] tempList = file.list();
         File temp = null;
         for (int i = 0; i < tempList.length; i++) {
@@ -98,6 +101,8 @@ public class FileUtil {
                 delFolder(path + File.separator + tempList[i]);// 再删除空文件夹
             }
         }
+
+        return true;
     }
 
     public static String inputStreamToString(InputStream in) throws Exception {
