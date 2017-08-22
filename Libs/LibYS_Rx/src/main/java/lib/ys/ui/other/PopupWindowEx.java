@@ -444,6 +444,7 @@ abstract public class PopupWindowEx implements
 
             setDimAmount(mDimAmount);
         }
+
     }
 
     @Override
