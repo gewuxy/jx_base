@@ -25,7 +25,7 @@ abstract public class ListActivityEx<T, A extends IAdapter<T>>
 
     @Override
     public int getContentViewId() {
-        return R.layout.list_layout;
+        return R.layout.layout_list;
     }
 
     @Override

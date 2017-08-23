@@ -25,7 +25,7 @@ public class SwipeBackActivityHelper {
         // 获得当期Activity的Window的根视图DecorView设置颜色无
         mActivity.getWindow().getDecorView().setBackgroundDrawable(null);
         // 加载布局
-        mSwipeBackLayout = (SwipeBackLayout) LayoutInflater.from(mActivity).inflate(R.layout.swipeback_layout, null);
+        mSwipeBackLayout = (SwipeBackLayout) LayoutInflater.from(mActivity).inflate(R.layout.layout_swipeback, null);
     }
 
     /**

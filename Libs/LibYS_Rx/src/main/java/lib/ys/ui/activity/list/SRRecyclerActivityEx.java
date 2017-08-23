@@ -28,7 +28,7 @@ abstract public class SRRecyclerActivityEx<T, A extends IAdapter<T>> extends Rec
 
     @Override
     public int getContentViewId() {
-        return R.layout.sr_recycler_layout;
+        return R.layout.layout_sr_recycler;
     }
 
     @Override

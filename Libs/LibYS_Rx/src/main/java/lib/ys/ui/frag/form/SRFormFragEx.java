@@ -24,7 +24,7 @@ abstract public class SRFormFragEx<T extends FormEx<VH>, VH extends ViewHolderEx
     @NonNull
     @Override
     public int getContentViewId() {
-        return R.layout.sr_scroll_layout;
+        return R.layout.layout_sr_scroll;
     }
 
     @CallSuper

@@ -30,7 +30,7 @@ abstract public class SRRecyclerFragEx<T, A extends IAdapter<T>>
 
     @Override
     public int getContentViewId() {
-        return R.layout.sr_recycler_layout;
+        return R.layout.layout_sr_recycler;
     }
 
     @Override

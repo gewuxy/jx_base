@@ -169,6 +169,14 @@ abstract public class ActivityEx extends SwipeBackActivity implements
         mInitComplete = true;
     }
 
+    protected View getHeaderView() {
+        return mDecorView.getHeaderView();
+    }
+
+    protected View getFooterView() {
+        return mDecorView.getFooterView();
+    }
+
     /**
      * 获取titleBar的状态
      *
