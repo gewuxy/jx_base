@@ -242,6 +242,14 @@ abstract public class FragEx extends Fragment implements
         afterInitCompleted();
     }
 
+    protected View getHeaderView() {
+        return mDecorView.getHeaderView();
+    }
+
+    protected View getFooterView() {
+        return mDecorView.getFooterView();
+    }
+
     /**
      * 初始化完成以后的通知
      */
