@@ -95,6 +95,8 @@ public class WebOption {
                     if (mOnSuccess != null) {
                         mOnSuccess.onSuccess(view, url);
                     }
+                } else {
+                    mSuccess = true;
                 }
             }
         };
