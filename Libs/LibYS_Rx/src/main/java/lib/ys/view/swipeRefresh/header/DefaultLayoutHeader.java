@@ -30,7 +30,7 @@ public class DefaultLayoutHeader extends BaseLayoutHeader {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.sr_list_header;
+        return R.layout.layout_sr_header;
     }
 
     @Override

@@ -35,7 +35,7 @@ abstract public class GroupListFragEx<GROUP, CHILD, A extends IGroupAdapter<GROU
 
     @Override
     public int getContentViewId() {
-        return R.layout.group_list_layout;
+        return R.layout.layout_group_list;
     }
 
     @Override

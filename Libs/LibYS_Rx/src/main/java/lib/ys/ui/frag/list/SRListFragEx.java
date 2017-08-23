@@ -30,7 +30,7 @@ abstract public class SRListFragEx<T, A extends IAdapter<T>> extends ListFragEx<
 
     @Override
     public int getContentViewId() {
-        return R.layout.sr_list_layout;
+        return R.layout.layout_sr_list;
     }
 
     @Override

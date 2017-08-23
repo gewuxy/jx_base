@@ -21,14 +21,14 @@ public class DefaultFooter extends BaseFooter {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.sr_list_footer;
+        return R.layout.layout_sr_footer;
     }
 
     @Override
     protected void findViews() {
-        mLayoutLoading = findViewById(R.id.sr_list_footer_layout_loading);
-        mLayoutReLoadMore = findViewById(R.id.sr_list_footer_btn_reload_more);
-        mProgressView = (ProgressView) findViewById(R.id.sr_list_footer_progress_view);
+        mLayoutLoading = findViewById(R.id.sr_footer_layout_loading);
+        mLayoutReLoadMore = findViewById(R.id.sr_footer_btn_reload_more);
+        mProgressView = (ProgressView) findViewById(R.id.sr_footer_progress_view);
     }
 
     @Override
