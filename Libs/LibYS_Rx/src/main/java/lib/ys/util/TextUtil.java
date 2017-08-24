@@ -72,7 +72,7 @@ public class TextUtil {
      */
     public static String cutString(CharSequence text, float textSize, float pxLength, String symbol) {
         float oneCharLen = textSize;
-        float halfCharlen = textSize / 2;
+        float halfCharLen = textSize / 2;
 
         int curLen = 0;
         int count = 0;
@@ -82,7 +82,7 @@ public class TextUtil {
                 // CN
                 curLen += oneCharLen;
             } else {
-                curLen += halfCharlen;
+                curLen += halfCharLen;
             }
 
             if (curLen > pxLength) {

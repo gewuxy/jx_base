@@ -12,6 +12,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
@@ -492,7 +493,7 @@ public class NavBar extends RelativeLayout {
      *
      * @param text 如果文本内容为null, 无效
      */
-    public TextView addTextViewMid(CharSequence text) {
+    public TextView addTextViewMid(@NonNull CharSequence text) {
         return addTextViewMid(text, mConfig.getTextColor());
     }
 
@@ -502,7 +503,7 @@ public class NavBar extends RelativeLayout {
      * @param text
      * @param id
      */
-    public TextView addTextViewMid(CharSequence text, @ColorRes int id) {
+    public TextView addTextViewMid(@NonNull CharSequence text, @ColorRes int id) {
         return addTextViewMid(text, id, 0);
     }
 
@@ -513,16 +514,19 @@ public class NavBar extends RelativeLayout {
      * @param id
      * @param maxLength
      */
-    public TextView addTextViewMid(CharSequence text, @ColorRes int id, int maxLength) {
+    public TextView addTextViewMid(@NonNull CharSequence text, @ColorRes int id, int maxLength) {
         if (TextUtils.isEmpty(text)) {
             return null;
         }
+
         TextView tv = createTextView(mConfig.getTextSizeMid(), id, 0, null);
+
         if (maxLength != 0) {
             tv.setMaxWidth((int) ((maxLength) * mConfig.getTextSizeMid() * DpFitter.getDensity()));
             tv.setSingleLine();
             tv.setEllipsize(TruncateAt.END);
         }
+
         setTvText(text, tv);
         mLayoutMid.addView(tv, getTextLinearParams());
         return tv;
