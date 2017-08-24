@@ -44,8 +44,8 @@ import lib.ys.util.view.ViewUtil;
  */
 public class NavBar extends RelativeLayout {
 
-    private static final int MATCH_PARENT = LayoutParams.MATCH_PARENT;
-    private static final int WRAP_CONTENT = LayoutParams.WRAP_CONTENT;
+    private static final int MATCH_PARENT = LayoutUtil.MATCH_PARENT;
+    private static final int WRAP_CONTENT = LayoutUtil.WRAP_CONTENT;
 
     private LinearLayout mLayoutLeft;
     private LinearLayout mLayoutMid;
@@ -107,11 +107,13 @@ public class NavBar extends RelativeLayout {
         mLayoutMid = new LinearLayout(getContext());
         mLayoutMid.setId(R.id.nav_bar_mid);
         mLayoutMid.setOrientation(LinearLayout.HORIZONTAL);
+        mLayoutMid.setGravity(Gravity.CENTER);
         LayoutParams midParams = getRelativeParams();
+        midParams.width = MATCH_PARENT;
         if (flatBar != null) {
             midParams.addRule(BELOW, flatBar.getId());
         }
-        midParams.addRule(CENTER_IN_PARENT);
+        midParams.addRule(CENTER_VERTICAL);
         addView(mLayoutMid, midParams);
 
         // 添加右边布局
@@ -247,7 +249,7 @@ public class NavBar extends RelativeLayout {
      * @param v
      */
     public void addViewMid(View v) {
-        addViewMid(v, LayoutUtil.getLinearParams(WRAP_CONTENT, WRAP_CONTENT), null);
+        addViewMid(v, null);
     }
 
     /**
@@ -257,7 +259,10 @@ public class NavBar extends RelativeLayout {
      * @param lsn
      */
     public void addViewMid(View v, OnClickListener lsn) {
-        addViewMid(v, LayoutUtil.getLinearParams(WRAP_CONTENT, WRAP_CONTENT), lsn);
+        LinearLayout.LayoutParams params = getLinearParams();
+        params.weight = 1;
+        params.width = MATCH_PARENT;
+        addViewMid(v, params, lsn);
     }
 
     /**
