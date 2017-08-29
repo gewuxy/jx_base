@@ -164,7 +164,6 @@ abstract public class SRListFragEx<T, A extends IAdapter<T>> extends ListFragEx<
         if (super.onRetryClick()) {
             return true;
         }
-
         return mSROpt.onRetryClick();
     }
 

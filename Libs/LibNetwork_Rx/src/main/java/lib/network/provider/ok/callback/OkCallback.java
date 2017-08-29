@@ -39,10 +39,11 @@ abstract public class OkCallback implements Callback {
             builder.message(Network.getConfig().getTimeoutToast());
         } else if (e instanceof SocketException) {
             // socket链接中断, 暂时认为是取消
-            builder.message("socket链接中断");
+//            builder.message("socket链接中断");
         } else {
             if (e.getMessage().equals("Canceled")) {
-                builder.message("任务取消");
+                // FIXME: 是否要有msg
+//                builder.message("任务取消");
             } else {
                 builder.message(e.getMessage());
             }

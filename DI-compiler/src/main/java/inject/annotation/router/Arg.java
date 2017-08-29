@@ -28,5 +28,5 @@ public @interface Arg {
 
     boolean defaultBoolean() default false;
 
-    boolean optional() default false;
+    boolean opt() default false;
 }

@@ -262,7 +262,7 @@ public class RouterProcessor extends BaseProcessor {
         for (Element e : annotatedElement.getEnclosedElements()) {
             Arg a = e.getAnnotation(Arg.class);
             if (a != null) {
-                if (a.optional()) {
+                if (a.opt()) {
                     optional.add(e);
                 } else {
                     required.add(e);
