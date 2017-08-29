@@ -299,6 +299,11 @@ public class NetworkProcessor extends BaseProcessor {
         b.addStatement("$N.param($T.getConfig().getCommonParams())", FieldName.KBuilder, MyClassName.KNetwork);
         b.addStatement("$N.header($T.getConfig().getCommonHeaders())", FieldName.KBuilder, MyClassName.KNetwork);
 
+        /**
+         * 添加加密
+         */
+        b.addStatement("$T.getConfig().encrypt($N)", MyClassName.KNetwork, FieldName.KBuilder);
+
         b.addStatement("return $N.build()", FieldName.KBuilder);
 
         typeBuilder.addMethod(constructorBuilder.build());

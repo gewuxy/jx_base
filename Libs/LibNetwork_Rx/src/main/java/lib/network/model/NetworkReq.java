@@ -83,7 +83,7 @@ public class NetworkReq {
      * 内部builder
      */
     public static class Builder {
-        protected List<CommonPair> mParams;
+        private List<CommonPair> mParams;
         private List<BytePair> mByteParams;
         private List<FilePair> mFileParams;
 
@@ -253,6 +253,10 @@ public class NetworkReq {
         public <T extends Builder> T retry(int count, long delay) {
             mRetry = new NetworkRetry(count, delay);
             return (T) this;
+        }
+
+        public List<CommonPair> getParams() {
+            return mParams;
         }
 
         public NetworkReq build() {

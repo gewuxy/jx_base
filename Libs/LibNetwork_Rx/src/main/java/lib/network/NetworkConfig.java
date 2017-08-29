@@ -7,7 +7,9 @@ import android.support.annotation.Nullable;
 import java.util.List;
 
 import inject.annotation.builder.Builder;
+import lib.network.model.NetworkReq;
 import lib.network.model.interfaces.IConfigsMaker;
+import lib.network.model.interfaces.IEncryptor;
 import lib.network.model.param.CommonPair;
 
 /**
@@ -40,6 +42,8 @@ public class NetworkConfig {
     IConfigsMaker mParamsMaker;
     // 共用headers
     IConfigsMaker mHeadersMaker;
+    // 加密器
+    IEncryptor mEncryptor;
 
     public NetworkConfig() {
         mConnectTimeout = 15;
@@ -89,6 +93,12 @@ public class NetworkConfig {
             return mHeadersMaker.make();
         } else {
             return null;
+        }
+    }
+
+    public void encrypt(@NonNull NetworkReq.Builder builder) {
+        if (mEncryptor != null) {
+            mEncryptor.encrypt(builder);
         }
     }
 
