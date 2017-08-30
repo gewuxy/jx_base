@@ -58,8 +58,8 @@ public class TextUtil {
         return !isEmpty(str);
     }
 
-    private static final int KCNRangeMin = 19968; // \u4e00
-    private static final int KCNRangeMax = 171941; // \u9fa5
+    public static final int KCNRangeMin = 19968; // \u4e00
+    public static final int KCNRangeMax = 171941; // \u9fa5
 
     /**
      * 根据字体大小及限制的PX长度来截取字符串
