@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import lib.network.Network;
 import lib.network.NetworkUtil;
 import lib.network.model.param.BytePair;
 import lib.network.model.param.CommonPair;
@@ -260,6 +261,9 @@ public class NetworkReq {
         }
 
         public NetworkReq build() {
+            // 先进行加密操作
+            Network.getConfig().encrypt(this);
+
             NetworkReq r = new NetworkReq();
 
             r.mMethod = mMethod;
