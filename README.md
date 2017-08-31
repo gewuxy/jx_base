@@ -1,4 +1,19 @@
 ### 在总环境的 build.gradle 里添加
+    ext.versions = [
+            'minSdk'        : 14,
+            'compileSdk'    : 24,
+            'buildTools'    : '26.0.0',
+            'versionCode'   : 100,
+            'versionName'   : '1.0',
+            'supportLibrary': '24+',
+            'java'          : JavaVersion.VERSION_1_8
+    ]
+    
+    ext.configs = [
+            'dimension'   : 'default',
+            'abortOnError': false,
+    ]
+
     ext.deps = [
             android  : [
                     'runtime': 'com.google.android:android:4.1.1.4',
