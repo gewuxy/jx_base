@@ -62,4 +62,8 @@ public class ListConfig {
     public Class<? extends BaseFooter> getFooterClz() {
         return mFooterClz;
     }
+
+    public static ListConfigBuilder newBuilder() {
+        return ListConfigBuilder.create();
+    }
 }

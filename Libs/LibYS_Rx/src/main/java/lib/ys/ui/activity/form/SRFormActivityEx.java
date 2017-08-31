@@ -3,8 +3,8 @@ package lib.ys.ui.activity.form;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
-import lib.network.model.NetworkResp;
 import lib.network.model.NetworkError;
+import lib.network.model.NetworkResp;
 import lib.network.model.interfaces.IListResult;
 import lib.ys.R;
 import lib.ys.adapter.interfaces.IViewHolder;

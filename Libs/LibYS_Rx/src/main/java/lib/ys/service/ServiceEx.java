@@ -6,14 +6,14 @@ import android.os.IBinder;
 
 import org.json.JSONException;
 
-import lib.ys.util.InjectUtil;
+import lib.network.model.NetworkError;
 import lib.network.model.NetworkReq;
 import lib.network.model.NetworkResp;
-import lib.network.model.NetworkError;
 import lib.network.model.interfaces.OnNetworkListener;
 import lib.ys.YSLog;
 import lib.ys.ui.interfaces.impl.NetworkOpt;
 import lib.ys.ui.interfaces.opt.INetworkOpt;
+import lib.ys.util.InjectUtil;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 

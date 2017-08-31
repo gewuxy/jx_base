@@ -60,7 +60,7 @@ public class CaptchaView extends TextView {
             @Override
             public void onNext(@NonNull Long aLong) {
                 //setText(mResendText + KPrefix + aLong + KSuffix);
-                setText( aLong + KSecond);
+                setText(aLong + KSecond);
             }
 
             @Override

@@ -10,6 +10,7 @@ import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import inject.annotation.builder.Builder;
 import lib.ys.ui.decor.ErrorDecorEx;
 
 /**
@@ -17,6 +18,7 @@ import lib.ys.ui.decor.ErrorDecorEx;
  *
  * @author yuansui
  */
+@Builder
 public class AppConfig {
 
     /**
@@ -37,26 +39,32 @@ public class AppConfig {
     }
 
     @DrawableRes
-    private int mBgRes = 0;
+    int mBgRes = 0;
 
     @ColorRes
-    private int mBgColorRes = 0;
+    int mBgColorRes = 0;
 
-    private Class<? extends ErrorDecorEx> mErrorDecorClz = null;
+    Class<? extends ErrorDecorEx> mErrorDecorClz = null;
 
-    private boolean mEnableSwipeFinish = false;
+    /**
+     * 是否使用滑动退出activity, 使用的时候需要注意事项:
+     * 1. 底层的main activity一定要使用传统不透明的theme
+     * 2. application theme使用{@link lib.ys.R.style#AppTheme_SwipeBack}
+     */
+    boolean mEnableSwipeFinish = false;
 
     /**
      * 初始化的加载样式
      */
     @RefreshWay
-    private int mInitRefreshWay = RefreshWay.dialog;
+    int mInitRefreshWay = RefreshWay.dialog;
 
-    // 是否使用沉浸式状态栏
-    private boolean mEnableFlatBar = false;
-
-    private AppConfig() {
-    }
+    /**
+     * 设置沉浸式状态栏是否可用
+     *
+     * @param enable
+     */
+    boolean mEnableFlatBar = false;
 
     public Class<? extends ErrorDecorEx> getErrorDecorClz() {
         return mErrorDecorClz;
@@ -90,91 +98,7 @@ public class AppConfig {
         return mEnableSwipeFinish;
     }
 
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
-    public static class Builder {
-        @DrawableRes
-        private int mBgRes = 0;
-
-        @ColorRes
-        private int mBgColorRes = 0;
-
-        private Class<? extends ErrorDecorEx> mErrorDecorClz = null;
-
-        private boolean mEnableSwipeFinish = false;
-
-        /**
-         * 初始化的加载样式
-         */
-        @RefreshWay
-        private int mInitRefreshWay = RefreshWay.dialog;
-
-        // 是否使用沉浸式状态栏
-        private boolean mEnableFlatBar = false;
-
-        private Builder() {
-        }
-
-        public Builder bgRes(@DrawableRes int res) {
-            mBgRes = res;
-            return this;
-        }
-
-        public Builder bgColorRes(@ColorRes int res) {
-            mBgColorRes = res;
-            return this;
-        }
-
-        public Builder errorDecorClz(Class<? extends ErrorDecorEx> clz) {
-            mErrorDecorClz = clz;
-            return this;
-        }
-
-        @TargetApi(VERSION_CODES.KITKAT)
-        /**
-         * 设置沉浸式状态栏是否可用
-         * @param enable
-         */
-        public Builder enableFlatBar(boolean enable) {
-            mEnableFlatBar = enable;
-            return this;
-        }
-
-        /**
-         * 设置初始化数据的时候使用的刷新模式
-         *
-         * @param way
-         */
-        public Builder initRefreshWay(@RefreshWay int way) {
-            mInitRefreshWay = way;
-            return this;
-        }
-
-        /**
-         * 是否使用滑动退出activity, 使用的时候需要注意事项:
-         * 1. 底层的main activity一定要使用传统不透明的theme
-         * 2. application theme使用{@link lib.ys.R.style#AppTheme_SwipeBack}
-         *
-         * @param enable
-         */
-        public Builder enableSwipeFinish(boolean enable) {
-            mEnableSwipeFinish = enable;
-            return this;
-        }
-
-        public AppConfig build() {
-            AppConfig c = new AppConfig();
-
-            c.mBgRes = mBgRes;
-            c.mBgColorRes = mBgColorRes;
-            c.mErrorDecorClz = mErrorDecorClz;
-            c.mEnableSwipeFinish = mEnableSwipeFinish;
-            c.mInitRefreshWay = mInitRefreshWay;
-            c.mEnableFlatBar = mEnableFlatBar;
-
-            return c;
-        }
+    public static AppConfigBuilder newBuilder() {
+        return AppConfigBuilder.create();
     }
 }
