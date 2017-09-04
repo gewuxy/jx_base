@@ -3,11 +3,7 @@ package lib.ys.util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -19,7 +15,6 @@ import android.provider.Settings;
 import android.provider.Settings.Secure;
 import android.support.v4.net.ConnectivityManagerCompat;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 
 import java.io.File;
 import java.util.List;
@@ -164,20 +159,6 @@ public class DeviceUtil {
         return isSdcardMounted() && !Environment.getExternalStorageState().equals(Environment.MEDIA_SHARED);
     }
 
-    public static void setMetaValue(String key, String value) {
-        if (TextUtil.isEmpty(key)) {
-            return;
-        }
-
-        ApplicationInfo appInfo = null;
-        try {
-            appInfo = AppEx.ct().getPackageManager().getApplicationInfo(AppEx.ct().getPackageName(), PackageManager.GET_META_DATA);
-            appInfo.metaData.putString(key, value);
-        } catch (NameNotFoundException e) {
-            YSLog.e(TAG, e);
-        }
-    }
-
     @SuppressLint("WifiManagerLeak")
     public static WifiInfo getWifiInfo() {
         WifiManager wifi = (WifiManager) AppEx.ct().getSystemService(Context.WIFI_SERVICE);
@@ -222,35 +203,6 @@ public class DeviceUtil {
         return Build.VERSION.RELEASE;
     }
 
-    // 获取当前软件版本名
-    public static String getAppVersionName() {
-        String versionName = "";
-        try {
-            PackageManager packageManager = AppEx.ct().getPackageManager();
-            PackageInfo packageInfo = packageManager.getPackageInfo(AppEx.ct().getPackageName(), 0);
-            versionName = packageInfo.versionName;
-            if (TextUtils.isEmpty(versionName)) {
-                return "";
-            }
-        } catch (Exception e) {
-            YSLog.e(TAG, e);
-        }
-        return versionName;
-    }
-
-    // 获取当前软件版本号
-    public static int getAppVersion() {
-        int versionCode = -1;
-        try {
-            PackageManager packageManager = AppEx.ct().getPackageManager();
-            PackageInfo packageInfo = packageManager.getPackageInfo(AppEx.ct().getPackageName(), 0);
-            versionCode = packageInfo.versionCode;
-        } catch (Exception e) {
-            YSLog.e(TAG, e);
-        }
-        return versionCode;
-    }
-
     public static File getSdcardDir() {
         File dir = Environment.getExternalStorageDirectory();
         if (!dir.exists()) {
@@ -266,33 +218,6 @@ public class DeviceUtil {
      */
     public static boolean isOverMarshmallow() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
-    }
-
-    /**
-     * 获取App的名字
-     *
-     * @return
-     */
-    public static String getAppName() {
-        PackageManager packageManager = null;
-        ApplicationInfo applicationInfo = null;
-        try {
-            packageManager = AppEx.ct().getPackageManager();
-            applicationInfo = packageManager.getApplicationInfo(AppEx.ct().getPackageName(), 0);
-        } catch (NameNotFoundException e) {
-            applicationInfo = null;
-        }
-        String applicationName = (String) packageManager.getApplicationLabel(applicationInfo);
-        return applicationName;
-    }
-
-    public static Drawable getAppIcon() {
-        PackageManager packageManager = AppEx.ct().getPackageManager();
-        try {
-            return packageManager.getApplicationIcon(AppEx.ct().getPackageName());
-        } catch (NameNotFoundException e) {
-            return null;
-        }
     }
 
     public static void makePhoneCall(Context context, String number) {

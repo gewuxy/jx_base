@@ -1,10 +1,13 @@
 package lib.ys.util;
 
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import lib.ys.AppEx;
 import lib.ys.YSLog;
@@ -35,6 +38,73 @@ public class PackageUtil {
             YSLog.e(TAG, e);
         }
         return apiKey;
+    }
+
+    public static void setMetaValue(String key, String value) {
+        if (TextUtil.isEmpty(key)) {
+            return;
+        }
+
+        ApplicationInfo appInfo = null;
+        try {
+            appInfo = getPM().getApplicationInfo(getPkgName(), PackageManager.GET_META_DATA);
+            appInfo.metaData.putString(key, value);
+        } catch (NameNotFoundException e) {
+            YSLog.e(TAG, e);
+        }
+    }
+
+    // 获取当前软件版本名
+    public static String getAppVersionName() {
+        String versionName = "";
+        try {
+            PackageInfo packageInfo = getPM().getPackageInfo(AppEx.ct().getPackageName(), 0);
+            versionName = packageInfo.versionName;
+            if (TextUtils.isEmpty(versionName)) {
+                return "";
+            }
+        } catch (Exception e) {
+            YSLog.e(TAG, e);
+        }
+        return versionName;
+    }
+
+    // 获取当前软件版本号
+    public static int getAppVersion() {
+        int versionCode = -1;
+        try {
+            PackageInfo packageInfo = getPM().getPackageInfo(AppEx.ct().getPackageName(), 0);
+            versionCode = packageInfo.versionCode;
+        } catch (Exception e) {
+            YSLog.e(TAG, e);
+        }
+        return versionCode;
+    }
+
+    /**
+     * 获取App的名字
+     *
+     * @return
+     */
+    public static String getAppName() {
+        PackageManager packageManager = null;
+        ApplicationInfo applicationInfo = null;
+        try {
+            packageManager = getPM();
+            applicationInfo = packageManager.getApplicationInfo(AppEx.ct().getPackageName(), 0);
+        } catch (NameNotFoundException e) {
+            applicationInfo = null;
+        }
+        String applicationName = (String) packageManager.getApplicationLabel(applicationInfo);
+        return applicationName;
+    }
+
+    public static Drawable getAppIcon() {
+        try {
+            return getPM().getApplicationIcon(AppEx.ct().getPackageName());
+        } catch (NameNotFoundException e) {
+            return null;
+        }
     }
 
     private static PackageManager getPM() {
