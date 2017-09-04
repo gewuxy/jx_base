@@ -14,7 +14,6 @@ import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
@@ -163,28 +162,6 @@ public class DeviceUtil {
      */
     public static boolean isSdcardEnable() {
         return isSdcardMounted() && !Environment.getExternalStorageState().equals(Environment.MEDIA_SHARED);
-    }
-
-    public static String getMetaValue(String metaKey) {
-        if (metaKey == null) {
-            return null;
-        }
-
-        Bundle metaData = null;
-        String apiKey = null;
-        try {
-            ApplicationInfo ai = AppEx.ct().getPackageManager().getApplicationInfo(AppEx.ct().getPackageName(), PackageManager.GET_META_DATA);
-            if (null != ai) {
-                metaData = ai.metaData;
-            }
-            if (null != metaData) {
-                apiKey = metaData.getString(metaKey);
-            }
-        } catch (NameNotFoundException e) {
-            YSLog.e(TAG, e);
-            apiKey = ConstantsEx.KEmptyValue;
-        }
-        return apiKey;
     }
 
     public static void setMetaValue(String key, String value) {
