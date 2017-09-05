@@ -29,7 +29,7 @@ dependencies {
     /**
      * 图片
      */
-    compile deps.network.image
+    compile deps.fresco
     /**
      * Rx
      */
