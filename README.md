@@ -41,7 +41,8 @@
                     'android': 'io.reactivex.rxjava2:rxandroid:2+'
             ],
             'network': [
-                    'ok': 'com.squareup.okhttp3:okhttp:3.8.0'
+                    'ok'   : 'com.squareup.okhttp3:okhttp:3.8.0',
+                    'image': 'com.facebook.fresco:fresco:1.5.0'
             ],
             'debug'  : [
                     'leakcanary': 'com.squareup.leakcanary:leakcanary-android:1.5.1'
