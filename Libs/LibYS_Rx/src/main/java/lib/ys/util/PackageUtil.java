@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import java.util.List;
+
 import lib.ys.AppEx;
+import lib.ys.ConstantsEx;
 import lib.ys.YSLog;
 
 /**
@@ -54,7 +57,21 @@ public class PackageUtil {
         }
     }
 
-    // 获取当前软件版本名
+    public static boolean isAndroidMarketAvailable() {
+        List<PackageInfo> packages = getPM().getInstalledPackages(0);
+        for (int i = 0; i < packages.size(); i++) {
+            PackageInfo packageInfo = packages.get(i);
+            if (packageInfo.packageName.equals(ConstantsEx.KAndroidMarketPackageName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 获取当前软件版本名
+     * @return
+     */
     public static String getAppVersionName() {
         String versionName = "";
         try {
@@ -69,7 +86,10 @@ public class PackageUtil {
         return versionName;
     }
 
-    // 获取当前软件版本号
+    /**
+     * 获取当前软件版本号
+     * @return
+     */
     public static int getAppVersion() {
         int versionCode = -1;
         try {
@@ -83,7 +103,6 @@ public class PackageUtil {
 
     /**
      * 获取App的名字
-     *
      * @return
      */
     public static String getAppName() {
@@ -99,6 +118,10 @@ public class PackageUtil {
         return applicationName;
     }
 
+    /**
+     * 获取app图标
+     * @return
+     */
     public static Drawable getAppIcon() {
         try {
             return getPM().getApplicationIcon(AppEx.ct().getPackageName());

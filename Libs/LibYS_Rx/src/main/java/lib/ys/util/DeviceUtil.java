@@ -2,11 +2,8 @@ package lib.ys.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -17,7 +14,6 @@ import android.support.v4.net.ConnectivityManagerCompat;
 import android.telephony.TelephonyManager;
 
 import java.io.File;
-import java.util.List;
 
 import lib.ys.AppEx;
 import lib.ys.ConstantsEx;
@@ -97,17 +93,6 @@ public class DeviceUtil {
 
     public static boolean isAirplaneModeOn(Context context) {
         return (0 != Settings.System.getInt(context.getContentResolver(), "airplane_mode_on", 0));
-    }
-
-    public static boolean isAndroidMarketAvailable(Context context) {
-        List<PackageInfo> packages = context.getPackageManager().getInstalledPackages(0);
-        for (int i = 0; i < packages.size(); i++) {
-            PackageInfo packageInfo = packages.get(i);
-            if (packageInfo.packageName.equals(ConstantsEx.KAndroidMarketPackageName)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static String getIMEI(Context context) {
@@ -218,13 +203,6 @@ public class DeviceUtil {
      */
     public static boolean isOverMarshmallow() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
-    }
-
-    public static void makePhoneCall(Context context, String number) {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        Uri data = Uri.parse("tel:" + number);
-        intent.setData(data);
-        context.startActivity(intent);
     }
 
     /**

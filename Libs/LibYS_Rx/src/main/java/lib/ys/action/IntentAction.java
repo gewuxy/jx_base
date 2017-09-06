@@ -416,4 +416,22 @@ public class IntentAction {
             normalLaunch(intent);
         }
     }
+
+    public static class PhoneCallAction extends BaseAction {
+
+        private String mTellNum;
+
+        public PhoneCallAction tellNum(String tellNum) {
+            mTellNum = tellNum;
+            return this;
+        }
+
+        @Override
+        public void launch() {
+            Uri data = Uri.parse("tel:" + mTellNum);
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(data);
+            normalLaunch(intent);
+        }
+    }
 }
