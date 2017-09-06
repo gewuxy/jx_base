@@ -48,6 +48,5 @@ public class RecyclerViewHolderEx extends ViewHolder implements IViewHolder {
     protected void finalize() throws Throwable {
         super.finalize();
         mMap.clear();
-        mMap = null;
     }
 }

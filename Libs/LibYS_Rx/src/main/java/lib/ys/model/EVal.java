@@ -214,7 +214,7 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
             } else if (o instanceof Integer) {
                 v = Long.valueOf((Integer) o);
             } else if (o instanceof String) {
-                v = Long.valueOf((String) o);
+                v = Long.parseLong((String) o);
             }
         } catch (NumberFormatException e) {
             // LogMgr.e(TAG, e);
@@ -315,7 +315,7 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
             } else if (o instanceof String || o instanceof Integer) {
                 v = Double.valueOf(getString(key));
             } else if (o instanceof Float) {
-                v = (Double) o;
+                v = ((Float) o).doubleValue();
             }
         } catch (NumberFormatException e) {
             // LogMgr.e(TAG, e);

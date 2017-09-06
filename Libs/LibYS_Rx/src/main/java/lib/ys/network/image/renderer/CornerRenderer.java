@@ -1,17 +1,18 @@
 package lib.ys.network.image.renderer;
 
+import android.support.annotation.IntRange;
+
 /**
  * 圆角渲染器
  */
 public class CornerRenderer implements Renderer {
-
 
     private int mRadius = 10;
 
     public CornerRenderer() {
     }
 
-    public CornerRenderer(int radius) {
+    public CornerRenderer(@IntRange(from = 0) int radius) {
         mRadius = radius;
     }
 
@@ -29,7 +30,12 @@ public class CornerRenderer implements Renderer {
                 return false;
             }
         } else {
-            return super.equals(o);
+            return false;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return mRadius;
     }
 }

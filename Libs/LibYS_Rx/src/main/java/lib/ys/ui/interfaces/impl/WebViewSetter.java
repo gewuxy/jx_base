@@ -191,7 +191,6 @@ public class WebViewSetter {
         } else {
             // 使用es文件浏览器打开
             if (uri != null) {
-                System.gc();// 立即回收
                 picPath = uri.getPath();
             }
         }

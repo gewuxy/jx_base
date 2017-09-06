@@ -45,6 +45,5 @@ abstract public class ViewHolderEx implements IViewHolder {
     protected void finalize() throws Throwable {
         super.finalize();
         mMap.clear();
-        mMap = null;
     }
 }

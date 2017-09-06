@@ -106,7 +106,7 @@ public class AnimArcView extends View implements OnTimeTickListener {
     @Override
     protected void onDraw(Canvas canvas) {
         if (mDrawBg) {
-            canvas.drawCircle(mW / 2, mH / 2, mRadius, mPaintBg);
+            canvas.drawCircle(mW / 2f, mH / 2f, mRadius, mPaintBg);
         }
 
         canvas.drawArc(mArc, mStartAngle, mCurrSweepAngle, false, mPaintArc);

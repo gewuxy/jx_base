@@ -13,6 +13,7 @@ import lib.ys.form.FormEx;
  * TODO 未改完
  *
  * @param <VH>
+ * @deprecated
  */
 abstract public class ChildFormEx<VH extends ViewHolderEx> extends FormEx<VH> implements OnClickListener {
 

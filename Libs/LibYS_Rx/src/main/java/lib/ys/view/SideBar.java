@@ -125,7 +125,7 @@ public class SideBar extends View {
                 mPaint.setFakeBoldText(true);
             }
             // 要画的字母的x,y坐标
-            float posX = mWidth / 2;
+            float posX = mWidth / 2f;
             float posY = i * mLetterHeight + mLetterHeight / 2 + offset;
 
             // 画出字母
@@ -150,7 +150,7 @@ public class SideBar extends View {
         switch (mGravity) {
             case Gravity.TOP: {
                 // do nothing
-                y -= mLetterHeight / 2;
+                y -= mLetterHeight / 2f;
             }
             break;
             case Gravity.CENTER_VERTICAL:

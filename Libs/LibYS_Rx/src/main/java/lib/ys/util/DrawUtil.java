@@ -92,7 +92,7 @@ public class DrawUtil {
     }
 
     public static void drawBmpInCenterX(Canvas canvas, Bitmap bmp, float x, float y, Paint paint) {
-        canvas.drawBitmap(bmp, x - bmp.getWidth() / 2, y, paint);
+        canvas.drawBitmap(bmp, x - bmp.getWidth() / 2f, y, paint);
     }
 
     private static void drawBmpInLeftX(Canvas canvas, Bitmap bmp, float x, float y, Paint paint) {

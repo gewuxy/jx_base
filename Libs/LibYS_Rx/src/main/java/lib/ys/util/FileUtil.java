@@ -25,12 +25,11 @@ public class FileUtil {
      */
     public static boolean delFolder(String folderPath) {
         try {
-            delAllFile(folderPath); // 删除完里面所有内容
+            delAllFiles(folderPath); // 删除完里面所有内容
             String filePath = folderPath;
             filePath = filePath.toString();
-            File myFilePath = new File(filePath);
-            myFilePath.delete(); // 删除空文件夹
-            return true;
+            File file = new File(filePath);
+            return file.delete(); // 删除空文件夹
         } catch (Exception e) {
             YSLog.e(TAG, e);
             return false;
@@ -42,13 +41,13 @@ public class FileUtil {
      *
      * @param file
      */
-    public static void delFile(File file) {
+    public static boolean delFile(File file) {
         if (file == null || !file.exists()) {
-            return;
+            return false;
         }
 
         if (file.isFile()) {
-            file.delete();
+            return file.delete();
         } else {
             File[] files = file.listFiles();
             if (files != null && files.length > 0) {
@@ -57,7 +56,7 @@ public class FileUtil {
                 }
             }
 
-            file.delete();// 删除该文件夹
+            return file.delete();// 删除该文件夹
         }
     }
 
@@ -68,14 +67,14 @@ public class FileUtil {
      */
     public static boolean delOnlyFolderContained(String folderPath) {
         try {
-            return delAllFile(folderPath); // 删除完里面所有内容
+            return delAllFiles(folderPath); // 删除完里面所有内容
         } catch (Exception e) {
             YSLog.e(TAG, e);
         }
         return false;
     }
 
-    private static boolean delAllFile(String path) {
+    private static boolean delAllFiles(String path) {
         File file = new File(path);
         if (!file.exists()) {
             return false;
@@ -86,19 +85,22 @@ public class FileUtil {
         }
 
         String[] tempList = file.list();
-        File temp = null;
         for (int i = 0; i < tempList.length; i++) {
             if (path.endsWith(File.separator)) {
-                temp = new File(path + tempList[i]);
+                File temp = new File(path + tempList[i]);
+                if (!temp.delete()) {
+                    YSLog.d(TAG, "delAllFiles: file delete error");
+                    return false;
+                }
             } else {
-                temp = new File(path + File.separator + tempList[i]);
-            }
-            if (temp.isFile()) {
-                temp.delete();
-            }
-            if (temp.isDirectory()) {
-                delAllFile(path + File.separator + tempList[i]);// 先删除文件夹里面的文件
-                delFolder(path + File.separator + tempList[i]);// 再删除空文件夹
+                String innnerPath = path + File.separator + tempList[i];
+                if (delAllFiles(innnerPath)) {
+                    // 先删除文件夹里面的文件, 再删除空文件夹
+                    if (!delFolder(innnerPath)) {
+                        YSLog.d(TAG, "delAllFiles: folder delete error");
+                        return false;
+                    }
+                }
             }
         }
 

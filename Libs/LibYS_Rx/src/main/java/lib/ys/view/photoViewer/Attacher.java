@@ -136,7 +136,7 @@ public class Attacher implements IAttacher, View.OnTouchListener, OnScaleDragGes
     public void setScale(float scale, boolean animate) {
         DraweeView<GenericDraweeHierarchy> draweeView = getDraweeView();
         if (draweeView != null) {
-            setScale(scale, (draweeView.getRight()) / 2, (draweeView.getBottom()) / 2, false);
+            setScale(scale, (draweeView.getRight()) / 2f, (draweeView.getBottom()) / 2f, false);
         }
     }
 

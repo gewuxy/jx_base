@@ -256,7 +256,6 @@ public class BmpUtil {
             result = bmp.compress(format, quality, fos);
         } catch (OutOfMemoryError error) {
             YSLog.e(TAG, "compress" + destFile.toString(), error);
-            System.gc();
         } catch (Exception e) {
             YSLog.e(TAG, "compress", e);
         } finally {
@@ -759,7 +758,7 @@ public class BmpUtil {
         Bitmap retBmp = Bitmap.createBitmap(min, min, Config.ARGB_8888);
 
         Canvas canvas = createCanvas(retBmp);
-        canvas.drawCircle(min / 2, min / 2, min / 2, paint);
+        canvas.drawCircle(min / 2f, min / 2f, min / 2f, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bmp, 0, 0, paint);
 

@@ -2,7 +2,7 @@ package lib.ys.network.image.renderer;
 
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
-import android.support.annotation.FloatRange;
+import android.support.annotation.IntRange;
 
 import static android.R.attr.width;
 
@@ -14,12 +14,12 @@ public class CircleRenderer implements Renderer {
     @ColorInt
     private int mBorderColor = Color.TRANSPARENT;
 
-    private float mBorderWidth;
+    private int mBorderWidth;
 
     public CircleRenderer() {
     }
 
-    public CircleRenderer(@ColorInt int color, @FloatRange(from = 0) float width) {
+    public CircleRenderer(@ColorInt int color, @IntRange(from = 0) int width) {
         mBorderWidth = width;
         mBorderColor = color;
     }
@@ -28,7 +28,7 @@ public class CircleRenderer implements Renderer {
         mBorderWidth = width;
     }
 
-    public void setBorderWidth(@FloatRange(from = 0) float width) {
+    public void setBorderWidth(@IntRange(from = 0) int width) {
         mBorderWidth = width;
     }
 
@@ -51,7 +51,12 @@ public class CircleRenderer implements Renderer {
             }
             return false;
         } else {
-            return super.equals(o);
+            return false;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return mBorderColor & mBorderWidth;
     }
 }

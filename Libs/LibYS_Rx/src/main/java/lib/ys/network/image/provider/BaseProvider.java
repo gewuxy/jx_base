@@ -21,8 +21,8 @@ import lib.ys.network.image.renderer.Renderer;
  */
 abstract public class BaseProvider {
 
-    protected Context mContext;
-    protected ImageView mIv;
+    private Context mContext;
+    private ImageView mIv;
 
     /**
      * 以下是详细属性

@@ -29,7 +29,8 @@ import java.util.ArrayList;
  */
 public class GridViewEx extends GridView {
 
-    public static boolean DEBUG = false;
+    private final static boolean DEBUG = false;
+
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
 

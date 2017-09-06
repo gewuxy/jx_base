@@ -26,7 +26,7 @@ abstract public class AppEx extends Application {
 
     protected String TAG = getClass().getSimpleName();
 
-    protected static Context mContext;
+    private static Context mContext;
 
     private static AppConfig mAppConfig;
     private static ListConfig mListConfig;
@@ -158,7 +158,6 @@ abstract public class AppEx extends Application {
     public void onLowMemory() {
         super.onLowMemory();
         NetworkImageView.clearMemoryCache(mContext);
-        System.gc();
     }
 
     abstract protected String getNetworkImageCacheDir();
@@ -172,6 +171,11 @@ abstract public class AppEx extends Application {
         return false;
     }
 
+    /**
+     * 处理崩溃
+     *
+     * @param e
+     */
     protected void handleCrash(Throwable e) {
     }
 

@@ -87,12 +87,12 @@ public class AnimateUtil {
         }
     }
 
-    public static ValueAnimator getValueNumber(int fromNumber, int toNumber) {
-        return getValueNumber(fromNumber, toNumber, KDuration);
+    public static ValueAnimator ofIntValue(int from, int to) {
+        return ofIntValue(from, to, KDuration);
     }
 
-    public static ValueAnimator getValueNumber(int fromNumber, int toNumber, long duration) {
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(fromNumber, toNumber);
+    public static ValueAnimator ofIntValue(int from, int to, long duration) {
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(from, to);
         valueAnimator.setDuration(duration);
         return valueAnimator;
     }

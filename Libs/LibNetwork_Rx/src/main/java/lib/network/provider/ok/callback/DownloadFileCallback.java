@@ -38,8 +38,13 @@ public class DownloadFileCallback extends OkCallback {
         try {
             File dir = new File(mFileDir);
             if (!dir.exists()) {
-                dir.mkdirs();
+                if (!dir.mkdirs()) {
+                    NativeListener.inst().onError(id,
+                            NetworkErrorBuilder.create().code(id).message("创建文件失败, 请检查权限").build(),
+                            getListener());
+                }
             }
+
             os = new FileOutputStream(new File(mFileDir, mFileName));
             os.write(response.body().bytes());
 

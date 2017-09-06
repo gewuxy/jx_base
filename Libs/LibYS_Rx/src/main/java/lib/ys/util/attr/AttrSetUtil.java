@@ -57,7 +57,7 @@ public class AttrSetUtil {
         // like '@2131492875'
         int index = val.indexOf(AttrParse.prefix_src);
         if (index != ConstantsEx.KErrNotFound) {
-            return Integer.valueOf(val.substring(index + 1));
+            return Integer.parseInt(val.substring(index + 1));
         } else {
             return ConstantsEx.KErrNotFound;
         }

@@ -205,7 +205,6 @@ abstract public class ActivityEx extends SwipeBackActivity implements
     public void onLowMemory() {
         super.onLowMemory();
         NetworkImageView.clearMemoryCache(this);
-        System.gc();
     }
 
     @Override

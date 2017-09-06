@@ -44,7 +44,7 @@ import static javax.lang.model.element.Modifier.STATIC;
 @AutoService(Processor.class)
 public class NetworkProcessor extends BaseProcessor {
 
-    private final String KSplit = ", ";
+    private static final String KSplit = ", ";
 
     private interface FieldName {
         String KHost = "KHost";

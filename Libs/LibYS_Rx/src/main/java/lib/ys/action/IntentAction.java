@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.provider.Settings;
+import android.support.annotation.CallSuper;
 import android.support.annotation.StringRes;
 
 import java.io.File;
@@ -25,7 +26,7 @@ public class IntentAction {
     private static final String TAG = IntentAction.class.getSimpleName();
 
     /**
-     * 邮件action
+     * 邮件
      *
      * @return
      */
@@ -51,32 +52,76 @@ public class IntentAction {
         return new MarketAction();
     }
 
+    /**
+     * 地图
+     *
+     * @return
+     */
     public static MapAction map() {
         return new MapAction();
     }
 
+    /**
+     * 指定App
+     *
+     * @return
+     */
     public static AppAction app() {
         return new AppAction();
     }
 
+    /**
+     * 任意
+     *
+     * @return
+     */
     public static AnyAction any() {
         return new AnyAction();
     }
 
+    /**
+     * word文档
+     *
+     * @return
+     */
     public static WordAction word() {
         return new WordAction();
     }
 
+    /**
+     * ppt文档
+     *
+     * @return
+     */
     public static PptAction ppt() {
         return new PptAction();
     }
 
+    /**
+     * excel表格
+     *
+     * @return
+     */
     public static ExcelAction excel() {
         return new ExcelAction();
     }
 
+    /**
+     * app的设置
+     *
+     * @return
+     */
     public static AppSetupAction appSetup() {
         return new AppSetupAction();
+    }
+
+    /**
+     * 打电话
+     *
+     * @return
+     */
+    public static PhoneCallAction phoneCall() {
+        return new PhoneCallAction();
     }
 
     abstract static public class BaseAction {
@@ -86,12 +131,28 @@ public class IntentAction {
 
         abstract public void launch();
 
+        /**
+         * 要求子类重写, 方便外部链式调用
+         *
+         * @param title
+         * @param <T>
+         * @return
+         */
+        @CallSuper
         public <T extends BaseAction> T createChooser(String title) {
             mCreateChooser = true;
             mChooserTitle = title;
             return (T) this;
         }
 
+        /**
+         * 要求子类重写, 方便外部链式调用
+         *
+         * @param a
+         * @param <T>
+         * @return
+         */
+        @CallSuper
         public <T extends BaseAction> T alert(String a) {
             mAlert = a;
             return (T) this;
@@ -154,6 +215,16 @@ public class IntentAction {
         public MailAction text(String t) {
             mText = t;
             return this;
+        }
+
+        @Override
+        public MailAction createChooser(String title) {
+            return super.createChooser(title);
+        }
+
+        @Override
+        public MailAction alert(String a) {
+            return super.alert(a);
         }
 
         @Override

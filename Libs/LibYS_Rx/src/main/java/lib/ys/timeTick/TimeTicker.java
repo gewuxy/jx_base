@@ -14,7 +14,7 @@ import io.reactivex.subscribers.DisposableSubscriber;
  */
 public class TimeTicker {
 
-    private final int KTimerInterval = 1000 / 60;
+    private static final int KTimerInterval = 1000 / 60;
 
     private OnTimeTickListener mListener;
 

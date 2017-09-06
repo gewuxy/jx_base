@@ -115,13 +115,9 @@ public class ToggleButton extends View implements OnClickListener {
             return;
         }
 
-        mAnimListener = new AnimatorUpdateListener() {
-
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                mInterpolation = (Float) valueAnimator.getAnimatedValue();
-                ViewCompat.postInvalidateOnAnimation(ToggleButton.this);
-            }
+        mAnimListener = valueAnimator -> {
+            mInterpolation = (Float) valueAnimator.getAnimatedValue();
+            ViewCompat.postInvalidateOnAnimation(ToggleButton.this);
         };
 
         mEndListener = new AnimatorListener() {
@@ -210,7 +206,7 @@ public class ToggleButton extends View implements OnClickListener {
         computeCenter(mInterpolation);
         int count = canvas.save();
         canvas.clipRect(mCircleCenterX, 0, mW, mH);
-        canvas.scale(1 - mInterpolation, 1 - mInterpolation, mW / 2, mCircleCenterY/*(实际上是mHeight / 2)*/);
+        canvas.scale(1f - mInterpolation, 1f - mInterpolation, mW / 2f, mCircleCenterY/*(实际上是mHeight / 2)*/);
         mPaint.setColor(Color.WHITE);
         canvas.drawPath(mRectPath, mPaint);
         canvas.restoreToCount(count);
