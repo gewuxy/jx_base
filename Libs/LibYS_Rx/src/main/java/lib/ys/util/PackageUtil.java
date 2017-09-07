@@ -70,6 +70,7 @@ public class PackageUtil {
 
     /**
      * 获取当前软件版本名
+     *
      * @return
      */
     public static String getAppVersionName() {
@@ -88,6 +89,7 @@ public class PackageUtil {
 
     /**
      * 获取当前软件版本号
+     *
      * @return
      */
     public static int getAppVersion() {
@@ -103,6 +105,7 @@ public class PackageUtil {
 
     /**
      * 获取App的名字
+     *
      * @return
      */
     public static String getAppName() {
@@ -120,6 +123,7 @@ public class PackageUtil {
 
     /**
      * 获取app图标
+     *
      * @return
      */
     public static Drawable getAppIcon() {

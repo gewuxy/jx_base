@@ -12,9 +12,9 @@ import lib.ys.form.FormEx;
 
 /**
  * TODO 未改完
- * @deprecated
  *
  * @param <VH>
+ * @deprecated
  */
 abstract public class GroupFormEx<VH extends ViewHolderEx> extends FormEx<VH> {
 

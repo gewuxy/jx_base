@@ -53,7 +53,7 @@ public interface IInitOpt {
     void initNavBar(NavBar bar);
 
     /**
-     * 是用findViewById的方法
+     * 使用findViewById的方法
      */
     void findViews();
 

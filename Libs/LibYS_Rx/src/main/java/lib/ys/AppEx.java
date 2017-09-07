@@ -82,6 +82,20 @@ abstract public class AppEx extends Application {
         return ListConfigBuilder.create().build();
     }
 
+    /**
+     * 设置网络
+     *
+     * @return
+     */
+    abstract protected NetworkConfig configureNetwork();
+
+    /**
+     * 设置nav bar
+     *
+     * @return
+     */
+    abstract protected NavBarConfig configureNavBar();
+
     public static AppConfig getConfig() {
         return mAppConfig;
     }
@@ -89,10 +103,6 @@ abstract public class AppEx extends Application {
     public static ListConfig getListConfig() {
         return mListConfig;
     }
-
-    abstract protected NetworkConfig configureNetwork();
-
-    abstract protected NavBarConfig configureNavBar();
 
     /**
      * 设置主进程配置
@@ -177,8 +187,5 @@ abstract public class AppEx extends Application {
      * @param e
      */
     protected void handleCrash(Throwable e) {
-    }
-
-    public void doDestroy() {
     }
 }
