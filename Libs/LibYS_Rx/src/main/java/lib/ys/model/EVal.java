@@ -599,4 +599,52 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
     private boolean isEValType(Class clz) {
         return EVal.class.isAssignableFrom(clz);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        // 很难一次性判断所有条件, 只能分开逐步判断
+        if (obj instanceof EVal) {
+            // 类名不一样
+            if (!obj.getClass().getCanonicalName().equals(getClass().getCanonicalName())) {
+                return false;
+            }
+
+            EVal val = (EVal) obj;
+            List<E> valFields = val.getEnumFields();
+            List<E> selfFields = getEnumFields();
+
+            for (int i = 0; i < selfFields.size(); ++i) {
+                Object o1 = getObject(selfFields.get(i));
+                Object o2 = val.getObject(valFields.get(i));
+                if (o1 == null && o2 == null) {
+                    continue;
+                } else if (o1 == null && o2 != null) {
+                    return false;
+                } else if (o1 != null && o2 == null) {
+                    return false;
+                } else if (!o1.equals(o2)) {
+                    return false;
+                }
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        List<E> fields = getEnumFields();
+        List<Object> objs = new ArrayList<>();
+        for (E f : fields) {
+            objs.add(getObject(f));
+        }
+
+        return Arrays.hashCode(objs.toArray());
+    }
 }
