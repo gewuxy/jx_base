@@ -9,6 +9,12 @@ android {
         targetSdkVersion versions.compileSdk
         versionCode versions.versionCode
         versionName versions.versionName
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
     }
 
     compileOptions {
@@ -18,16 +24,16 @@ android {
 }
 
 dependencies {
-    compile deps.network.ok
-    provided deps.support.annotations
+    api deps.network.ok
+    compileOnly deps.support.annotations
     /**
      * Rx
      */
-    provided deps.rx.java
-    provided deps.rx.android
+    compileOnly deps.rx.java
+    compileOnly deps.rx.android
     /**
      * Processor
      */
-    provided project(deps.ys.compiler)
+    compileOnly project(deps.ys.compiler)
     annotationProcessor project(deps.ys.compiler)
 }
