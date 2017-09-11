@@ -158,6 +158,10 @@ public class ListScrollable<T, A extends IAdapter<T>> extends BaseScrollable<T>
         getAdapter().addAll(position, item);
     }
 
+    public void refreshItem(int position) {
+        getAdapter().refreshItem(position);
+    }
+
     public void invalidate() {
         getAdapter().notifyDataSetChanged();
     }

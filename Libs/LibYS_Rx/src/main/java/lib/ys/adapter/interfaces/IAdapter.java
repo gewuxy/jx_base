@@ -42,6 +42,8 @@ public interface IAdapter<T> {
 
     void remove(T item);
 
+    void refreshItem(int position);
+
     void notifyDataSetChanged();
 
     void addAll(int position, List<T> item);

@@ -70,4 +70,9 @@ abstract public class GroupAdapterEx<GROUP extends IGroup<CHILD>, CHILD, VH exte
 
     abstract public void refreshChildView(int groupPosition, int childPosition, boolean isLastChild, VH holder);
 
+    @Override
+    public final void refreshItem(int position) {
+        // do nothing
+    }
+
 }

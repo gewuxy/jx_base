@@ -42,6 +42,8 @@ public interface IScrollable<T> {
 
     void addAll(List<T> data);
 
+    void refreshItem(int position);
+
     void invalidate();
 
     void onDestroy();

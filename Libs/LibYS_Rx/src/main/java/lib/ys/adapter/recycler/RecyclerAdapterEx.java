@@ -22,6 +22,11 @@ abstract public class RecyclerAdapterEx<T, VH extends RecyclerViewHolderEx> exte
         return 0;
     }
 
+    @Override
+    public final void refreshItem(int position) {
+        // do nothing
+    }
+
     abstract protected void refreshView(int position, VH holder);
 
     abstract protected int getConvertViewResId();
