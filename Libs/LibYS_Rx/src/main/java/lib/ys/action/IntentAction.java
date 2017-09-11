@@ -257,6 +257,16 @@ public class IntentAction {
         private BrowserAction() {
         }
 
+        @Override
+        public BrowserAction createChooser(String title) {
+            return super.createChooser(title);
+        }
+
+        @Override
+        public BrowserAction alert(String a) {
+            return super.alert(a);
+        }
+
         public BrowserAction url(String url) {
             mUrl = url;
             return this;
@@ -280,6 +290,16 @@ public class IntentAction {
     public static class MarketAction extends BaseAction {
 
         private MarketAction() {
+        }
+
+        @Override
+        public MarketAction createChooser(String title) {
+            return super.createChooser(title);
+        }
+
+        @Override
+        public MarketAction alert(String a) {
+            return super.alert(a);
         }
 
         @Override
@@ -309,6 +329,16 @@ public class IntentAction {
         private String mName;
 
         private MapAction() {
+        }
+
+        @Override
+        public MapAction createChooser(String title) {
+            return super.createChooser(title);
+        }
+
+        @Override
+        public MapAction alert(String a) {
+            return super.alert(a);
         }
 
         /**
@@ -370,6 +400,16 @@ public class IntentAction {
         private AppAction() {
         }
 
+        @Override
+        public AppAction createChooser(String title) {
+            return super.createChooser(title);
+        }
+
+        @Override
+        public AppAction alert(String a) {
+            return super.alert(a);
+        }
+
         public AppAction url(String url) {
             mUrl = url;
             return this;
@@ -387,6 +427,16 @@ public class IntentAction {
         private Intent mIntent;
 
         private AnyAction() {
+        }
+
+        @Override
+        public AnyAction createChooser(String title) {
+            return super.createChooser(title);
+        }
+
+        @Override
+        public AnyAction alert(String a) {
+            return super.alert(a);
         }
 
         public AnyAction intent(Intent i) {
@@ -408,6 +458,16 @@ public class IntentAction {
         private String mFilePath;
 
         private WordAction() {
+        }
+
+        @Override
+        public WordAction createChooser(String title) {
+            return super.createChooser(title);
+        }
+
+        @Override
+        public WordAction alert(String a) {
+            return super.alert(a);
         }
 
         public WordAction filePath(String filePath) {
@@ -436,6 +496,16 @@ public class IntentAction {
         private PptAction() {
         }
 
+        @Override
+        public PptAction createChooser(String title) {
+            return super.createChooser(title);
+        }
+
+        @Override
+        public PptAction alert(String a) {
+            return super.alert(a);
+        }
+
         public PptAction filePath(String filePath) {
             mFilePath = filePath;
             return this;
@@ -462,6 +532,16 @@ public class IntentAction {
         public ExcelAction() {
         }
 
+        @Override
+        public ExcelAction createChooser(String title) {
+            return super.createChooser(title);
+        }
+
+        @Override
+        public ExcelAction alert(String a) {
+            return super.alert(a);
+        }
+
         public ExcelAction filePath(String filePath) {
             mFilePath = filePath;
             return this;
@@ -481,6 +561,16 @@ public class IntentAction {
     public static class AppSetupAction extends BaseAction {
 
         @Override
+        public AppSetupAction createChooser(String title) {
+            return super.createChooser(title);
+        }
+
+        @Override
+        public AppSetupAction alert(String a) {
+            return super.alert(a);
+        }
+
+        @Override
         public void launch() {
             Uri uri = Uri.parse("package:" + AppEx.ct().getPackageName());
             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, uri);
@@ -495,6 +585,16 @@ public class IntentAction {
         public PhoneCallAction tellNum(String tellNum) {
             mTellNum = tellNum;
             return this;
+        }
+
+        @Override
+        public PhoneCallAction createChooser(String title) {
+            return super.createChooser(title);
+        }
+
+        @Override
+        public PhoneCallAction alert(String a) {
+            return super.alert(a);
         }
 
         @Override

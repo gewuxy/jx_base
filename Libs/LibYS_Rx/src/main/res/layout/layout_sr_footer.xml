@@ -29,7 +29,7 @@
             android:id="@+id/sr_footer_progress_view"
             android:layout_width="@dimen/list_header_footer_loading_size"
             android:layout_height="@dimen/list_header_footer_loading_size"
-            android:src="@mipmap/ic_loading"/>
+            android:src="@drawable/ic_loading"/>
 
         <TextView
             android:id="@+id/sr_footer_tv_loading"
