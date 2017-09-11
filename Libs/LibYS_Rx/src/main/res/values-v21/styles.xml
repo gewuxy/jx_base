@@ -22,9 +22,9 @@
     <!--这个文件是为了在xml preview里不会报Missing styles的错误-->
     <style name="AppTheme_SwipeBack" parent="@android:style/Theme.Material.Light.NoActionBar">
         <item name="edge_size">50dp</item>
-        <item name="shadow_left">@mipmap/shadow_ic_left</item>
-        <item name="shadow_right">@mipmap/shadow_ic_right</item>
-        <item name="shadow_bottom">@mipmap/shadow_ic_bottom</item>
+        <item name="shadow_left">@drawable/shadow_ic_left</item>
+        <item name="shadow_right">@drawable/shadow_ic_right</item>
+        <item name="shadow_bottom">@drawable/shadow_ic_bottom</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
