@@ -478,7 +478,7 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
         return toJsonObject().toString();
     }
 
-    private JSONObject toJsonObject() {
+    public JSONObject toJsonObject() {
         JSONObject obj = new JSONObject();
         try {
             Class clz = GenericUtil.getClassType(getClass());
