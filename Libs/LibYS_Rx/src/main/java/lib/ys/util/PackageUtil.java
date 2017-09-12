@@ -76,7 +76,7 @@ public class PackageUtil {
     public static String getAppVersionName() {
         String versionName = "";
         try {
-            PackageInfo packageInfo = getPM().getPackageInfo(AppEx.ct().getPackageName(), 0);
+            PackageInfo packageInfo = getPM().getPackageInfo(getPkgName(), 0);
             versionName = packageInfo.versionName;
             if (TextUtils.isEmpty(versionName)) {
                 return "";
@@ -95,7 +95,7 @@ public class PackageUtil {
     public static int getAppVersion() {
         int versionCode = -1;
         try {
-            PackageInfo packageInfo = getPM().getPackageInfo(AppEx.ct().getPackageName(), 0);
+            PackageInfo packageInfo = getPM().getPackageInfo(getPkgName(), 0);
             versionCode = packageInfo.versionCode;
         } catch (Exception e) {
             YSLog.e(TAG, e);
@@ -113,7 +113,7 @@ public class PackageUtil {
         ApplicationInfo applicationInfo = null;
         try {
             packageManager = getPM();
-            applicationInfo = packageManager.getApplicationInfo(AppEx.ct().getPackageName(), 0);
+            applicationInfo = packageManager.getApplicationInfo(getPkgName(), 0);
         } catch (NameNotFoundException e) {
             applicationInfo = null;
         }
@@ -128,7 +128,7 @@ public class PackageUtil {
      */
     public static Drawable getAppIcon() {
         try {
-            return getPM().getApplicationIcon(AppEx.ct().getPackageName());
+            return getPM().getApplicationIcon(getPkgName());
         } catch (NameNotFoundException e) {
             return null;
         }
