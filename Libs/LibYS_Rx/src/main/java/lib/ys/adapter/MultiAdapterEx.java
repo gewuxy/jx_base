@@ -319,6 +319,14 @@ abstract public class MultiAdapterEx<T, VH extends IViewHolder> extends BaseAdap
         return getCacheVH(position, getItemViewType(position));
     }
 
+    @Override
+    public final void invalidate(int position) {
+        VH vh = getCacheVH(position);
+        if (vh != null) {
+            refreshView(position, vh, getItemViewType(position));
+        }
+    }
+
     /**
      * 处理view的click消息
      *

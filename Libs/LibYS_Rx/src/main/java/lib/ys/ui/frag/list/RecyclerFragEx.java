@@ -170,6 +170,11 @@ abstract public class RecyclerFragEx<T, A extends IAdapter<T>> extends FragEx
     }
 
     @Override
+    public void invalidate(int position) {
+        mScrollable.invalidate(position);
+    }
+
+    @Override
     public void remove(int position) {
         mScrollable.remove(position);
     }

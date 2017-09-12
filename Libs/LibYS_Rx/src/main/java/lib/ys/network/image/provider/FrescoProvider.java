@@ -45,6 +45,8 @@ public class FrescoProvider extends BaseProvider {
     private ControllerListener mCtrlListener;
     private PipelineDraweeControllerBuilder mBuilder;
     private SimpleDraweeView mSdv;
+    private Uri mUri;
+
 
     @DrawableRes
     private Integer mPlaceHolderKeeper;
@@ -66,8 +68,14 @@ public class FrescoProvider extends BaseProvider {
             mSdv.getHierarchy().setFadeDuration(getFade());
         }
 
+        Uri uri = generateUri();
+        if (mUri != null && mUri.equals(uri)) {
+            return;
+        }
+        mUri = uri;
+
         DraweeController controller = null;
-        ImageRequestBuilder builder = ImageRequestBuilder.newBuilderWithSource(generateUri());
+        ImageRequestBuilder builder = ImageRequestBuilder.newBuilderWithSource(mUri);
 
         // 拦截器
         if (getInterceptors().size() != 0) {

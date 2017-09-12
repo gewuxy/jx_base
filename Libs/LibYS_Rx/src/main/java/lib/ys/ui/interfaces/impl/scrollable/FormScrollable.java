@@ -37,6 +37,11 @@ public class FormScrollable<T> extends BaseScrollable<T> {
     }
 
     @Override
+    public void invalidate(int position) {
+
+    }
+
+    @Override
     public void invalidate() {
 
     }

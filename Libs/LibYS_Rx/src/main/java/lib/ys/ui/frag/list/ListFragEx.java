@@ -139,6 +139,11 @@ abstract public class ListFragEx<T, A extends IAdapter<T>> extends FragEx implem
     }
 
     @Override
+    public void invalidate(int position) {
+        mScrollable.invalidate(position);
+    }
+
+    @Override
     public void remove(int position) {
         mScrollable.remove(position);
     }

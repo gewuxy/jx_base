@@ -447,10 +447,22 @@ abstract public class MultiRecyclerAdapterEx<T, VH extends RecyclerViewHolderEx>
     }
 
     @Override
+    public void invalidate(int position) {
+        VH vh = getCacheVH(position);
+        if (vh != null) {
+            refreshView(position, vh, getItemViewType(position));
+        }
+    }
+
+    @Override
     public void onViewDetachedFromWindow(VH holder) {
         super.onViewDetachedFromWindow(holder);
 
         mSetInit.clear();
         mMapClickLsn.clear();
+    }
+
+    @Override
+    public void onDestroy() {
     }
 }

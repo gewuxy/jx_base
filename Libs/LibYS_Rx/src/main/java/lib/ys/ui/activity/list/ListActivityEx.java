@@ -135,6 +135,11 @@ abstract public class ListActivityEx<T, A extends IAdapter<T>>
     }
 
     @Override
+    public void invalidate(int position) {
+        mScrollable.invalidate(position);
+    }
+
+    @Override
     public void invalidate() {
         mScrollable.invalidate();
     }

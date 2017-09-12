@@ -674,4 +674,9 @@ abstract public class MultiGroupAdapterEx<GROUP extends IGroup<CHILD>, CHILD, VH
     public final int getCount() {
         return 0;
     }
+
+    @Deprecated
+    @Override
+    public void invalidate(int position) {
+    }
 }

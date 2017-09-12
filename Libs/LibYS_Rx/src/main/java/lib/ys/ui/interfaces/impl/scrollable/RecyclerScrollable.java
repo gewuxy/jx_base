@@ -175,6 +175,10 @@ public class RecyclerScrollable<T, A extends IAdapter<T>> extends BaseScrollable
         getAdapter().addAll(position, item);
     }
 
+    public void invalidate(int position) {
+        getAdapter().invalidate(position);
+    }
+
     public void invalidate() {
         getAdapter().notifyDataSetChanged();
     }
