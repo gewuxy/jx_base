@@ -320,14 +320,11 @@ abstract public class MultiAdapterEx<T, VH extends IViewHolder> extends BaseAdap
     }
 
     @Override
-    public final void refreshItem(int position) {
+    public final void invalidate(int position) {
         VH vh = getCacheVH(position);
         if (vh != null) {
-            refreshItem(position, vh, getItemViewType(position));
+            refreshView(position, vh, getItemViewType(position));
         }
-    }
-
-    protected void refreshItem(int position, VH vh, int itemViewType) {
     }
 
     /**

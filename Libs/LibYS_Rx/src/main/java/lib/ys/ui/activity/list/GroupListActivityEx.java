@@ -92,6 +92,14 @@ abstract public class GroupListActivityEx<GROUP, CHILD, A extends IGroupAdapter<
     }
 
     /**
+     * @param position
+     * @deprecated 无效
+     */
+    @Override
+    public void invalidate(int position) {
+    }
+
+    /**
      * 无效
      */
     @Override

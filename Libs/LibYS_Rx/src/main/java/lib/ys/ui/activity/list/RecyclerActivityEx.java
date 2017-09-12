@@ -169,6 +169,11 @@ abstract public class RecyclerActivityEx<T, A extends IAdapter<T>>
     }
 
     @Override
+    public void invalidate(int position) {
+        mScrollable.invalidate(position);
+    }
+
+    @Override
     public void remove(int position) {
         mScrollable.remove(position);
     }

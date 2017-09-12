@@ -50,6 +50,8 @@ public interface BaseOnScrollableListener<T> {
 
     void invalidate();
 
+    void invalidate(int position);
+
     void remove(int position);
 
     void remove(T item);

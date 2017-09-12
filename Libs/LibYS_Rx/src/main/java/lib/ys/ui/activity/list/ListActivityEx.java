@@ -134,8 +134,9 @@ abstract public class ListActivityEx<T, A extends IAdapter<T>>
         mScrollable.addAll(position, item);
     }
 
-    public void refreshItem(int position) {
-        mScrollable.refreshItem(position);
+    @Override
+    public void invalidate(int position) {
+        mScrollable.invalidate(position);
     }
 
     @Override

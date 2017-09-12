@@ -103,6 +103,7 @@ public class ListScrollable<T, A extends IAdapter<T>> extends BaseScrollable<T>
             }
 
             mAdapter.removeAll();
+            mAdapter.onDestroy();
             mAdapter = null;
         }
     }
@@ -158,8 +159,8 @@ public class ListScrollable<T, A extends IAdapter<T>> extends BaseScrollable<T>
         getAdapter().addAll(position, item);
     }
 
-    public void refreshItem(int position) {
-        getAdapter().refreshItem(position);
+    public void invalidate(int position) {
+        getAdapter().invalidate(position);
     }
 
     public void invalidate() {

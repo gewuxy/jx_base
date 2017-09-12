@@ -42,7 +42,7 @@ public interface IAdapter<T> {
 
     void remove(T item);
 
-    void refreshItem(int position);
+    void invalidate(int position);
 
     void notifyDataSetChanged();
 
@@ -55,4 +55,9 @@ public interface IAdapter<T> {
     void add(int position, T item);
 
     void setData(List<T> data);
+
+    /**
+     * 销毁(activity/frag自动调用)
+     */
+    void onDestroy();
 }

@@ -37,7 +37,7 @@ public class FormScrollable<T> extends BaseScrollable<T> {
     }
 
     @Override
-    public void refreshItem(int position) {
+    public void invalidate(int position) {
 
     }
 

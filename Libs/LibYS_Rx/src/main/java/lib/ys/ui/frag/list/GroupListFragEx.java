@@ -99,9 +99,16 @@ abstract public class GroupListFragEx<GROUP, CHILD, A extends IGroupAdapter<GROU
     }
 
     /**
-     * 无效
+     * @param position
+     * @deprecated 无效
      */
     @Override
+    public void invalidate(int position) {
+    }
+
+    /**
+     * @deprecated 无效
+     */
     @Deprecated
     public int getCount() {
         return 0;

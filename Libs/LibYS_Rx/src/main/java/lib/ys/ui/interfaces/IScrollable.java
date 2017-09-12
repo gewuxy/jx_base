@@ -42,9 +42,17 @@ public interface IScrollable<T> {
 
     void addAll(List<T> data);
 
-    void refreshItem(int position);
-
+    /**
+     * 刷新整个列表
+     */
     void invalidate();
+
+    /**
+     * 刷新单个item
+     *
+     * @param position
+     */
+    void invalidate(int position);
 
     void onDestroy();
 }
