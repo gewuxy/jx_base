@@ -103,6 +103,17 @@ public class AnimateUtil {
         return animator;
     }
 
+    /**
+     * view在X轴方向移动
+     * @param view
+     * @return
+     */
+    public static ObjectAnimator ofFloatX(View view, float x, float y, long duration) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, "translationX", x, y);
+        animator.setDuration(duration);
+        return animator;
+    }
+
     /*********************************
      * 设置位移
      */
