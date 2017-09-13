@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 import lib.ys.AppEx;
-import lib.ys.YSLog;
 import lib.ys.adapter.MultiAdapterEx.OnAdapterClickListener;
 import lib.ys.adapter.VH.RecyclerViewHolderEx;
 import lib.ys.adapter.interfaces.IAdapter;
@@ -179,18 +178,11 @@ abstract public class MultiRecyclerAdapterEx<T, VH extends RecyclerViewHolderEx>
 
     @Override
     public T getItem(int position) {
-        if (mTs == null) {
+        if (mTs == null || position >= getCount()) {
             return null;
         }
 
-        T t = null;
-        try {
-            t = mTs.get(position);
-        } catch (Exception e) {
-            YSLog.e(TAG, e);
-        }
-
-        return t;
+        return mTs.get(position);
     }
 
     @Override
