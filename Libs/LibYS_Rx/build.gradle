@@ -40,4 +40,9 @@ dependencies {
      */
     compile project(deps.ys.compiler)
     annotationProcessor project(deps.ys.compiler)
+    /**
+     * dagger
+     */
+    compile deps.google.dagger.core
+    annotationProcessor deps.google.dagger.compiler
 }

@@ -55,8 +55,8 @@ abstract public class BaseFooter extends LinearLayout implements IExtend {
         });
     }
 
-    public void setOnRetryLoadClickListener(OnRetryClickListener lisn) {
-        mOnRetryClickLsn = lisn;
+    public void setOnRetryLoadClickListener(OnRetryClickListener lsn) {
+        mOnRetryClickLsn = lsn;
     }
 
     public void hide() {

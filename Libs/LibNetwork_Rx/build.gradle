@@ -18,7 +18,7 @@ android {
 }
 
 dependencies {
-    compile deps.network.ok
+    compile deps.square.ok
     provided deps.support.annotations
     /**
      * Rx

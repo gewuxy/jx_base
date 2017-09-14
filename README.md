@@ -82,9 +82,6 @@
     ]
     
     ext.deps = [
-            android    : [
-                    runtime: 'com.google.android:android:4.1.1.4', // 在java项目里调用安卓编译环境
-            ],
             support    : [
                     compat      : "com.android.support:support-compat:${versions.supportLibrary}",
                     annotations : "com.android.support:support-annotations:${versions.supportLibrary}",
@@ -96,31 +93,44 @@
                     ],
                     dex         : 'com.android.support:multidex:1.0.1',
             ],
-            auto       : [
-                    service: 'com.google.auto.service:auto-service:1.0-rc3', // 自动构建Processor等服务环境
-                    common : 'com.google.auto:auto-common:0.8',
-            ],
-            java       : [
-                    poet: 'com.squareup:javapoet:1.9.0', // 以优雅的方式自动生成java代码
-            ],
             rx         : [
                     java   : 'io.reactivex.rxjava2:rxjava:2.1+',
                     android: 'io.reactivex.rxjava2:rxandroid:2+'
-            ],
-            network    : [
-                    ok: 'com.squareup.okhttp3:okhttp:3.8.0',
-            ],
-            debug      : [
-                    leakcanary: 'com.squareup.leakcanary:leakcanary-android:1.5.1' // 内存泄漏检查工具
-            ],
-            release    : [
-                    leakcanary: 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1' // 内存泄漏检查工具
             ],
             lottie     : 'com.airbnb.android:lottie:2.2.0', // 加载AE制作出来的json直接展示效果的库
             fresco     : 'com.facebook.fresco:fresco:1.5.0',
             butterknife: [
                     core    : 'com.jakewharton:butterknife:8.8.1',
                     compiler: 'com.jakewharton:butterknife-compiler:8.8.1'
+            ],
+            square     : [
+                    /**
+                     * android
+                     */
+                    ok        : 'com.squareup.okhttp3:okhttp:3.8.0',
+                    retrofit  : 'com.squareup.retrofit2:retrofit:2.3.0',
+                    leakcanary: [
+                            debug  : 'com.squareup.leakcanary:leakcanary-android:1.5.1', // 内存泄漏检查工具_debug
+                            release: 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1', // 内存泄漏检查工具_release
+                    ],
+                    /**
+                     * java
+                     */
+                    poet      : 'com.squareup:javapoet:1.9.0', // 以优雅的方式自动生成java代码
+            ],
+            google     : [
+                    /**
+                     * android
+                     */
+                    gson   : 'com.google.code.gson:gson:2.8.1',
+                    /**
+                     * java
+                     */
+                    runtime: 'com.google.android:android:4.1.1.4', // 在java项目里调用安卓编译环境
+                    auto   : [
+                            service: 'com.google.auto.service:auto-service:1.0-rc3', // 自动构建Processor等服务环境
+                            common : 'com.google.auto:auto-common:0.8',
+                    ],
             ],
             ys         : [
                     core    : ':Android:Libs:LibYS_Rx',
@@ -131,4 +141,4 @@
     //                um     : ':Android:Libs:LibUM',
             ],
     ]
-    
+  
