@@ -28,6 +28,6 @@ dependencies {
     /**
      * Processor
      */
-    provided project(deps.ys.compiler)
+    provided project(deps.ys.annotation)
     annotationProcessor project(deps.ys.compiler)
 }
