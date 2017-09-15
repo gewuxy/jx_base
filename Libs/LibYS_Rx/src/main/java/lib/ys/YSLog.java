@@ -2,9 +2,16 @@ package lib.ys;
 
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public final class YSLog {
 
     private static final String KSeparate = "=========";
+    // JSON的缩进量
+    private static final int KJsonIndent = 4;
+
     private static boolean mIsDebug = true;
 
     private YSLog() {
@@ -95,5 +102,28 @@ public final class YSLog {
         if (mIsDebug) {
             Log.w(tag, log);
         }
+    }
+
+    public static void json(String tag, String message) {
+        if (!mIsDebug) {
+            return;
+        }
+
+        String json;
+        try {
+            if (message.startsWith("{")) {
+                JSONObject jsonObject = new JSONObject(message);
+                json = jsonObject.toString(KJsonIndent);
+            } else if (message.startsWith("[")) {
+                JSONArray jsonArray = new JSONArray(message);
+                json = jsonArray.toString(KJsonIndent);
+            } else {
+                json = message;
+            }
+        } catch (JSONException e) {
+            json = message;
+        }
+
+        Log.d(tag, json);
     }
 }
