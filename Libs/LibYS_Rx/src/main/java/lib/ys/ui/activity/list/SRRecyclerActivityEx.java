@@ -10,7 +10,6 @@ import java.util.List;
 import lib.network.model.NetworkResp;
 import lib.network.model.interfaces.IListResult;
 import lib.ys.AppEx;
-import lib.ys.ConstantsEx.ListConstants;
 import lib.ys.R;
 import lib.ys.adapter.interfaces.IAdapter;
 import lib.ys.config.AppConfig.RefreshWay;
@@ -80,9 +79,7 @@ abstract public class SRRecyclerActivityEx<T, A extends IAdapter<T>> extends Rec
     }
 
     @Override
-    public IListResult<T> parseNetworkResponse(int id, String text) throws JSONException {
-        return null;
-    }
+    abstract public IListResult<T> parseNetworkResponse(int id, String text) throws JSONException;
 
     @Override
     public void setOnScrollListener(OnScrollMixListener listener) {
@@ -126,7 +123,7 @@ abstract public class SRRecyclerActivityEx<T, A extends IAdapter<T>> extends Rec
 
     @Override
     public int getLimit() {
-        return ListConstants.KDefaultLimit;
+        return AppEx.getListConfig().getLimit();
     }
 
     @Override
@@ -156,10 +153,10 @@ abstract public class SRRecyclerActivityEx<T, A extends IAdapter<T>> extends Rec
 
     @Override
     public boolean onRetryClick() {
-        if (!super.onRetryClick()) {
-            return mSROpt.onRetryClick();
+        if (super.onRetryClick()) {
+            return true;
         }
-        return true;
+        return mSROpt.onRetryClick();
     }
 
     @Override

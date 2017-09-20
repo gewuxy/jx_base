@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 import lib.ys.AppEx;
-import lib.ys.YSLog;
 import lib.ys.adapter.MultiAdapterEx.OnAdapterClickListener;
 import lib.ys.adapter.interfaces.IGroupAdapter;
 import lib.ys.adapter.interfaces.IViewHolder;
@@ -134,18 +133,11 @@ abstract public class MultiGroupAdapterEx<GROUP extends IGroup<CHILD>, CHILD, VH
 
     @Override
     public GROUP getGroup(int groupPosition) {
-        if (mGroups == null) {
+        if (mGroups == null || groupPosition >= getGroupCount()) {
             return null;
         }
 
-        GROUP GROUP = null;
-        try {
-            GROUP = mGroups.get(groupPosition);
-        } catch (Exception e) {
-            YSLog.e(TAG, e);
-        }
-
-        return GROUP;
+        return mGroups.get(groupPosition);
     }
 
     /**

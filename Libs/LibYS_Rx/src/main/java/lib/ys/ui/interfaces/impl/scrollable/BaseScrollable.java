@@ -83,7 +83,7 @@ abstract public class BaseScrollable<T> implements IScrollable<T> {
     private void nativeAddHeader(View v) {
         if (mSv instanceof ListView) {
             ((ListView) mSv).addHeaderView(v);
-        } else if (mSv instanceof ExpandableListView) {
+    } else if (mSv instanceof ExpandableListView) {
             ((ExpandableListView) mSv).addHeaderView(v);
         } else if (mSv instanceof WrapRecyclerView) {
             ((WrapRecyclerView) mSv).addHeaderView(v);

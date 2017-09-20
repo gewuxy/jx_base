@@ -18,7 +18,7 @@ android {
 }
 
 dependencies {
-    compile deps.network.ok
+    compile deps.square.ok
     provided deps.support.annotations
     /**
      * Rx
@@ -28,6 +28,6 @@ dependencies {
     /**
      * Processor
      */
-    provided project(deps.ys.compiler)
+    provided project(deps.ys.annotation)
     annotationProcessor project(deps.ys.compiler)
 }
