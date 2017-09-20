@@ -9,12 +9,6 @@ android {
         targetSdkVersion versions.compileSdk
         versionCode versions.versionCode
         versionName versions.versionName
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                includeCompileClasspath = true
-            }
-        }
     }
 
     compileOptions {
@@ -24,26 +18,31 @@ android {
 }
 
 dependencies {
-    api project(deps.ys.network)
+    compile project(deps.ys.network)
     /**
      * support包相关
      */
-    compileOnly deps.support.annotations
-    api deps.support.v4
-    api deps.support.recyclerview
-    api deps.support.gridlayout
+    provided deps.support.annotations
+    compile deps.support.v4
+    compile deps.support.recyclerview
+    compile deps.support.gridlayout
     /**
      * 图片
      */
-    api deps.fresco
+    compile deps.fresco
     /**
      * Rx
      */
-    api deps.rx.java
-    api deps.rx.android
+    compile deps.rx.java
+    compile deps.rx.android
     /**
      * Processor
      */
-    api project(deps.ys.compiler)
+    compile project(deps.ys.annotation)
     annotationProcessor project(deps.ys.compiler)
+    /**
+     * dagger
+     */
+    compile deps.google.dagger.core
+    annotationProcessor deps.google.dagger.compiler
 }

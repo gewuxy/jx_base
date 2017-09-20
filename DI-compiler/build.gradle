@@ -1,8 +1,9 @@
 apply plugin: 'java-library'
 
 dependencies {
-    compile deps.java.poet
-    compile deps.auto.service
+    compile project(deps.ys.annotation)
+    compile deps.square.poet
+    compile deps.google.auto.service
 }
 
 compileJava {
