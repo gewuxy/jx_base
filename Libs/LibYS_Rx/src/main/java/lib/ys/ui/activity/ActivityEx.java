@@ -167,7 +167,7 @@ abstract public class ActivityEx extends SwipeBackActivity implements
 
         fit(mDecorView);
 
-        mUnbinder = ButterKnife.bind(mDecorView);
+        mUnbinder = ButterKnife.bind(this);
         findViews();
 
         setViews();

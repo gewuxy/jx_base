@@ -239,7 +239,7 @@ abstract public class FragEx extends Fragment implements
             fit(getNavBar());
         }
 
-        mUnbinder = ButterKnife.bind(mDecorView);
+        mUnbinder = ButterKnife.bind(this, mDecorView);
         findViews();
 
         setViews();
