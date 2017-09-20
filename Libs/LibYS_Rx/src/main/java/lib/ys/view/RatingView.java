@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import lib.ys.ConstantsEx;
 import lib.ys.R;
+import lib.ys.YSLog;
 import lib.ys.util.XmlAttrUtil;
 import lib.ys.util.view.LayoutUtil;
 
@@ -23,7 +24,7 @@ public class RatingView extends LinearLayout implements OnClickListener {
     private int mDrawableLightResId;
     private int mDrawableHalfResId;
     private int mDrawableDarkResId;
-    private int mStarNumber;
+    private float mStarNumber;
     private int mStarGap;
     private int mStarSize;
 
@@ -39,7 +40,7 @@ public class RatingView extends LinearLayout implements OnClickListener {
         super(context, attrs);
 
         TypedArray typeArray = context.obtainStyledAttributes(attrs, R.styleable.RatingView);
-        mStarNumber = typeArray.getInt(R.styleable.RatingView_rating_starNum, 0);
+        mStarNumber = typeArray.getFloat(R.styleable.RatingView_rating_starNum, 0f);
         mStarGap = typeArray.getDimensionPixelOffset(R.styleable.RatingView_rating_starGap, ConstantsEx.KInvalidValue);
         mStarSize = typeArray.getDimensionPixelOffset(R.styleable.RatingView_rating_starSize, ConstantsEx.KInvalidValue);
 
@@ -49,7 +50,6 @@ public class RatingView extends LinearLayout implements OnClickListener {
         mRating = typeArray.getInt(R.styleable.RatingView_rating_num, 0);
 
         typeArray.recycle();
-
         // 做适配
         mStarGap = XmlAttrUtil.convert(mStarGap, KDefaultStartGapDp);
         mStarSize = XmlAttrUtil.convert(mStarSize, KDefaultStartSizeDp);
@@ -65,14 +65,14 @@ public class RatingView extends LinearLayout implements OnClickListener {
     private void createStarViewByNumStar() {
         ImageView iv = null;
         LayoutParams params = null;
-        for (int i = 0; i < mStarNumber; i++) {
+        for (int i = 0; i < mRating; i++) {
             iv = new ImageView(getContext());
             if (mStarSize != 0) {
                 params = LayoutUtil.getLinearParams(mStarSize, mStarSize);
             } else {
                 params = LayoutUtil.getLinearParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             }
-            if (i < mStarNumber - 1) {
+            if (i < mRating - 1) {
                 params.rightMargin = mStarGap;
             }
 
@@ -83,14 +83,15 @@ public class RatingView extends LinearLayout implements OnClickListener {
 
     private void freshStarViewByRating() {
         ImageView view = null;
-        float changeRating = mRating / 2f;
-        int ratingInt = Math.round(changeRating);
-        boolean half = ratingInt > changeRating;
+        int ratingInt = Math.round(mStarNumber);
+        YSLog.d("www", "ratingInt = " + mStarNumber);
+        boolean half = ratingInt > mStarNumber;
+        YSLog.d("www", "half = " + half);
         if (half) {
             ratingInt -= 1;
         }
 
-        for (int i = 0; i < mStarNumber; i++) {
+        for (int i = 0; i < mRating; i++) {
             view = (ImageView) getChildAt(i);
             if (i < ratingInt) {
                 view.setImageResource(mDrawableLightResId);
@@ -106,12 +107,11 @@ public class RatingView extends LinearLayout implements OnClickListener {
         if (rating < 0) {
             rating = 0;
         }
-
-        if (rating == mRating) {
+        if (rating == mStarNumber) {
             return;
         }
 
-        mRating = rating;
+        mStarNumber = rating;
         freshStarViewByRating();
     }
 
@@ -132,7 +132,7 @@ public class RatingView extends LinearLayout implements OnClickListener {
 
         for (int i = 0; i < getChildCount(); ++i) {
             if (v.equals(getChildAt(i))) {
-                int rating = (i + 1) * 2;
+                int rating = i + 1;
                 setRating(rating);
                 if (mListener != null) {
                     mListener.onRatingSelected(rating);
@@ -151,6 +151,6 @@ public class RatingView extends LinearLayout implements OnClickListener {
     }
 
     public interface OnRatingViewSelectListener {
-        public void onRatingSelected(int rating);
+        void onRatingSelected(int rating);
     }
 }
