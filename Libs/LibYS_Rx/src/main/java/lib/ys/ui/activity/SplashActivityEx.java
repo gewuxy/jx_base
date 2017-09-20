@@ -20,10 +20,6 @@ abstract public class SplashActivityEx extends ActivityEx {
     }
 
     @Override
-    public void findViews() {
-    }
-
-    @Override
     public void setViews() {
 
         boolean b = addOnPreDrawListener(new OnPreDrawListener() {

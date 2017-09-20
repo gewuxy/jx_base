@@ -5,7 +5,9 @@ import android.support.annotation.CallSuper;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
+import butterknife.BindView;
 import lib.ys.R;
+import lib.ys.R2;
 import lib.ys.ui.interfaces.impl.WebOption;
 import lib.ys.ui.interfaces.impl.WebViewSetter;
 import lib.ys.ui.interfaces.web.IWebViewHost;
@@ -13,21 +15,17 @@ import lib.ys.ui.interfaces.web.IWebViewHost;
 
 abstract public class WebViewActivityEx extends ActivityEx implements IWebViewHost {
 
-    private WebView mWebView;
-    private ProgressBar mProgressBar;
+    @BindView(R2.id.web_view_ex_wv)
+    WebView mWebView;
+
+    @BindView(R2.id.web_view_ex_progress_bar)
+    ProgressBar mProgressBar;
 
     private WebViewSetter mSetter;
 
     @Override
     public int getContentViewId() {
         return R.layout.activity_web_view_ex;
-    }
-
-    @CallSuper
-    @Override
-    public void findViews() {
-        mWebView = findView(R.id.web_view_ex_wv);
-        mProgressBar = findView(R.id.web_view_ex_progress_bar);
     }
 
     @CallSuper

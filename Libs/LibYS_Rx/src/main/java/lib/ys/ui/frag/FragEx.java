@@ -23,6 +23,8 @@ import android.view.ViewTreeObserver.OnPreDrawListener;
 
 import java.lang.reflect.Field;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import lib.network.Network;
 import lib.network.model.NetworkError;
 import lib.network.model.NetworkReq;
@@ -92,6 +94,8 @@ abstract public class FragEx extends Fragment implements
      */
     private NetworkOpt mNetworkImpl;
     private PermissionOpt mPermission;
+
+    private Unbinder mUnbinder;
 
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -235,11 +239,18 @@ abstract public class FragEx extends Fragment implements
             fit(getNavBar());
         }
 
+        mUnbinder = ButterKnife.bind(mDecorView);
         findViews();
+
         setViews();
 
         mInitComplete = true;
         afterInitCompleted();
+    }
+
+    @Override
+    public void findViews() {
+        // 不是必须要实现的了, 因为有butterKnife注入
     }
 
     protected View getHeaderView() {
@@ -518,9 +529,10 @@ abstract public class FragEx extends Fragment implements
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
 
+        mUnbinder.unbind();
         if (mNetworkImpl != null) {
             mNetworkImpl.onDestroy();
         }
