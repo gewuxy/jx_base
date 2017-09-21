@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: plugs.butterknife
+//apply plugin: plugs.butterknife
 
 android {
     compileSdkVersion versions.compileSdk
@@ -52,9 +52,4 @@ dependencies {
      */
     api project(deps.ys.annotation)
     annotationProcessor project(deps.ys.compiler)
-    /**
-     * butterknife
-     */
-    api deps.butterknife.core
-    annotationProcessor deps.butterknife.compiler
 }

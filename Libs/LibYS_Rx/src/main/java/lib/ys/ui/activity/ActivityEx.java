@@ -29,8 +29,6 @@ import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.Window;
 import android.widget.EditText;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import lib.network.Network;
@@ -111,9 +109,6 @@ abstract public class ActivityEx extends SwipeBackActivity implements
     private NetworkOpt mNetworkImpl;
     private PermissionOpt mPermission;
 
-    private Unbinder mUnbinder;
-
-
     protected void onCreate(Bundle savedInstanceState) {
         if (AppEx.getConfig().isFlatBarEnabled()) {
             UIUtil.setFlatBar(getWindow());
@@ -167,17 +162,11 @@ abstract public class ActivityEx extends SwipeBackActivity implements
 
         fit(mDecorView);
 
-        mUnbinder = ButterKnife.bind(this);
         findViews();
 
         setViews();
 
         mInitComplete = true;
-    }
-
-    @Override
-    public void findViews() {
-        // 不是必须要实现的了, 因为有butterKnife注入
     }
 
     protected View getHeaderView() {
@@ -221,10 +210,6 @@ abstract public class ActivityEx extends SwipeBackActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
-        }
 
         LayoutFitter.clearFitSet();
 
