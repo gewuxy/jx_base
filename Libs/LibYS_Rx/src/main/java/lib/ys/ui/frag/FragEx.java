@@ -532,7 +532,9 @@ abstract public class FragEx extends Fragment implements
     public void onDestroyView() {
         super.onDestroyView();
 
-        mUnbinder.unbind();
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+        }
         if (mNetworkImpl != null) {
             mNetworkImpl.onDestroy();
         }
