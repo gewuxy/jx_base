@@ -163,7 +163,7 @@ abstract public class ActivityEx extends SwipeBackActivity implements
         fit(mDecorView);
 
         findViews();
-2        setViews();
+        setViews();
 
         mInitComplete = true;
     }
