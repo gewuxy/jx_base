@@ -16,7 +16,6 @@ import java.lang.annotation.RetentionPolicy;
         Permission.sensors,
         Permission.sms,
         Permission.storage,
-        Permission.recorder,
 })
 @Retention(RetentionPolicy.SOURCE)
 /**
@@ -75,6 +74,4 @@ public @interface Permission {
      * {@link permission#WRITE_EXTERNAL_STORAGE}
      */
     String storage = permission.READ_EXTERNAL_STORAGE;
-
-    String recorder = permission.RECORD_AUDIO;
 }
