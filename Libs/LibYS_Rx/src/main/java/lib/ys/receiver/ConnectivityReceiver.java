@@ -18,10 +18,10 @@ public class ConnectivityReceiver extends BaseReceiver {
         type_3g, //
         type_4g, //
         type_wifi, //
-        type_unknow, //
+        type_unknown, //
     }
 
-    private TConnType mType = TConnType.type_unknow;
+    private TConnType mType = TConnType.type_unknown;
     private ConnectivityManager mCm;
 
     public ConnectivityReceiver(Context context) {
@@ -72,12 +72,12 @@ public class ConnectivityReceiver extends BaseReceiver {
                         }
                         break;
                         default: {
-                            mType = TConnType.type_unknow;
+                            mType = TConnType.type_unknown;
                         }
                     }
                     break;
                 default:
-                    mType = TConnType.type_unknow;
+                    mType = TConnType.type_unknown;
             }
         } else {
             mType = TConnType.disconnect;

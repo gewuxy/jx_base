@@ -1,9 +1,0 @@
-apply plugin: 'java'
-
-dependencies {
-}
-
-compileJava {
-    sourceCompatibility = versions.java
-    targetCompatibility = versions.java
-}

@@ -22,12 +22,18 @@ android {
         targetCompatibility versions.java
     }
 
+    buildTypes {
+        alpha {
+            // 声明alpha类型, 需要打包的app编译时会有要求
+        }
+    }
+
     sourceSets.main {
         jniLibs.srcDirs = ['libs']
     }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar'], dir: 'libs')
     compileOnly project(deps.ys.core)
 }

@@ -1,0 +1,13 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation project(deps.ys.annotation)
+    implementation deps.square.poet
+    implementation deps.google.auto.service
+//    compile 'org.projectlombok:lombok.ast:0.2'
+}
+
+compileJava {
+    sourceCompatibility = versions.java
+    targetCompatibility = versions.java
+}
