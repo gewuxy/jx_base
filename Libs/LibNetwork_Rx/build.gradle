@@ -40,6 +40,6 @@ dependencies {
     /**
      * Processor
      */
-    api project(deps.ys.annotation)
+    compileOnly project(deps.ys.annotation)
     annotationProcessor project(deps.ys.compiler)
 }
