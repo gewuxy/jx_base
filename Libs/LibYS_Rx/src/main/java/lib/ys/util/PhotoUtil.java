@@ -3,7 +3,6 @@ package lib.ys.util;
 import android.annotation.TargetApi;
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -12,7 +11,8 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 
-import java.io.File;
+import lib.ys.action.IntentAction;
+import lib.ys.action.IntentAction.PhotoAction.PhotoSource;
 
 public class PhotoUtil {
 
@@ -24,9 +24,12 @@ public class PhotoUtil {
      * @param requestCode
      */
     public static void fromCamera(Object host, String path, int requestCode) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(path)));
-        LaunchUtil.startActivityForResult(host, intent, requestCode);
+        IntentAction.photo()
+                .host(host)
+                .path(path)
+                .source(PhotoSource.camera)
+                .code(requestCode)
+                .launch();
     }
 
     /**
@@ -36,8 +39,11 @@ public class PhotoUtil {
      * @param requestCode
      */
     public static void fromAlbum(Object host, int requestCode) {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        LaunchUtil.startActivityForResult(host, intent, requestCode);
+        IntentAction.photo()
+                .host(host)
+                .code(requestCode)
+                .source(PhotoSource.album)
+                .launch();
     }
 
     /**
