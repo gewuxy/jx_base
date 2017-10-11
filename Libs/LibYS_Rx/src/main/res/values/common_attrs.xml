@@ -6,7 +6,7 @@
 
     <declare-styleable name="RatingView">
         <attr name="rating_num" format="integer"/>
-        <attr name="rating_starNum" format="integer"/>
+        <attr name="rating_starNum" format="float"/>
         <attr name="rating_starGap" format="dimension"/>
         <attr name="rating_starSize" format="dimension"/>
         <attr name="rating_drawableLight" format="reference"/>

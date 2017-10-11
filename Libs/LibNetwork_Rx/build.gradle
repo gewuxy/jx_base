@@ -9,25 +9,37 @@ android {
         targetSdkVersion versions.compileSdk
         versionCode versions.versionCode
         versionName versions.versionName
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
     }
 
     compileOptions {
         sourceCompatibility versions.java
         targetCompatibility versions.java
     }
+
+    buildTypes {
+        alpha {
+            // 声明alpha类型, 需要打包的app编译时会有要求
+        }
+    }
 }
 
 dependencies {
-    compile deps.square.ok
-    provided deps.support.annotations
+    api deps.square.ok
+    compileOnly deps.support.annotations
     /**
      * Rx
      */
-    provided deps.rx.java
-    provided deps.rx.android
+    compileOnly deps.rx.java
+    compileOnly deps.rx.android
     /**
      * Processor
      */
-    provided project(deps.ys.annotation)
+    compileOnly project(deps.ys.annotation)
     annotationProcessor project(deps.ys.compiler)
 }

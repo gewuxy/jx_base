@@ -24,7 +24,7 @@ import lib.ys.form.group.ChildFormEx;
 import lib.ys.form.group.GroupFormEx;
 import lib.ys.form.group.OnGroupFormViewClickListener;
 import lib.ys.ui.frag.FragEx;
-import lib.ys.util.ReflectionUtil;
+import lib.ys.util.ReflectUtil;
 import lib.ys.util.view.LayoutUtil;
 
 /**
@@ -152,7 +152,7 @@ abstract public class GroupFormFragEx<T extends GroupFormEx> extends FragEx impl
         }
         root.addView(v, LayoutUtil.getLinearParams(MATCH_PARENT, WRAP_CONTENT));
 
-        ViewHolderEx vh = ReflectionUtil.newInst(getViewHolderClz(), v);
+        ViewHolderEx vh = ReflectUtil.newInst(getViewHolderClz(), v);
         if (vh == null) {
             return false;
         }

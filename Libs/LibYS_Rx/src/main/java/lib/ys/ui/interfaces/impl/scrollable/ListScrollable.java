@@ -23,7 +23,7 @@ import lib.ys.ui.interfaces.listener.OnScrollMixListener;
 import lib.ys.ui.interfaces.listener.scrollable.OnListScrollableListener;
 import lib.ys.ui.other.NavBar;
 import lib.ys.util.GenericUtil;
-import lib.ys.util.ReflectionUtil;
+import lib.ys.util.ReflectUtil;
 import lib.ys.util.UIUtil;
 
 /**
@@ -86,7 +86,7 @@ public class ListScrollable<T, A extends IAdapter<T>> extends BaseScrollable<T>
             return;
         }
 
-        mAdapter = ReflectionUtil.newInst(mAdapterClass);
+        mAdapter = ReflectUtil.newInst(mAdapterClass);
         mDataSetObserver = new DataSetObserver() {
             @Override
             public void onChanged() {

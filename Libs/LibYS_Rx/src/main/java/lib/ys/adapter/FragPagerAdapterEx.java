@@ -156,7 +156,7 @@ abstract public class FragPagerAdapterEx<T extends Fragment, TITLE extends IPage
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return (mTitles == null || mTitles.isEmpty()) ? ConstantsEx.KEmptyValue : mTitles.get(position).getTitle();
+        return (mTitles == null || mTitles.isEmpty()) ? ConstantsEx.KEmpty : mTitles.get(position).getTitle();
     }
 
     public void removeAll() {

@@ -1,10 +1,10 @@
 package lib.ys.ui.activity;
 
 import android.support.annotation.CallSuper;
+import android.support.annotation.DrawableRes;
 import android.widget.ImageView;
 
 import lib.ys.R;
-
 
 abstract public class SimpleSplashActivityEx extends SplashActivityEx {
 
@@ -18,8 +18,6 @@ abstract public class SimpleSplashActivityEx extends SplashActivityEx {
     @CallSuper
     @Override
     public void findViews() {
-        super.findViews();
-
         mIv = findView(R.id.splash_iv);
     }
 
@@ -31,5 +29,6 @@ abstract public class SimpleSplashActivityEx extends SplashActivityEx {
         mIv.setImageResource(getSplashImageResId());
     }
 
+    @DrawableRes
     abstract protected int getSplashImageResId();
 }

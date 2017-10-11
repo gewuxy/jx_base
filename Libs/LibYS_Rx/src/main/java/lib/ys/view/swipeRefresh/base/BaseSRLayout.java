@@ -16,7 +16,7 @@ import android.view.animation.Transformation;
 
 import lib.ys.AppEx;
 import lib.ys.fitter.DpFitter;
-import lib.ys.util.ReflectionUtil;
+import lib.ys.util.ReflectUtil;
 import lib.ys.util.view.LayoutUtil;
 import lib.ys.view.scrollableLayout.ScrollableLayout;
 import lib.ys.view.swipeRefresh.header.BaseHeader;
@@ -75,7 +75,7 @@ abstract public class BaseSRLayout<T extends View> extends ViewGroup {
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         mTotalDragDistance = DpFitter.dp(KDragMaxDistanceDp);
 
-        mHeader = ReflectionUtil.newInst(AppEx.getListConfig().getHeaderClz(), getContext(), this);
+        mHeader = ReflectUtil.newInst(AppEx.getListConfig().getHeaderClz(), getContext(), this);
         if (mHeader == null) {
             mHeader = new DefaultLayoutHeader(getContext(), this);
         }

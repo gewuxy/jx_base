@@ -18,7 +18,7 @@ import lib.ys.adapter.recycler.MultiRecyclerAdapterEx;
 import lib.ys.adapter.recycler.OnRecyclerItemClickListener;
 import lib.ys.ui.interfaces.listener.scrollable.OnRecyclerScrollableListener;
 import lib.ys.util.GenericUtil;
-import lib.ys.util.ReflectionUtil;
+import lib.ys.util.ReflectUtil;
 import lib.ys.view.recycler.WrapRecyclerView;
 
 /**
@@ -134,7 +134,7 @@ public class RecyclerScrollable<T, A extends IAdapter<T>> extends BaseScrollable
             return;
         }
 
-        mAdapter = ReflectionUtil.newInst(mAdapterClass);
+        mAdapter = ReflectUtil.newInst(mAdapterClass);
         mDataObserver = new AdapterDataObserver() {
 
             @Override

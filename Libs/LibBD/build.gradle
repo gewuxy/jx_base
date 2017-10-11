@@ -9,11 +9,23 @@ android {
         targetSdkVersion versions.compileSdk
         versionCode versions.versionCode
         versionName versions.versionName
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
     }
 
     compileOptions {
         sourceCompatibility versions.java
         targetCompatibility versions.java
+    }
+
+    buildTypes {
+        alpha {
+            // 声明alpha类型, 需要打包的app编译时会有要求
+        }
     }
 
     sourceSets.main {
@@ -22,6 +34,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    provided project(deps.ys.core)
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    compileOnly project(deps.ys.core)
 }

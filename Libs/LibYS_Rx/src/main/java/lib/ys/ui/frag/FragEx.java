@@ -236,6 +236,7 @@ abstract public class FragEx extends Fragment implements
         }
 
         findViews();
+
         setViews();
 
         mInitComplete = true;
@@ -518,8 +519,8 @@ abstract public class FragEx extends Fragment implements
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
 
         if (mNetworkImpl != null) {
             mNetworkImpl.onDestroy();

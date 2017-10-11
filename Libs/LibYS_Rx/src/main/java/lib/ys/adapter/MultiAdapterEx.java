@@ -30,7 +30,7 @@ import lib.ys.ui.interfaces.opt.ICommonOpt;
 import lib.ys.ui.interfaces.opt.IFitOpt;
 import lib.ys.util.GenericUtil;
 import lib.ys.util.LaunchUtil;
-import lib.ys.util.ReflectionUtil;
+import lib.ys.util.ReflectUtil;
 import lib.ys.util.view.ViewUtil;
 
 /**
@@ -100,7 +100,7 @@ abstract public class MultiAdapterEx<T, VH extends IViewHolder> extends BaseAdap
             convertView = getLayoutInflater().inflate(getConvertViewResId(itemType), null);
             fit(convertView);
 
-            VH holder = ReflectionUtil.newInst(mVHClass, convertView);
+            VH holder = ReflectUtil.newInst(mVHClass, convertView);
             convertView.setTag(holder);
 
             initView(position, holder, itemType);
@@ -148,7 +148,7 @@ abstract public class MultiAdapterEx<T, VH extends IViewHolder> extends BaseAdap
         }
 
         if (mMapClickLsn == null) {
-            mMapClickLsn = new HashMap<View, ViewClickListener>();
+            mMapClickLsn = new HashMap<>();
         }
 
         ViewClickListener lsn = mMapClickLsn.get(view);
@@ -354,19 +354,18 @@ abstract public class MultiAdapterEx<T, VH extends IViewHolder> extends BaseAdap
     private class ViewCheckListener implements OnCheckedChangeListener {
 
         private int mPosition;
-        private OnCompoundBtnCheckListener mBtnCheckListener;
 
-        public ViewCheckListener(int position, OnCompoundBtnCheckListener listener) {
+        public ViewCheckListener(int position) {
             mPosition = position;
-            mBtnCheckListener = listener;
         }
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (mBtnCheckListener != null) {
-                mBtnCheckListener.onCompoundBtnCheck(mPosition, buttonView, isChecked);
-            }
+           onCompoundBtnCheck(mPosition, buttonView, isChecked);
         }
+    }
+
+    protected void onCompoundBtnCheck(int position, CompoundButton btn, boolean isChecked) {
     }
 
     public interface OnCompoundBtnCheckListener {
@@ -378,21 +377,20 @@ abstract public class MultiAdapterEx<T, VH extends IViewHolder> extends BaseAdap
      *
      * @param position
      * @param btn
-     * @param listener
      */
-    protected void setOnCompoundBtnCheckListener(int position, CompoundButton btn, OnCompoundBtnCheckListener listener) {
-        if (btn == null || listener == null) {
+    protected void setOnCompoundBtnCheckListener(int position, CompoundButton btn) {
+        if (btn == null) {
             return;
         }
 
         if (mMapCheckLsn == null) {
-            mMapCheckLsn = new HashMap<CompoundButton, ViewCheckListener>();
+            mMapCheckLsn = new HashMap<>();
         }
 
         ViewCheckListener lsn = mMapCheckLsn.get(btn);
         if (lsn == null) {
             // 表示这个btn没有被设置过lsn
-            lsn = new ViewCheckListener(position, listener);
+            lsn = new ViewCheckListener(position);
             btn.setOnCheckedChangeListener(lsn);
             mMapCheckLsn.put(btn, lsn);
         } else {

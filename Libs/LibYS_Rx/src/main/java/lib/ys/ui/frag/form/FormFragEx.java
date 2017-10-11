@@ -26,7 +26,7 @@ import lib.ys.form.OnFormViewClickListener;
 import lib.ys.form.TransparencyType;
 import lib.ys.ui.frag.FragEx;
 import lib.ys.util.GenericUtil;
-import lib.ys.util.ReflectionUtil;
+import lib.ys.util.ReflectUtil;
 import lib.ys.util.view.LayoutUtil;
 import lib.ys.view.StayScrollView;
 
@@ -142,7 +142,7 @@ abstract public class FormFragEx<T extends FormEx<VH>, VH extends ViewHolderEx> 
         mLayoutItems.addView(v, LayoutUtil.getLinearParams(MATCH_PARENT, WRAP_CONTENT));
         fit(v);
 
-        VH holder = ReflectionUtil.newInst(mVHClass, v);
+        VH holder = ReflectUtil.newInst(mVHClass, v);
         if (holder == null) {
             return;
         }

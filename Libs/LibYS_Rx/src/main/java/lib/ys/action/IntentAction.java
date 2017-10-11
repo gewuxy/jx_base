@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.CallSuper;
+import android.support.annotation.IntDef;
 import android.support.annotation.StringRes;
 
 import java.io.File;
@@ -122,6 +124,15 @@ public class IntentAction {
      */
     public static PhoneCallAction phoneCall() {
         return new PhoneCallAction();
+    }
+
+    /**
+     * 选择照片
+     *
+     * @return
+     */
+    public static PhotoAction photo() {
+        return new PhotoAction();
     }
 
     abstract static public class BaseAction {
@@ -603,6 +614,83 @@ public class IntentAction {
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(data);
             normalLaunch(intent);
+        }
+    }
+
+    public static class PhotoAction extends BaseAction {
+        /**
+         * 图片来源
+         */
+        @IntDef({
+                PhotoSource.unknown,
+                PhotoSource.camera,
+                PhotoSource.album,
+        })
+        public @interface PhotoSource {
+            int unknown = -1; // 未知
+            int camera = 0; // 拍照
+            int album = 1; // 相册
+        }
+
+        @PhotoSource
+        private int mSource = PhotoSource.unknown;
+        private String mPath;
+        private Object mHost;
+        private int mCode = -1;
+
+        /**
+         * 照片保存地址
+         *
+         * @param p
+         * @return
+         */
+        public PhotoAction path(String p) {
+            mPath = p;
+            return this;
+        }
+
+        public PhotoAction host(Object host) {
+            mHost = host;
+            return this;
+        }
+
+        public PhotoAction code(int code) {
+            mCode = code;
+            return this;
+        }
+
+        public PhotoAction source(@PhotoSource int s) {
+            mSource = s;
+            return this;
+        }
+
+        @Override
+        public PhotoAction createChooser(String title) {
+            return super.createChooser(title);
+        }
+
+        @Override
+        public PhotoAction alert(String a) {
+            return super.alert(a);
+        }
+
+
+        @Override
+        public void launch() {
+            if (mHost == null || mCode == -1 || mSource == PhotoSource.unknown) {
+                AppEx.showToast("配置不正确");
+                return;
+            }
+
+            if (mSource == PhotoSource.camera) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(mPath)));
+                LaunchUtil.startActivityForResult(mHost, intent, mCode);
+            } else {
+                // 从图库里选择照片 返回的数据在 intent.getData()里, 是Uri的形式
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                LaunchUtil.startActivityForResult(mHost, intent, mCode);
+            }
         }
     }
 }

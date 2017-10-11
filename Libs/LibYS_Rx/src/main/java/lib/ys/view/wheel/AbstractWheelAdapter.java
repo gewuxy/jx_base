@@ -25,16 +25,15 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import lib.ys.AppEx;
-import lib.ys.adapter.VH.ViewHolderEx;
 import lib.ys.adapter.interfaces.IViewHolder;
 import lib.ys.fitter.LayoutFitter;
 import lib.ys.util.GenericUtil;
-import lib.ys.util.ReflectionUtil;
+import lib.ys.util.ReflectUtil;
 
 /**
  * Abstract Wheel adapter.
  */
-abstract public class AbstractWheelAdapter<T, VH extends ViewHolderEx> implements WheelViewAdapter {
+abstract public class AbstractWheelAdapter<T, VH extends IViewHolder> implements WheelViewAdapter {
 
     private LayoutInflater mInflater = null;
 
@@ -77,7 +76,7 @@ abstract public class AbstractWheelAdapter<T, VH extends ViewHolderEx> implement
             convertView = getLayoutInflater().inflate(getConvertViewResId(), null);
             LayoutFitter.fit(convertView);
 
-            VH holder = ReflectionUtil.newInst(mVHClass, convertView);
+            VH holder = ReflectUtil.newInst(mVHClass, convertView);
             convertView.setTag(holder);
 
             initView(position, holder);

@@ -100,7 +100,7 @@ public class ConvertUtil {
      * @param bytes
      * @return
      */
-    public static String bytesTohexStr(byte[] bytes) {
+    public static String bytesToHexStr(byte[] bytes) {
         String hex = "";
         for (int i = 0; i < bytes.length; i++) {
             hex = Integer.toHexString(bytes[i] & 0xFF);

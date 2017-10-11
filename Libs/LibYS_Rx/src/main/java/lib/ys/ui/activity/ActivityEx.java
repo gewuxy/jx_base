@@ -109,7 +109,6 @@ abstract public class ActivityEx extends SwipeBackActivity implements
     private NetworkOpt mNetworkImpl;
     private PermissionOpt mPermission;
 
-
     protected void onCreate(Bundle savedInstanceState) {
         if (AppEx.getConfig().isFlatBarEnabled()) {
             UIUtil.setFlatBar(getWindow());
