@@ -30,7 +30,7 @@ import lib.ys.ui.interfaces.opt.ICommonOpt;
 import lib.ys.ui.interfaces.opt.IFitOpt;
 import lib.ys.util.GenericUtil;
 import lib.ys.util.LaunchUtil;
-import lib.ys.util.ReflectionUtil;
+import lib.ys.util.ReflectUtil;
 import lib.ys.util.view.ViewUtil;
 
 /**
@@ -100,7 +100,7 @@ abstract public class MultiAdapterEx<T, VH extends IViewHolder> extends BaseAdap
             convertView = getLayoutInflater().inflate(getConvertViewResId(itemType), null);
             fit(convertView);
 
-            VH holder = ReflectionUtil.newInst(mVHClass, convertView);
+            VH holder = ReflectUtil.newInst(mVHClass, convertView);
             convertView.setTag(holder);
 
             initView(position, holder, itemType);

@@ -15,12 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import lib.ys.ConstantsEx;
 import lib.ys.YSLog;
 import lib.ys.util.GenericUtil;
 import lib.ys.util.JsonUtil;
-import lib.ys.util.ReflectionUtil;
+import lib.ys.util.ReflectUtil;
 import lib.ys.util.TextUtil;
 
 import static java.lang.annotation.ElementType.FIELD;
@@ -49,7 +49,7 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
 
         float asFloat() default Float.MIN_VALUE;
 
-        String asString() default ConstantsEx.KEmptyValue;
+        String asString() default ConstantsEx.KEmpty;
     }
 
     /**
@@ -134,7 +134,7 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
         }
 
         // 过滤掉null
-        Observable.fromIterable(getEnumFields())
+        Flowable.fromIterable(getEnumFields())
                 .filter(e -> o.getObject(e) != null)
                 .subscribe(e -> put(e, o.getObject(e)));
         return (T) this;
@@ -183,7 +183,7 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
     }
 
     public String getString(E key) {
-        return getString(key, ConstantsEx.KEmptyValue);
+        return getString(key, ConstantsEx.KEmpty);
     }
 
     public String getString(E key, String defaultValue) {
@@ -389,7 +389,7 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
     public EVal clone() {
         EVal val = create(getClass());
 
-        Observable.fromIterable(getEnumFields())
+        Flowable.fromIterable(getEnumFields())
                 .subscribe(e -> {
                     Object o = mMap.get(e);
                     if (o == null) {
@@ -419,7 +419,7 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
 
         List<Object> newList = new ArrayList<>();
 
-        Observable.fromIterable(list)
+        Flowable.fromIterable(list)
                 .subscribe(o -> {
                     if (o instanceof EVal) {
                         EVal ev = (EVal) o;
@@ -462,7 +462,7 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
      * @return
      */
     public static <T extends EVal> T create(Class<T> clz) {
-        return ReflectionUtil.newDeclaredInst(clz);
+        return ReflectUtil.newDeclaredInst(clz);
     }
 
     /***********************************
@@ -545,9 +545,10 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
             Field f = fields[i];
             // 必须通过valueOf获取E, 因为fields[]的排列不是有序的
             E e = (E) E.valueOf(clz, f.getName());
+            String eName = e.name();
 
-            Object o = JsonUtil.getObject(obj, e.name());
-            if (o == null) {
+            String o = JsonUtil.getString(obj, eName);
+            if (o.isEmpty()) {
                 continue;
             }
 
@@ -555,17 +556,17 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
                 Bind annotation = f.getAnnotation(Bind.class);
                 Class val = annotation.value();
                 if (!val.equals(EVal.class)) {
-                    put(e, JsonUtil.getEV(annotation.value(), obj.optJSONObject(e.name())));
+                    put(e, JsonUtil.getEV(annotation.value(), obj.optJSONObject(eName)));
                     continue;
                 }
 
                 Class asList = annotation.asList();
                 if (isEValType(asList)) {
-                    put(e, JsonUtil.getEVs(asList, obj.optJSONArray(e.name())));
+                    put(e, JsonUtil.getEVs(asList, obj.optJSONArray(eName)));
                 } else {
                     // 基础数据类型
                     List list = new ArrayList<>();
-                    JSONArray jsonArray = obj.optJSONArray(e.name());
+                    JSONArray jsonArray = obj.optJSONArray(eName);
                     for (int j = 0; j < jsonArray.length(); j++) {
                         if (String.class.isAssignableFrom(asList)) {
                             list.add(jsonArray.optString(j));

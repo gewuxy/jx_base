@@ -18,7 +18,7 @@ import lib.ys.impl.ErrorDecorImpl;
 import lib.ys.ui.dialog.DialogEx;
 import lib.ys.ui.interfaces.listener.OnRetryClickListener;
 import lib.ys.ui.other.NavBar;
-import lib.ys.util.ReflectionUtil;
+import lib.ys.util.ReflectUtil;
 import lib.ys.util.res.ResLoader;
 import lib.ys.util.view.LayoutUtil;
 import lib.ys.util.view.ViewUtil;
@@ -171,7 +171,7 @@ public class DecorViewEx extends RelativeLayout {
         goneView(mLoadingDecor);
 
         // 添加ErrorView
-        mErrorDecor = ReflectionUtil.newInst(AppEx.getConfig().getErrorDecorClz(), getContext());
+        mErrorDecor = ReflectUtil.newInst(AppEx.getConfig().getErrorDecorClz(), getContext());
         if (mErrorDecor == null) {
             // 找不到, 使用默认的
             mErrorDecor = new ErrorDecorImpl(getContext());

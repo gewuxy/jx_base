@@ -15,18 +15,9 @@ import lib.network.model.interfaces.IResult;
 import lib.ys.YSLog;
 import lib.ys.model.EVal;
 
-@SuppressWarnings({"unchecked", "rawtypes"})
 public class JsonUtil {
 
     private static final String TAG = JsonUtil.class.getSimpleName();
-
-    public static Object getObject(JSONObject json, String tag) {
-        Object ret = json.opt(tag);
-        if (ret == null) {
-            return null;
-        }
-        return ret;
-    }
 
     public static String getString(JSONObject json, String tag) {
         String ret = null;
@@ -111,7 +102,7 @@ public class JsonUtil {
             return null;
         }
 
-        T t = ReflectionUtil.newInst(clz);
+        T t = ReflectUtil.newInst(clz);
         if (t == null) {
             return null;
         }

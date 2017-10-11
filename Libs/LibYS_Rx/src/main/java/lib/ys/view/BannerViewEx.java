@@ -9,7 +9,7 @@ import java.util.List;
 
 import lib.ys.adapter.PagerAdapterEx;
 import lib.ys.util.GenericUtil;
-import lib.ys.util.ReflectionUtil;
+import lib.ys.util.ReflectUtil;
 import lib.ys.util.view.ViewUtil;
 import lib.ys.view.pager.AutoScrollViewPager;
 import lib.ys.view.pager.indicator.IconPageIndicator;
@@ -35,7 +35,7 @@ abstract public class BannerViewEx<T, A extends PagerAdapterEx> extends Relative
         }
 
         Class<A> adapterClass = GenericUtil.getClassType(getClass(), PagerAdapterEx.class);
-        mAdapter = ReflectionUtil.newInst(adapterClass);
+        mAdapter = ReflectUtil.newInst(adapterClass);
     }
 
     @Override

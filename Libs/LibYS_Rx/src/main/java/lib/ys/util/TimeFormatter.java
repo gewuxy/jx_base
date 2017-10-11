@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
  *
  * @author yuansui
  */
-public class TimeUtil {
+public class TimeFormatter {
 
     /**
      * 时间格式定义, 规则:
@@ -55,13 +55,13 @@ public class TimeUtil {
      * @param format
      * @return
      */
-    public static String formatMilli(long milli, String format) {
+    public static String milli(long milli, String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(milli);
     }
 
-    public static String formatMilli(String milli, String format) {
-        return formatMilli(Long.parseLong(milli), format);
+    public static String milli(String milli, String format) {
+        return milli(Long.parseLong(milli), format);
     }
 
     /**
@@ -71,11 +71,11 @@ public class TimeUtil {
      * @param format
      * @return
      */
-    public static String formatSecond(long second, String format) {
-        return formatMilli(second * 1000, format);
+    public static String second(long second, String format) {
+        return milli(second * 1000, format);
     }
 
-    public static String formatSecond(String second, String format) {
-        return formatSecond(Long.parseLong(second), format);
+    public static String second(String second, String format) {
+        return second(Long.parseLong(second), format);
     }
 }

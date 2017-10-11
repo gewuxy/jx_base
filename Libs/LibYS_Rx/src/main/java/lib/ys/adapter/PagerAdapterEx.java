@@ -20,7 +20,7 @@ import lib.ys.fitter.LayoutFitter;
 import lib.ys.ui.interfaces.opt.ICommonOpt;
 import lib.ys.ui.interfaces.opt.IFitOpt;
 import lib.ys.util.GenericUtil;
-import lib.ys.util.ReflectionUtil;
+import lib.ys.util.ReflectUtil;
 import lib.ys.util.view.ViewUtil;
 import lib.ys.view.pager.indicator.IconPagerAdapter;
 
@@ -174,7 +174,7 @@ abstract public class PagerAdapterEx<T, VH extends IViewHolder> extends PagerAda
             convertView = getLayoutInflater().inflate(getConvertViewResId(), null);
             fit(convertView);
 
-            VH holder = ReflectionUtil.newInst(mVHClass, convertView);
+            VH holder = ReflectUtil.newInst(mVHClass, convertView);
             convertView.setTag(holder);
 
             initView(modPos, holder);

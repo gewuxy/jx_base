@@ -90,7 +90,7 @@ public class MoneyUtil {
             decimals = text.substring(indexDot);
         } else {
             sInteger.append(text);
-            decimals = ConstantsEx.KEmptyValue;
+            decimals = ConstantsEx.KEmpty;
         }
         int i = sInteger.length();
         i -= KThousand;

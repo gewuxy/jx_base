@@ -7,7 +7,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
+import android.support.annotation.Nullable;
 
 import java.util.List;
 
@@ -15,53 +15,55 @@ import lib.ys.AppEx;
 import lib.ys.ConstantsEx;
 import lib.ys.YSLog;
 
-/**
- * @author CaiXiang
- * @since 2017/9/4
- */
-
 public class PackageUtil {
     private static final String TAG = PackageUtil.class.getSimpleName();
 
+    @Nullable
     public static String getMetaValue(@NonNull String key) {
         if (key == null) {
             return null;
         }
 
-        String apiKey = null;
-        try {
-            ApplicationInfo ai = getPM().getApplicationInfo(getPkgName(), PackageManager.GET_META_DATA);
-            if (null != ai) {
-                Bundle metaData = ai.metaData;
-                if (null != metaData) {
-                    apiKey = String.valueOf(metaData.get(key));
-                }
+        ApplicationInfo info = getApplicationInfo(PackageManager.GET_META_DATA);
+        if (info != null) {
+            Bundle metaData = info.metaData;
+            if (null != metaData) {
+                return String.valueOf(metaData.get(key));
             }
-        } catch (NameNotFoundException e) {
-            YSLog.e(TAG, e);
         }
-        return apiKey;
+        return null;
     }
 
+    /**
+     * 设置meta信息
+     *
+     * @param key
+     * @param value
+     * @deprecated 只能更改内存中已经读出来的值, 不能更改声明的值
+     */
     public static void setMetaValue(String key, String value) {
         if (TextUtil.isEmpty(key)) {
             return;
         }
 
-        ApplicationInfo appInfo = null;
-        try {
-            appInfo = getPM().getApplicationInfo(getPkgName(), PackageManager.GET_META_DATA);
-            appInfo.metaData.putString(key, value);
-        } catch (NameNotFoundException e) {
-            YSLog.e(TAG, e);
+        ApplicationInfo info = getApplicationInfo(PackageManager.GET_META_DATA);
+        if (info != null) {
+            info.metaData.putString(key, value);
         }
     }
 
+    private final static String KAndroidMarketPackageName = "com.android.vending";
+
+    /**
+     * 是否安装了安卓市场
+     *
+     * @return
+     */
     public static boolean isAndroidMarketAvailable() {
         List<PackageInfo> packages = getPM().getInstalledPackages(0);
         for (int i = 0; i < packages.size(); i++) {
             PackageInfo packageInfo = packages.get(i);
-            if (packageInfo.packageName.equals(ConstantsEx.KAndroidMarketPackageName)) {
+            if (packageInfo.packageName.equals(KAndroidMarketPackageName)) {
                 return true;
             }
         }
@@ -74,17 +76,11 @@ public class PackageUtil {
      * @return
      */
     public static String getAppVersionName() {
-        String versionName = "";
-        try {
-            PackageInfo packageInfo = getPM().getPackageInfo(AppEx.ct().getPackageName(), 0);
-            versionName = packageInfo.versionName;
-            if (TextUtils.isEmpty(versionName)) {
-                return "";
-            }
-        } catch (Exception e) {
-            YSLog.e(TAG, e);
+        PackageInfo info = getPackageInfo();
+        if (info != null) {
+            return info.versionName;
         }
-        return versionName;
+        return ConstantsEx.KEmpty;
     }
 
     /**
@@ -92,13 +88,11 @@ public class PackageUtil {
      *
      * @return
      */
-    public static int getAppVersion() {
+    public static int getAppVersionCode() {
         int versionCode = -1;
-        try {
-            PackageInfo packageInfo = getPM().getPackageInfo(AppEx.ct().getPackageName(), 0);
-            versionCode = packageInfo.versionCode;
-        } catch (Exception e) {
-            YSLog.e(TAG, e);
+        PackageInfo info = getPackageInfo();
+        if (info != null) {
+            versionCode = info.versionCode;
         }
         return versionCode;
     }
@@ -108,17 +102,8 @@ public class PackageUtil {
      *
      * @return
      */
-    public static String getAppName() {
-        PackageManager packageManager = null;
-        ApplicationInfo applicationInfo = null;
-        try {
-            packageManager = getPM();
-            applicationInfo = packageManager.getApplicationInfo(AppEx.ct().getPackageName(), 0);
-        } catch (NameNotFoundException e) {
-            applicationInfo = null;
-        }
-        String applicationName = (String) packageManager.getApplicationLabel(applicationInfo);
-        return applicationName;
+    public static CharSequence getAppName() {
+        return getPM().getApplicationLabel(getApplicationInfo());
     }
 
     /**
@@ -140,5 +125,30 @@ public class PackageUtil {
 
     private static String getPkgName() {
         return AppEx.ct().getPackageName();
+    }
+
+    @Nullable
+    private static PackageInfo getPackageInfo() {
+        try {
+            return getPM().getPackageInfo(getPkgName(), 0);
+        } catch (NameNotFoundException e) {
+            YSLog.e(TAG, "getPackageInfo", e);
+        }
+        return null;
+    }
+
+    @Nullable
+    private static ApplicationInfo getApplicationInfo() {
+        return getApplicationInfo(0);
+    }
+
+    @Nullable
+    private static ApplicationInfo getApplicationInfo(int flag) {
+        try {
+            return getPM().getApplicationInfo(getPkgName(), flag);
+        } catch (NameNotFoundException e) {
+            YSLog.e(TAG, "getApplicationInfo", e);
+        }
+        return null;
     }
 }

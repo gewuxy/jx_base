@@ -26,7 +26,7 @@ import lib.ys.model.group.IGroup;
 import lib.ys.ui.interfaces.opt.ICommonOpt;
 import lib.ys.ui.interfaces.opt.IFitOpt;
 import lib.ys.util.GenericUtil;
-import lib.ys.util.ReflectionUtil;
+import lib.ys.util.ReflectUtil;
 import lib.ys.util.view.ViewUtil;
 
 abstract public class MultiGroupAdapterEx<GROUP extends IGroup<CHILD>, CHILD, VH extends IViewHolder>
@@ -188,7 +188,7 @@ abstract public class MultiGroupAdapterEx<GROUP extends IGroup<CHILD>, CHILD, VH
             convertView = getLayoutInflater().inflate(getGroupConvertViewResId(groupType), null);
             fit(convertView);
 
-            VH holder = ReflectionUtil.newInst(mVHClass, convertView);
+            VH holder = ReflectUtil.newInst(mVHClass, convertView);
             convertView.setTag(holder);
 
             initGroupView(groupPosition, isExpanded, holder, groupType);
@@ -219,7 +219,7 @@ abstract public class MultiGroupAdapterEx<GROUP extends IGroup<CHILD>, CHILD, VH
             convertView = getLayoutInflater().inflate(getChildConvertViewResId(childType), null);
             fit(convertView);
 
-            VH holder = ReflectionUtil.newInst(mVHClass, convertView);
+            VH holder = ReflectUtil.newInst(mVHClass, convertView);
             convertView.setTag(holder);
 
             initChildView(groupPosition, childPosition, isLastChild, holder, childType);

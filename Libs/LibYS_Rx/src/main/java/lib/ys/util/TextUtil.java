@@ -8,7 +8,7 @@ import lib.ys.ConstantsEx;
 
 public class TextUtil {
 
-    public static final String KTextEmpty = ConstantsEx.KEmptyValue;
+    public static final String KTextEmpty = ConstantsEx.KEmpty;
     public static final String KBlankUtf8Def = "%20";
     public static final int KBlankIndex = 32;
 

@@ -20,18 +20,6 @@ import lib.ys.AppEx;
  * 一些零碎的方法
  */
 public class UtilEx {
-    /**
-     * 把数字转换成int型(丢精度)
-     *
-     * @param value
-     * @return
-     */
-    public static String toIntStyle(String value) {
-        float moneyF = Float.valueOf(value);
-        int money = (int) moneyF;
-        return String.valueOf(money);
-    }
-
     public static String md5(String string) {
         byte[] hash;
 

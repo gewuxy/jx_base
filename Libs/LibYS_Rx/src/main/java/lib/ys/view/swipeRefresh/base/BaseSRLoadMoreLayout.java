@@ -14,7 +14,7 @@ import lib.ys.AppEx;
 import lib.ys.ConstantsEx;
 import lib.ys.ui.interfaces.listener.OnScrollMixListener;
 import lib.ys.util.DeviceUtil;
-import lib.ys.util.ReflectionUtil;
+import lib.ys.util.ReflectUtil;
 import lib.ys.view.swipeRefresh.footer.BaseFooter;
 import lib.ys.view.swipeRefresh.footer.DefaultFooter;
 import lib.ys.view.swipeRefresh.interfaces.IExtend.IExtendStatus;
@@ -57,7 +57,7 @@ abstract public class BaseSRLoadMoreLayout<T extends View> extends BaseSRLayout<
     abstract public void removeHeaderView(View v);
 
     private void createFooterView(Context context) {
-        mLoadMoreFooterView = ReflectionUtil.newInst(AppEx.getListConfig().getFooterClz(), context);
+        mLoadMoreFooterView = ReflectUtil.newInst(AppEx.getListConfig().getFooterClz(), context);
         if (mLoadMoreFooterView == null) {
             // 加载失败, 使用默认的
             mLoadMoreFooterView = new DefaultFooter(context);

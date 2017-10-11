@@ -39,17 +39,6 @@ public class JsonParserEx {
         return JsonUtil.getEVs(clz, array);
     }
 
-    protected static Object getObject(JSONObject obj, Enum<?> tag) {
-        return getObject(obj, tag.name());
-    }
-
-    protected static Object getObject(JSONObject obj, String tag) {
-        if (obj == null) {
-            return null;
-        }
-        return JsonUtil.getObject(obj, tag);
-    }
-
     protected static String getString(JSONObject obj, String tag) {
         if (obj == null) {
             return null;
@@ -69,10 +58,7 @@ public class JsonParserEx {
     }
 
     protected static JSONObject getJSONObject(JSONObject obj, Enum e) throws JSONException {
-        if (obj == null) {
-            return null;
-        }
-        return obj.optJSONObject(e.name());
+        return getJSONObject(obj, e.name());
     }
 
     protected static JSONArray getJSONArray(JSONObject obj, String tag) throws JSONException {
@@ -83,10 +69,7 @@ public class JsonParserEx {
     }
 
     protected static JSONArray getJSONArray(JSONObject obj, Enum e) throws JSONException {
-        if (obj == null) {
-            return null;
-        }
-        return obj.optJSONArray(e.name());
+        return getJSONArray(obj, e.name());
     }
 
     protected static int getInt(JSONObject obj, Enum<?> tag) {

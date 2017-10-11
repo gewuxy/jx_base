@@ -1,6 +1,7 @@
 package lib.ys.util;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 import lib.ys.YSLog;
 
@@ -9,9 +10,9 @@ import lib.ys.YSLog;
  *
  * @author yuansui
  */
-public class ReflectionUtil {
+public class ReflectUtil {
 
-    private static final String TAG = ReflectionUtil.class.getSimpleName();
+    private static final String TAG = ReflectUtil.class.getSimpleName();
 
     /**
      * 通过反射获取类的对象, 只通过public的构造方法获取
@@ -19,6 +20,7 @@ public class ReflectionUtil {
      * 通过循环的方式构造对象, 因为构造函数的数量还是非常小的, 不会增加多少开销
      * 无法通过传统的方式封装此方法, 因为需要传两个多变参数
      * ({@link Class#getConstructor(Class...)} 和 {@link Constructor#newInstance(Object...)}都需要)
+     * 而且不能通过Object的getClass获取到对应构造里需要的参数class而导致无法匹配
      * </p>
      *
      * @param clz  目标类
@@ -42,6 +44,7 @@ public class ReflectionUtil {
                 continue;
             }
         }
+
         return t;
     }
 
@@ -71,5 +74,9 @@ public class ReflectionUtil {
             }
         }
         return t;
+    }
+
+    public static Method getMethod(String className, String methodName, Class<?>... parameterTypes) throws ClassNotFoundException, NoSuchMethodException {
+        return Class.forName(className).getMethod(methodName, parameterTypes);
     }
 }

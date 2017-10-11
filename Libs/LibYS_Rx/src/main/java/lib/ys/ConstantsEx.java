@@ -1,12 +1,11 @@
 package lib.ys;
 
 public interface ConstantsEx {
-    String KAndroidMarketPackageName = "com.android.vending";
     int KErrNotFound = -1;
     int KErrDefault = -1;
     int KInvalidValue = Integer.MIN_VALUE;
 
-    String KEmptyValue = "";
+    String KEmpty = "";
 
     String KFakeIMEI = "35278404110901162";
 

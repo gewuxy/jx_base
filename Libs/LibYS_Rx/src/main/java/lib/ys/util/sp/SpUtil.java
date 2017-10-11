@@ -145,7 +145,7 @@ public class SpUtil {
      * Get String Value
      */
     public static String getString(SharedPreferences sp, String key) {
-        return sp.getString(key, ConstantsEx.KEmptyValue);
+        return sp.getString(key, ConstantsEx.KEmpty);
     }
 
     public static String getString(SharedPreferences sp, String key, String defValue) {

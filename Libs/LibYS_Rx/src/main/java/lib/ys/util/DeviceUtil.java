@@ -95,6 +95,7 @@ public class DeviceUtil {
         return (0 != Settings.System.getInt(context.getContentResolver(), "airplane_mode_on", 0));
     }
 
+    @SuppressLint("MissingPermission")
     public static String getIMEI(Context context) {
         if (!PermissionChecker.allow(context, Permission.phone)) {
             return "";

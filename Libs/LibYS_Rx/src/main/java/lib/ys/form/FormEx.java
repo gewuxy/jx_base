@@ -565,7 +565,7 @@ abstract public class FormEx<VH extends IViewHolder> implements OnClickListener 
      * 重设之前的值
      */
     public void reset() {
-        save(ConstantsEx.KEmptyValue, ConstantsEx.KEmptyValue, ConstantsEx.KEmptyValue);
+        save(ConstantsEx.KEmpty, ConstantsEx.KEmpty, ConstantsEx.KEmpty);
     }
 
     protected boolean isEmpty(String text) {
