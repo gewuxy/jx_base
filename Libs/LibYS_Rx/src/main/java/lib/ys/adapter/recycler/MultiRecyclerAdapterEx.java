@@ -451,7 +451,9 @@ abstract public class MultiRecyclerAdapterEx<T, VH extends RecyclerViewHolderEx>
         super.onViewDetachedFromWindow(holder);
 
         mSetInit.clear();
-        mMapClickLsn.clear();
+        if (mMapClickLsn != null) {
+            mMapClickLsn.clear();
+        }
     }
 
     @Override
