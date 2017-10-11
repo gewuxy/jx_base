@@ -5,6 +5,7 @@ dependencies {
     implementation deps.square.poet
     implementation deps.google.auto.service
 //    compile 'org.projectlombok:lombok.ast:0.2'
+    implementation 'org.projectlombok:lombok:1.16.18'
 }
 
 compileJava {

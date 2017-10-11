@@ -1,6 +1,7 @@
 package lib.ys.view;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -9,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.subscribers.DisposableSubscriber;
 
 /**
