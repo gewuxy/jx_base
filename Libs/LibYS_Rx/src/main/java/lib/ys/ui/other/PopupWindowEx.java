@@ -17,6 +17,7 @@ import android.support.annotation.StringRes;
 import android.support.v4.widget.PopupWindowCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
@@ -40,7 +41,9 @@ import lib.ys.impl.LoadingDialogImpl;
 import lib.ys.ui.decor.DecorViewEx;
 import lib.ys.ui.decor.DecorViewEx.ViewState;
 import lib.ys.ui.dialog.DialogEx;
+import lib.ys.ui.interfaces.ITouchDelegate;
 import lib.ys.ui.interfaces.impl.NetworkOpt;
+import lib.ys.ui.interfaces.impl.TouchDelegateImpl;
 import lib.ys.ui.interfaces.listener.OnRetryClickListener;
 import lib.ys.ui.interfaces.opt.ICommonOpt;
 import lib.ys.ui.interfaces.opt.IInitOpt;
@@ -61,7 +64,8 @@ abstract public class PopupWindowEx implements
         OnNetworkListener,
         OnDismissListener,
         OnClickListener,
-        OnRetryClickListener {
+        OnRetryClickListener,
+        ITouchDelegate {
 
     protected final String TAG = getClass().getSimpleName();
 
@@ -76,6 +80,7 @@ abstract public class PopupWindowEx implements
     private float mDimAmount = KDefaultDimAmount;
 
     private NetworkOpt mNetworkImpl;
+    private TouchDelegateImpl mTouchDelegateImpl;
 
     private DecorViewEx mDecorView;
     @RefreshWay
@@ -96,7 +101,7 @@ abstract public class PopupWindowEx implements
     private void init() {
         mPopupWindow = new PopupWindow(mContext);
 
-        mDecorView = new DecorViewEx(mContext, null, getInitRefreshWay(), initLoadingDialog());
+        mDecorView = new DecorViewEx(mContext, null, getInitRefreshWay(), initLoadingDialog(), this);
         mDecorView.setContentView(getContentViewId(), getContentHeaderViewId(), getContentFooterViewId());
         mDecorView.setOnRetryClickListener(this);
 
@@ -616,5 +621,25 @@ abstract public class PopupWindowEx implements
                 getViewTreeObserver().removeGlobalOnLayoutListener(listener);
             }
         }
+    }
+
+    /**
+     * 是否监听decorView的点击事件
+     *
+     * @return
+     */
+    public boolean observeTouchEvent() {
+        return false;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (observeTouchEvent()) {
+            if (mTouchDelegateImpl == null) {
+                mTouchDelegateImpl = new TouchDelegateImpl();
+            }
+            return mTouchDelegateImpl.onInterceptTouchEvent(ev);
+        }
+        return false;
     }
 }

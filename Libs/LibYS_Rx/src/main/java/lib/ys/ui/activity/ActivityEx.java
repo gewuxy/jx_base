@@ -49,8 +49,10 @@ import lib.ys.ui.decor.DecorViewEx;
 import lib.ys.ui.decor.DecorViewEx.TNavBarState;
 import lib.ys.ui.decor.DecorViewEx.ViewState;
 import lib.ys.ui.dialog.DialogEx;
+import lib.ys.ui.interfaces.ITouchDelegate;
 import lib.ys.ui.interfaces.impl.NetworkOpt;
 import lib.ys.ui.interfaces.impl.PermissionOpt;
+import lib.ys.ui.interfaces.impl.TouchDelegateImpl;
 import lib.ys.ui.interfaces.listener.OnRetryClickListener;
 import lib.ys.ui.interfaces.opt.ICommonOpt;
 import lib.ys.ui.interfaces.opt.IFitOpt;
@@ -84,7 +86,8 @@ abstract public class ActivityEx extends SwipeBackActivity implements
         OnNetworkListener,
         OnClickListener,
         OnRetryClickListener,
-        OnPermissionListener {
+        OnPermissionListener,
+        ITouchDelegate {
 
     protected final String TAG = getClass().getSimpleName();
 
@@ -108,6 +111,8 @@ abstract public class ActivityEx extends SwipeBackActivity implements
      */
     private NetworkOpt mNetworkImpl;
     private PermissionOpt mPermission;
+    private TouchDelegateImpl mTouchDelegateImpl;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         if (AppEx.getConfig().isFlatBarEnabled()) {
@@ -150,7 +155,7 @@ abstract public class ActivityEx extends SwipeBackActivity implements
         // 数据的初始化提前, 可以根据数据来装载不同的view id
         initData();
 
-        mDecorView = new DecorViewEx(this, getNavBarState(), getInitRefreshWay(), initLoadingDialog());
+        mDecorView = new DecorViewEx(this, getNavBarState(), getInitRefreshWay(), initLoadingDialog(), this);
         mDecorView.setContentView(layoutResID, getContentHeaderViewId(), getContentFooterViewId());
 
         super.setContentView(mDecorView);
@@ -818,5 +823,25 @@ abstract public class ActivityEx extends SwipeBackActivity implements
 
     public <T extends View> T findView(int id) {
         return (T) super.findViewById(id);
+    }
+
+    /**
+     * 是否监听decorView的点击事件
+     *
+     * @return
+     */
+    public boolean observeTouchEvent() {
+        return false;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (observeTouchEvent()) {
+            if (mTouchDelegateImpl == null) {
+                mTouchDelegateImpl = new TouchDelegateImpl();
+            }
+            return mTouchDelegateImpl.onInterceptTouchEvent(ev);
+        }
+        return false;
     }
 }

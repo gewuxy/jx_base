@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -40,8 +41,10 @@ import lib.ys.ui.decor.DecorViewEx;
 import lib.ys.ui.decor.DecorViewEx.TNavBarState;
 import lib.ys.ui.decor.DecorViewEx.ViewState;
 import lib.ys.ui.dialog.DialogEx;
+import lib.ys.ui.interfaces.ITouchDelegate;
 import lib.ys.ui.interfaces.impl.NetworkOpt;
 import lib.ys.ui.interfaces.impl.PermissionOpt;
+import lib.ys.ui.interfaces.impl.TouchDelegateImpl;
 import lib.ys.ui.interfaces.listener.OnRetryClickListener;
 import lib.ys.ui.interfaces.opt.ICommonOpt;
 import lib.ys.ui.interfaces.opt.IFitOpt;
@@ -69,7 +72,8 @@ abstract public class FragEx extends Fragment implements
         OnNetworkListener,
         OnClickListener,
         OnRetryClickListener,
-        OnPermissionListener {
+        OnPermissionListener,
+        ITouchDelegate {
 
     protected final String TAG = getClass().getSimpleName();
 
@@ -92,6 +96,7 @@ abstract public class FragEx extends Fragment implements
      */
     private NetworkOpt mNetworkImpl;
     private PermissionOpt mPermission;
+    private TouchDelegateImpl mTouchDelegateImpl;
 
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -216,7 +221,7 @@ abstract public class FragEx extends Fragment implements
         // 数据的初始化提前, 可以根据数据来装载不同的view id
         initData();
 
-        mDecorView = new DecorViewEx(getActivity(), getNavBarState(), getInitRefreshWay(), initLoadingDialog());
+        mDecorView = new DecorViewEx(getActivity(), getNavBarState(), getInitRefreshWay(), initLoadingDialog(), this);
         mDecorView.setContentView(getContentViewId(), getContentHeaderViewId(), getContentFooterViewId());
     }
 
@@ -822,5 +827,25 @@ abstract public class FragEx extends Fragment implements
 
     @Override
     public void onPermissionResult(int code, @PermissionResult int result) {
+    }
+
+    /**
+     * 是否监听decorView的点击事件
+     *
+     * @return
+     */
+    public boolean observeTouchEvent() {
+        return false;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (observeTouchEvent()) {
+            if (mTouchDelegateImpl == null) {
+                mTouchDelegateImpl = new TouchDelegateImpl();
+            }
+            return mTouchDelegateImpl.onInterceptTouchEvent(ev);
+        }
+        return false;
     }
 }

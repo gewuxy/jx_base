@@ -3,7 +3,9 @@ package lib.ys.ui.decor;
 import android.content.Context;
 import android.support.annotation.IntDef;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -16,6 +18,7 @@ import lib.ys.config.AppConfig;
 import lib.ys.config.AppConfig.RefreshWay;
 import lib.ys.impl.ErrorDecorImpl;
 import lib.ys.ui.dialog.DialogEx;
+import lib.ys.ui.interfaces.ITouchDelegate;
 import lib.ys.ui.interfaces.listener.OnRetryClickListener;
 import lib.ys.ui.other.NavBar;
 import lib.ys.util.ReflectUtil;
@@ -69,12 +72,19 @@ public class DecorViewEx extends RelativeLayout {
     @RefreshWay
     private int mInitRefreshWay = RefreshWay.un_know;
 
-    public DecorViewEx(Context context, TNavBarState state, @RefreshWay int initRefreshWay, DialogEx loadingDialog) {
+    private ITouchDelegate mTouchDelegate;
+
+    public DecorViewEx(Context context,
+                       TNavBarState state,
+                       @RefreshWay int initRefreshWay,
+                       DialogEx loadingDialog,
+                       @Nullable ITouchDelegate touch) {
         super(context);
 
         mNavBarState = state;
         mInitRefreshWay = initRefreshWay;
         mLoadingDialog = loadingDialog;
+        mTouchDelegate = touch;
 
         init(context);
     }
@@ -261,5 +271,10 @@ public class DecorViewEx extends RelativeLayout {
 
     public void dismissLoadingDialog() {
         mLoadingDecor.dismissDialog();
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return mTouchDelegate.onInterceptTouchEvent(ev);
     }
 }
