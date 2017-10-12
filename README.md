@@ -9,9 +9,9 @@
         ext.versions = [
                 minSdk        : 15,
                 compileSdk    : 24,
-                buildTools    : '26.0.0',
+                buildTools    : '26.0.2',
     
-                androidPlugin : '3.0.0-beta6',
+                androidPlugin : '3.0.0-beta7',
     
                 versionCode   : 100,
                 versionName   : '1.0',
@@ -45,8 +45,8 @@
                         dex         : 'com.android.support:multidex:1.0.1',
                 ],
                 rx          : [
-                        java   : 'io.reactivex.rxjava2:rxjava:2.1+',
-                        android: 'io.reactivex.rxjava2:rxandroid:2+',
+                        java   : 'io.reactivex.rxjava2:rxjava:2.1.3',
+                        android: 'io.reactivex.rxjava2:rxandroid:2.0.1',
                         binding: 'com.jakewharton.rxbinding2:rxbinding:2.0.0',
                 ],
                 lottie      : 'com.airbnb.android:lottie:2.2.1', // 加载AE制作出来的json直接展示效果的库
@@ -59,12 +59,12 @@
                         /**
                          * android
                          */
-                        ok        : 'com.squareup.okhttp3:okhttp:3.8.0',
+                        ok        : 'com.squareup.okhttp3:okhttp:3.9.0',
                         retrofit  : 'com.squareup.retrofit2:retrofit:2.3.0',
                         leakcanary: [
                                 // 内存泄漏检查工具
-                                debug  : 'com.squareup.leakcanary:leakcanary-android:1.5.1',
-                                release: 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+                                debug  : 'com.squareup.leakcanary:leakcanary-android:1.5.4',
+                                release: 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
                         ],
                         /**
                          * java
@@ -117,7 +117,7 @@
              * github: https://github.com/KeepSafe/dexcount-gradle-plugin
              * 输出位置: {buildDir}/outputs/dexcount/${variant}* 可配置项请查阅
              */
-    //        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.7.3'
+            classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.7.3'
     
             /**
              * dex分包工具
@@ -171,4 +171,3 @@
     task clean(type: Delete) {
         delete rootProject.buildDir
     }
-    
