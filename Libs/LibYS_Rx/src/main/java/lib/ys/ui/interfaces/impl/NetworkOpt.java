@@ -111,7 +111,7 @@ public class NetworkOpt implements INetworkOpt {
         cancelAllNetworkReq();
 
         if (mNetwork != null) {
-            mNetwork.destroy();
+            mNetwork.cancelAll();
             mNetwork = null;
         }
 

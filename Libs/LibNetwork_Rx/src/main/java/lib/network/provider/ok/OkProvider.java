@@ -3,6 +3,7 @@ package lib.network.provider.ok;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.Flowable;
 import lib.network.NetworkLog;
 import lib.network.NetworkUtil;
 import lib.network.model.NetworkMethod;
@@ -26,20 +27,19 @@ import okhttp3.WebSocketListener;
  */
 public class OkProvider extends BaseProvider {
 
-    private Map<Integer, Task> mTaskMap;
+    private Map<Object, Map<Integer, Task>> mMapTag;
 
-    public OkProvider(Object tag) {
-        super(tag);
-
-        mTaskMap = new HashMap<>();
+    public OkProvider() {
+        mMapTag = new HashMap<>();
     }
 
     @Override
-    public void load(NetworkReq req, final int id, final OnNetworkListener lsn) {
+    public void load(NetworkReq req, Object tag, int id, OnNetworkListener lsn) {
         // FIXME: id的检测应该是在网络callback的时候进行, 暂时先放到这里, 如果出问题的话再更改
-        if (getTask(id) != null) {
-            if (getTask(id).isExecuted()) {
-                mTaskMap.remove(id);
+        Task t = getTask(tag, id);
+        if (t != null) {
+            if (t.isExecuted()) {
+                removeTask(tag, id);
             } else {
                 return;
             }
@@ -71,7 +71,7 @@ public class OkProvider extends BaseProvider {
 
         if (task != null) {
             task.run();
-            mTaskMap.put(id, task);
+            addTask(tag, id, task);
         }
     }
 
@@ -88,23 +88,52 @@ public class OkProvider extends BaseProvider {
     }
 
     @Override
-    public void cancel(int id) {
-        Task task = getTask(id);
+    public void cancel(Object tag, int id) {
+        Task task = getTask(tag, id);
         if (task != null) {
             task.cancel();
-            mTaskMap.remove(id);
+            removeTask(tag, id);
         }
     }
 
     @Override
-    public void cancelAll() {
-        for (Task task : mTaskMap.values()) {
-            task.cancel();
-        }
-        mTaskMap.clear();
+    public void cancelAll(Object tag) {
+        Flowable.just(mMapTag.get(tag))
+                .filter(integerTaskMap -> integerTaskMap != null)
+                .flatMap(integerTaskMap -> Flowable.fromIterable(integerTaskMap.values()))
+                .subscribe(task -> task.cancel());
     }
 
-    private Task getTask(int id) {
-        return mTaskMap.get(id);
+    @Override
+    public void cancelAll() {
+        Flowable.fromIterable(mMapTag.values())
+                .flatMap(integerTaskMap -> Flowable.fromIterable(integerTaskMap.values()))
+                .subscribe(task -> task.cancel());
+        mMapTag.clear();
+    }
+
+    private void addTask(Object tag, int id, Task task) {
+        Map<Integer, Task> taskMap = mMapTag.get(tag);
+        if (taskMap == null) {
+            taskMap = new HashMap<>();
+            mMapTag.put(tag, taskMap);
+        }
+        taskMap.put(id, task);
+    }
+
+    private Task getTask(Object tag, int id) {
+        Map<Integer, Task> taskMap = mMapTag.get(tag);
+        if (taskMap != null) {
+            return taskMap.get(id);
+        }
+        return null;
+    }
+
+    private Task removeTask(Object tag, int id) {
+        Map<Integer, Task> taskMap = mMapTag.get(tag);
+        if (taskMap != null) {
+            return taskMap.remove(id);
+        }
+        return null;
     }
 }

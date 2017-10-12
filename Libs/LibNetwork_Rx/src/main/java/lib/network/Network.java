@@ -20,21 +20,22 @@ import okhttp3.WebSocketListener;
  */
 public class Network {
     private OnNetworkListener mListener;
-    private BaseProvider mProvider;
+    private Object mTag;
 
+    private static BaseProvider mProvider;
     private static Context mContext;
     private static NetworkConfig mConfig;
 
     public Network(Object tag, OnNetworkListener listener) {
         mListener = listener;
-        mProvider = new OkProvider(tag);
+        mTag = tag;
     }
 
     public void load(int id, @NonNull NetworkReq req, @Nullable OnNetworkListener l) {
         if (l == null) {
             l = mListener;
         }
-        mProvider.load(req, id, l);
+        mProvider.load(req, mTag, id, l);
     }
 
     public WebSocket loadWebSocket(@NonNull NetworkReq req, @NonNull WebSocketListener l) {
@@ -42,20 +43,17 @@ public class Network {
     }
 
     public void cancel(int id) {
-        mProvider.cancel(id);
+        mProvider.cancel(mTag, id);
     }
 
     public void cancelAll() {
-        mProvider.cancelAll();
-    }
-
-    public void destroy() {
-        cancelAll();
+        mProvider.cancelAll(mTag);
     }
 
     public static void init(Context context, NetworkConfig config) {
         mContext = context;
         mConfig = config;
+        mProvider = new OkProvider();
     }
 
     public static Context getContext() {
@@ -67,5 +65,14 @@ public class Network {
             mConfig = NetworkConfigBuilder.create().build();
         }
         return mConfig;
+    }
+
+    /**
+     * 关闭app的时候取消所有
+     */
+    public static void cancelOnTerminal() {
+        if (mProvider != null) {
+            mProvider.cancelAll();
+        }
     }
 }
