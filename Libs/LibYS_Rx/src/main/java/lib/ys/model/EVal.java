@@ -324,6 +324,12 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
         return v;
     }
 
+    /**
+     * 获取序列化对象
+     *
+     * @param key
+     * @return
+     */
     public Serializable getSerializable(E key) {
         Object o = getObject(key);
         if (o == null) {
@@ -349,7 +355,14 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
         }
     }
 
-    public <T extends EVal> T getEv(E key) {
+    /**
+     * 获取同类型对象
+     *
+     * @param key
+     * @param <T>
+     * @return
+     */
+    public <T extends EVal> T get(E key) {
         Object o = getObject(key);
         if (o instanceof EVal) {
             return (T) o;
@@ -497,7 +510,7 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
 
                     Class val = annotation.value();
                     if (!val.equals(EVal.class)) {
-                        obj.put(e.name(), getEv(e).toJsonObject());
+                        obj.put(e.name(), get(e).toJsonObject());
                         continue;
                     }
 
