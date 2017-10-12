@@ -2,10 +2,15 @@ package lib.network;
 
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public final class NetworkLog {
 
     private static final String TAG = NetworkLog.class.getSimpleName();
 
+    private static final int KJsonIndent = 4;
     private static final String KSeparate = "=========";
     private static final boolean mIsDebug = true;
 
@@ -16,59 +21,9 @@ public final class NetworkLog {
         return mIsDebug;
     }
 
-    public static int v(String tag, String msg) {
+    public static void d(String msg) {
         if (mIsDebug) {
-            return Log.v(tag, msg);
-        } else {
-            return 0;
-        }
-    }
-
-    public static int v(String tag, String msg, Throwable tr) {
-        if (mIsDebug) {
-            return Log.v(tag, msg, tr);
-        } else {
-            return 0;
-        }
-    }
-
-    public static int d(String tag, String msg) {
-        if (mIsDebug) {
-            return Log.d(tag, msg);
-        } else {
-            return 0;
-        }
-    }
-
-    public static int d(String msg) {
-        if (mIsDebug) {
-            return Log.d(TAG, msg);
-        } else {
-            return 0;
-        }
-    }
-
-    public static int d(String tag, String msg, Throwable tr) {
-        if (mIsDebug) {
-            return Log.d(tag, msg, tr);
-        } else {
-            return 0;
-        }
-    }
-
-    public static int i(String tag, String msg) {
-        if (mIsDebug) {
-            return Log.i(tag, msg);
-        } else {
-            return 0;
-        }
-    }
-
-    public static int i(String tag, String msg, Throwable tr) {
-        if (mIsDebug) {
-            return Log.i(tag, msg, tr);
-        } else {
-            return 0;
+            printJson(msg);
         }
     }
 
@@ -90,21 +45,26 @@ public final class NetworkLog {
         }
     }
 
-    public static void e(String tag, String log) {
-        if (mIsDebug) {
-            Log.e(tag, log);
+    private static void printJson(String message) {
+        if (!mIsDebug) {
+            return;
         }
-    }
 
-    public static void e(String log) {
-        if (mIsDebug) {
-            Log.e(TAG, log);
+        String json;
+        try {
+            if (message.startsWith("{")) {
+                JSONObject jsonObject = new JSONObject(message);
+                json = jsonObject.toString(KJsonIndent);
+            } else if (message.startsWith("[")) {
+                JSONArray jsonArray = new JSONArray(message);
+                json = jsonArray.toString(KJsonIndent);
+            } else {
+                json = message;
+            }
+        } catch (JSONException e) {
+            json = message;
         }
-    }
 
-    public static void w(String tag, String log) {
-        if (mIsDebug) {
-            Log.w(tag, log);
-        }
+        Log.d(TAG, json);
     }
 }
