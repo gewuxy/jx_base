@@ -38,6 +38,4 @@
 
     <style name="et" parent="v"/>
 
-    <style name="layout" parent="v"/>
-
 </resources>
