@@ -1,19 +1,25 @@
 package lib.ys.util;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.os.Environment;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
+import android.support.annotation.NonNull;
 import android.support.v4.net.ConnectivityManagerCompat;
 import android.telephony.TelephonyManager;
 
 import java.io.File;
+import java.util.Locale;
 
 import lib.ys.AppEx;
 import lib.ys.ConstantsEx;
@@ -162,13 +168,7 @@ public class DeviceUtil {
      * @return
      */
     public static int getSDKVersion() {
-        int version = 0;
-        try {
-            version = Build.VERSION.SDK_INT;
-        } catch (NumberFormatException e) {
-            YSLog.e(TAG, e);
-        }
-        return version;
+        return Build.VERSION.SDK_INT;
     }
 
     public static String getBrand() {
@@ -213,5 +213,23 @@ public class DeviceUtil {
      */
     public static String getAndroidId(Context context) {
         return Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
+    }
+
+    /**
+     * 设置资源加载的语言版本
+     *
+     * @param context
+     * @param l
+     */
+    @TargetApi(VERSION_CODES.JELLY_BEAN_MR1)
+    public static void setResLocale(@NonNull Context context, @NonNull Locale l) {
+        Resources resources = context.getResources();
+        Configuration config = resources.getConfiguration();
+        if (getSDKVersion() >= VERSION_CODES.JELLY_BEAN_MR1) {
+            config.setLocale(l);
+        } else {
+            config.locale = l;
+        }
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }
