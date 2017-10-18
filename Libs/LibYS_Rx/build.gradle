@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-//apply plugin: plugs.butterknife
 
 android {
     compileSdkVersion versions.compileSdk

@@ -19,8 +19,8 @@ import javax.lang.model.element.VariableElement;
 
 import inject.android.MyClassName;
 import inject.annotation.network.API;
-import inject.annotation.network.APIFactory;
-import inject.annotation.network.Part;
+import inject.annotation.network.Descriptor;
+import inject.annotation.network.Query;
 import inject.annotation.network.Retry;
 import inject.annotation.network.Url;
 import inject.annotation.network.method.DOWNLOAD;
@@ -57,12 +57,12 @@ public class NetworkProcessor extends BaseProcessor {
 
     @Override
     protected Class<? extends Annotation> getAnnotationClass() {
-        return APIFactory.class;
+        return Descriptor.class;
     }
 
     @Override
     protected TypeSpec getBuilderSpec(Element annotatedElement) {
-        final String name = String.format("%sSetter", annotatedElement.getSimpleName());
+        final String name = String.format("%sDescriptor", annotatedElement.getSimpleName());
         TypeSpec.Builder builder = TypeSpec.classBuilder(name)
                 .addModifiers(PUBLIC, FINAL);
 
@@ -74,18 +74,18 @@ public class NetworkProcessor extends BaseProcessor {
         builder.addMethod(constructor.build());
 
         /**
-         * 寻找{@link APIFactory}
+         * 寻找{@link Descriptor}
          */
-        APIFactory apiFactory = annotatedElement.getAnnotation(APIFactory.class);
-        if (apiFactory != null) {
+        Descriptor descriptor = annotatedElement.getAnnotation(Descriptor.class);
+        if (descriptor != null) {
             // 加入host field
             builder.addField(FieldSpec.builder(String.class, FieldName.KHost, PRIVATE, STATIC, FINAL)
-                    .initializer(Format.KString, apiFactory.host())
+                    .initializer(Format.KString, descriptor.host())
                     .build());
 
-            if (!apiFactory.hostDebuggable().isEmpty()) {
+            if (!descriptor.hostDebuggable().isEmpty()) {
                 builder.addField(FieldSpec.builder(String.class, FieldName.KHostDebuggable, PRIVATE, STATIC, FINAL)
-                        .initializer(Format.KString, apiFactory.hostDebuggable())
+                        .initializer(Format.KString, descriptor.hostDebuggable())
                         .build());
             }
 
@@ -309,9 +309,9 @@ public class NetworkProcessor extends BaseProcessor {
     private void getAnnotatedFields(Element ele, List<VariableElement> required, List<VariableElement> optional) {
         ExecutableElement executableElement = (ExecutableElement) ele;
         for (VariableElement e : executableElement.getParameters()) {
-            Part part = e.getAnnotation(Part.class);
-            if (part != null) {
-                if (part.opt()) {
+            Query query = e.getAnnotation(Query.class);
+            if (query != null) {
+                if (query.opt()) {
                     optional.add(e);
                 } else {
                     required.add(e);
@@ -323,10 +323,10 @@ public class NetworkProcessor extends BaseProcessor {
     }
 
     private String getParamName(Element ele) {
-        Part part = ele.getAnnotation(Part.class);
+        Query query = ele.getAnnotation(Query.class);
         String name = ele.getSimpleName().toString();
-        if (part != null) {
-            return part.value().isEmpty() ? name : part.value();
+        if (query != null) {
+            return query.value().isEmpty() ? name : query.value();
         } else {
             return name;
         }
