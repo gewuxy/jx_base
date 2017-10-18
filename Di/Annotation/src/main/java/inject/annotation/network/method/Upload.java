@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.SOURCE)
-public @interface POST {
+public @interface Upload {
     String value();
 }

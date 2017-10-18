@@ -18,16 +18,16 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 
 import inject.android.MyClassName;
-import inject.annotation.network.API;
+import inject.annotation.network.Api;
 import inject.annotation.network.Descriptor;
 import inject.annotation.network.Query;
 import inject.annotation.network.Retry;
 import inject.annotation.network.Url;
-import inject.annotation.network.method.DOWNLOAD;
-import inject.annotation.network.method.DOWNLOAD_FILE;
-import inject.annotation.network.method.GET;
-import inject.annotation.network.method.POST;
-import inject.annotation.network.method.UPLOAD;
+import inject.annotation.network.method.Download;
+import inject.annotation.network.method.DownloadFile;
+import inject.annotation.network.method.Get;
+import inject.annotation.network.method.Post;
+import inject.annotation.network.method.Upload;
 
 import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PRIVATE;
@@ -108,10 +108,10 @@ public class NetworkProcessor extends BaseProcessor {
                 .build());
 
         /**
-         * 寻找{@link API}
+         * 寻找{@link Api}
          */
         for (Element apiEle : annotatedElement.getEnclosedElements()) {
-            API api = apiEle.getAnnotation(API.class);
+            Api api = apiEle.getAnnotation(Api.class);
             if (api != null && apiEle.getKind().isInterface()) {
                 // 只支持interface
                 // 生成对应API的class
@@ -170,7 +170,7 @@ public class NetworkProcessor extends BaseProcessor {
         return builder.build();
     }
 
-    private void writeAPI(Element ele, String methodName, TypeSpec.Builder typeBuilder, API api) {
+    private void writeAPI(Element ele, String methodName, TypeSpec.Builder typeBuilder, Api api) {
         List<VariableElement> required = new ArrayList<>();
         List<VariableElement> optional = new ArrayList<>();
         List<VariableElement> all = new ArrayList<>();
@@ -230,19 +230,19 @@ public class NetworkProcessor extends BaseProcessor {
 
             b.addStatement("$N.download($L, $L)", FieldName.KBuilder, FieldName.KDir, FieldName.KFileName);
 
-            pathVal = getAnnotation(ele, DOWNLOAD_FILE.class).value();
+            pathVal = getAnnotation(ele, DownloadFile.class).value();
         } else {
-            if (getAnnotation(ele, GET.class) != null) {
-                pathVal = getAnnotation(ele, GET.class).value();
+            if (getAnnotation(ele, Get.class) != null) {
+                pathVal = getAnnotation(ele, Get.class).value();
                 b.addStatement("$N.get()", FieldName.KBuilder);
-            } else if (ele.getAnnotation(POST.class) != null) {
-                pathVal = getAnnotation(ele, POST.class).value();
+            } else if (ele.getAnnotation(Post.class) != null) {
+                pathVal = getAnnotation(ele, Post.class).value();
                 b.addStatement("$N.post()", FieldName.KBuilder);
-            } else if (ele.getAnnotation(UPLOAD.class) != null) {
-                pathVal = getAnnotation(ele, UPLOAD.class).value();
+            } else if (ele.getAnnotation(Upload.class) != null) {
+                pathVal = getAnnotation(ele, Upload.class).value();
                 b.addStatement("$N.upload()", FieldName.KBuilder);
-            } else if (ele.getAnnotation(DOWNLOAD.class) != null) {
-                pathVal = getAnnotation(ele, DOWNLOAD.class).value();
+            } else if (ele.getAnnotation(Download.class) != null) {
+                pathVal = getAnnotation(ele, Download.class).value();
                 b.addStatement("$N.download()", FieldName.KBuilder);
             }
         }
@@ -344,7 +344,7 @@ public class NetworkProcessor extends BaseProcessor {
     }
 
     private boolean isDownloadFileType(Element e) {
-        return e.getAnnotation(DOWNLOAD_FILE.class) != null;
+        return e.getAnnotation(DownloadFile.class) != null;
     }
 
     private <T extends Annotation> T getAnnotation(Element ele, Class<T> clz) {
