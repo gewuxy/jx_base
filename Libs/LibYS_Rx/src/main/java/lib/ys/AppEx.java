@@ -12,7 +12,7 @@ import lib.ys.config.AppConfig;
 import lib.ys.config.ListConfig;
 import lib.ys.config.ListConfigBuilder;
 import lib.ys.config.NavBarConfig;
-import lib.ys.crash.CrashMgr;
+import lib.ys.crash.CrashHandler;
 import lib.ys.network.image.NetworkImageView;
 import lib.ys.ui.other.NavBar;
 import lib.ys.util.DeviceUtil;
@@ -56,7 +56,7 @@ abstract public class AppEx extends Application {
         NavBar.init(configureNavBar());
 
         if (enableCatchCrash()) {
-            CrashMgr.inst().init(e -> {
+            CrashHandler.inst().init(e -> {
                 YSLog.e(TAG, "handleCrashException", e);
                 handleCrash(e);
                 return true;

@@ -6,6 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 声明网络任务的描述类
+ *
  * @auther yuansui
  * @since 2017/8/16
  */

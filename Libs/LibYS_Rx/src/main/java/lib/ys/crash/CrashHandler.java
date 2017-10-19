@@ -5,22 +5,22 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import lib.ys.YSLog;
 import lib.ys.util.UtilEx;
 
-public class CrashMgr implements UncaughtExceptionHandler {
+public class CrashHandler implements UncaughtExceptionHandler {
 
-    public static final String TAG = CrashMgr.class.getSimpleName();
+    public static final String TAG = CrashHandler.class.getSimpleName();
 
     // 系统默认的UncaughtException处理类
     private UncaughtExceptionHandler mDefaultHandler;
-    private static CrashMgr mInst = null;
+    private static CrashHandler mInst = null;
 
     private OnCrashListener mCrashListener;
 
-    private CrashMgr() {
+    private CrashHandler() {
     }
 
-    public static CrashMgr inst() {
+    public static CrashHandler inst() {
         if (mInst == null) {
-            mInst = new CrashMgr();
+            mInst = new CrashHandler();
         }
         return mInst;
     }

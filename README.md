@@ -19,7 +19,7 @@
                 java          : JavaVersion.VERSION_1_8,
                 supportLibrary: '24+',
     
-                kotlin        : '1.1.4-3',
+                kotlin        : '1.1.51',
         ]
     
         ext.configs = [
