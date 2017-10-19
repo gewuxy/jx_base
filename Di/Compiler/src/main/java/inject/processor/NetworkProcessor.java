@@ -20,6 +20,7 @@ import javax.lang.model.element.VariableElement;
 import inject.android.MyClassName;
 import inject.annotation.network.Api;
 import inject.annotation.network.Descriptor;
+import inject.annotation.network.Host;
 import inject.annotation.network.Query;
 import inject.annotation.network.Retry;
 import inject.annotation.network.Url;
@@ -203,7 +204,6 @@ public class NetworkProcessor extends BaseProcessor {
             }
         }
 
-        String baseHost = FieldName.KBaseHost;
         String pathVal = null;
 
         MethodSpec.Builder b = MethodSpec.methodBuilder("build")
@@ -248,13 +248,19 @@ public class NetworkProcessor extends BaseProcessor {
         }
 
         String urlName = null;
-        // 如果有声明@Url, 则使用@Url的作为baseHost
-        for (VariableElement e : required) {
-            // @Url的声明只支持必需参数
-            Url url = getAnnotation(e, Url.class);
-            if (url != null) {
-                urlName = e.getSimpleName().toString();
-                break;
+        Host host = ele.getAnnotation(Host.class);
+        if (host != null) {
+            // 如果声明了@Host, 直接使用其value
+            urlName = host.value();
+        } else {
+            // 如果有声明@Url, 则使用@Url的作为baseHost
+            for (VariableElement e : required) {
+                // @Url的声明只支持必需参数
+                Url url = getAnnotation(e, Url.class);
+                if (url != null) {
+                    urlName = e.getSimpleName().toString();
+                    break;
+                }
             }
         }
 
@@ -264,10 +270,21 @@ public class NetworkProcessor extends BaseProcessor {
                 if (!apiVal.endsWith("/")) {
                     apiVal += "/";
                 }
-                constructorBuilder.addStatement("this.$N = $T.newBuilder($N + $S + $S)", FieldName.KBuilder, MyClassName.KNetworkReq, baseHost, apiVal, pathVal);
+                constructorBuilder.addStatement("this.$N = $T.newBuilder($N + $S + $S)",
+                        FieldName.KBuilder,
+                        MyClassName.KNetworkReq,
+                        FieldName.KBaseHost,
+                        apiVal,
+                        pathVal);
             } else {
-                constructorBuilder.addStatement("this.$N = $T.newBuilder($N + $S)", FieldName.KBuilder, MyClassName.KNetworkReq, baseHost, pathVal);
+                constructorBuilder.addStatement("this.$N = $T.newBuilder($N + $S)",
+                        FieldName.KBuilder,
+                        MyClassName.KNetworkReq,
+                        FieldName.KBaseHost,
+                        pathVal);
             }
+        } else if (host != null) {
+            constructorBuilder.addStatement("this.$N = $T.newBuilder($S)", FieldName.KBuilder, MyClassName.KNetworkReq, urlName);
         } else {
             constructorBuilder.addStatement("this.$N = $T.newBuilder($L)", FieldName.KBuilder, MyClassName.KNetworkReq, urlName);
         }
