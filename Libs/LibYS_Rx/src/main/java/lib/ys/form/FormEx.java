@@ -65,6 +65,7 @@ abstract public class FormEx<VH extends IViewHolder> implements OnClickListener 
     private int mLayoutId = ConstantsEx.KInvalidValue;
 
     private ColorStateList mTextColor;
+    private ColorStateList mNameColor;
 
     private String mToast;
 
@@ -226,6 +227,11 @@ abstract public class FormEx<VH extends IViewHolder> implements OnClickListener 
 
     public <T extends FormEx<VH>> T textColor(@ColorInt int color) {
         mTextColor = ColorStateList.valueOf(color);
+        return (T) this;
+    }
+
+    public <T extends FormEx<VH>> T nameColor(@ColorInt int color) {
+        mNameColor = ColorStateList.valueOf(color);
         return (T) this;
     }
 
@@ -406,6 +412,10 @@ abstract public class FormEx<VH extends IViewHolder> implements OnClickListener 
 
     public ColorStateList getTextColor() {
         return mTextColor;
+    }
+
+    public ColorStateList getNameColor() {
+        return mNameColor;
     }
 
     public String getToast() {
