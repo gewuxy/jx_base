@@ -63,7 +63,8 @@ public class NetworkOpt implements INetworkOpt {
         }
 
         if (mNetwork == null) {
-            mNetwork = new Network(mHost.getClass().getName(), mNetworkLsn);
+            String tag = Integer.toHexString(System.identityHashCode(mHost));
+            mNetwork = new Network(tag, mNetworkLsn);
         }
         mNetwork.load(id, req, l);
     }
