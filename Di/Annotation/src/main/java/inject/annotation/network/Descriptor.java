@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * @since 2017/8/16
  */
 @Target(ElementType.TYPE)
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface Descriptor {
     /**
      * 正式线
