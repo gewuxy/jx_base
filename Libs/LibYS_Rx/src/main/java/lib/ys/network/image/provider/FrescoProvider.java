@@ -110,6 +110,7 @@ public class FrescoProvider extends BaseProvider {
                 .setOldController(mSdv.getController())
                 .setImageRequest(builder.build())
                 .setControllerListener(mCtrlListener)
+                .setAutoPlayAnimations(true) // 图片下载完之后自动播放，同时，当View从屏幕移除时，停止播放
                 .build();
 
         mSdv.setController(controller);
@@ -141,6 +142,10 @@ public class FrescoProvider extends BaseProvider {
                             }
                         };
                         listener.onImageSet(info);
+                        // 控制动画的播放(要设置Listener才有效)
+                        /*if (animatable != null) {
+                            animatable.start();
+                        }*/
                     }
                 }
 

@@ -41,7 +41,8 @@ dependencies {
      * 图片
      * ImageView必须要继承SimpleDraweeView的方式导致无法使用implementation方式
      */
-    api deps.fresco
+    api deps.fresco.fresco
+    api deps.fresco.gif
     /**
      * Rx
      */
