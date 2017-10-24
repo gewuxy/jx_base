@@ -6,7 +6,6 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.support.annotation.CallSuper;
 import android.support.annotation.IntDef;
 import android.support.annotation.StringRes;
 
@@ -135,38 +134,38 @@ public class IntentAction {
         return new PhotoAction();
     }
 
-    abstract static public class BaseAction {
+    abstract static public class BaseAction<ACTION extends BaseAction<ACTION>> {
         protected boolean mCreateChooser;
         protected String mChooserTitle;
         protected String mAlert;
 
         abstract public void launch();
 
+        private ACTION getThis() {
+            return (ACTION) this;
+        }
+
         /**
          * 要求子类重写, 方便外部链式调用
          *
          * @param title
-         * @param <T>
          * @return
          */
-        @CallSuper
-        public <T extends BaseAction> T createChooser(String title) {
+        public ACTION createChooser(String title) {
             mCreateChooser = true;
             mChooserTitle = title;
-            return (T) this;
+            return getThis();
         }
 
         /**
          * 要求子类重写, 方便外部链式调用
          *
          * @param a
-         * @param <T>
          * @return
          */
-        @CallSuper
-        public <T extends BaseAction> T alert(String a) {
+        public ACTION alert(String a) {
             mAlert = a;
-            return (T) this;
+            return getThis();
         }
 
         /**
@@ -198,7 +197,7 @@ public class IntentAction {
     /**
      * 邮件
      */
-    public static class MailAction extends BaseAction {
+    public static class MailAction extends BaseAction<MailAction> {
 
         private String mAddress;
         private String mSubject;
@@ -229,16 +228,6 @@ public class IntentAction {
         }
 
         @Override
-        public MailAction createChooser(String title) {
-            return super.createChooser(title);
-        }
-
-        @Override
-        public MailAction alert(String a) {
-            return super.alert(a);
-        }
-
-        @Override
         public void launch() {
             Intent intent = new Intent(Intent.ACTION_SEND)
                     .setType("plain/text") // don't use final define
@@ -261,21 +250,11 @@ public class IntentAction {
     /**
      * 外部浏览器
      */
-    public static class BrowserAction extends BaseAction {
+    public static class BrowserAction extends BaseAction<BrowserAction> {
 
         private String mUrl;
 
         private BrowserAction() {
-        }
-
-        @Override
-        public BrowserAction createChooser(String title) {
-            return super.createChooser(title);
-        }
-
-        @Override
-        public BrowserAction alert(String a) {
-            return super.alert(a);
         }
 
         public BrowserAction url(String url) {
@@ -298,19 +277,9 @@ public class IntentAction {
         }
     }
 
-    public static class MarketAction extends BaseAction {
+    public static class MarketAction extends BaseAction<MarketAction> {
 
         private MarketAction() {
-        }
-
-        @Override
-        public MarketAction createChooser(String title) {
-            return super.createChooser(title);
-        }
-
-        @Override
-        public MarketAction alert(String a) {
-            return super.alert(a);
         }
 
         @Override
@@ -333,23 +302,13 @@ public class IntentAction {
         }
     }
 
-    public static class MapAction extends BaseAction {
+    public static class MapAction extends BaseAction<MapAction> {
 
         private double mLatitude;
         private double mLongitude;
         private String mName;
 
         private MapAction() {
-        }
-
-        @Override
-        public MapAction createChooser(String title) {
-            return super.createChooser(title);
-        }
-
-        @Override
-        public MapAction alert(String a) {
-            return super.alert(a);
         }
 
         /**
@@ -404,21 +363,11 @@ public class IntentAction {
     /**
      * 指定打开App的场景, 如支付宝, 微信
      */
-    public static class AppAction extends BaseAction {
+    public static class AppAction extends BaseAction<AppAction> {
 
         private String mUrl;
 
         private AppAction() {
-        }
-
-        @Override
-        public AppAction createChooser(String title) {
-            return super.createChooser(title);
-        }
-
-        @Override
-        public AppAction alert(String a) {
-            return super.alert(a);
         }
 
         public AppAction url(String url) {
@@ -433,21 +382,11 @@ public class IntentAction {
         }
     }
 
-    public static class AnyAction extends BaseAction {
+    public static class AnyAction extends BaseAction<AnyAction> {
 
         private Intent mIntent;
 
         private AnyAction() {
-        }
-
-        @Override
-        public AnyAction createChooser(String title) {
-            return super.createChooser(title);
-        }
-
-        @Override
-        public AnyAction alert(String a) {
-            return super.alert(a);
         }
 
         public AnyAction intent(Intent i) {
@@ -464,21 +403,11 @@ public class IntentAction {
     /**
      * 调用第三方打开Word文件
      */
-    public static class WordAction extends BaseAction {
+    public static class WordAction extends BaseAction<WordAction> {
 
         private String mFilePath;
 
         private WordAction() {
-        }
-
-        @Override
-        public WordAction createChooser(String title) {
-            return super.createChooser(title);
-        }
-
-        @Override
-        public WordAction alert(String a) {
-            return super.alert(a);
         }
 
         public WordAction filePath(String filePath) {
@@ -500,21 +429,11 @@ public class IntentAction {
     /**
      * 调用第三方打开PPT文件
      */
-    public static class PptAction extends BaseAction {
+    public static class PptAction extends BaseAction<PptAction> {
 
         private String mFilePath;
 
         private PptAction() {
-        }
-
-        @Override
-        public PptAction createChooser(String title) {
-            return super.createChooser(title);
-        }
-
-        @Override
-        public PptAction alert(String a) {
-            return super.alert(a);
         }
 
         public PptAction filePath(String filePath) {
@@ -536,21 +455,11 @@ public class IntentAction {
     /**
      * 调用第三方打开excel文件
      */
-    public static class ExcelAction extends BaseAction {
+    public static class ExcelAction extends BaseAction<ExcelAction> {
 
         private String mFilePath;
 
         public ExcelAction() {
-        }
-
-        @Override
-        public ExcelAction createChooser(String title) {
-            return super.createChooser(title);
-        }
-
-        @Override
-        public ExcelAction alert(String a) {
-            return super.alert(a);
         }
 
         public ExcelAction filePath(String filePath) {
@@ -569,17 +478,7 @@ public class IntentAction {
         }
     }
 
-    public static class AppSetupAction extends BaseAction {
-
-        @Override
-        public AppSetupAction createChooser(String title) {
-            return super.createChooser(title);
-        }
-
-        @Override
-        public AppSetupAction alert(String a) {
-            return super.alert(a);
-        }
+    public static class AppSetupAction extends BaseAction<AppSetupAction> {
 
         @Override
         public void launch() {
@@ -589,23 +488,13 @@ public class IntentAction {
         }
     }
 
-    public static class PhoneCallAction extends BaseAction {
+    public static class PhoneCallAction extends BaseAction<PhoneCallAction> {
 
         private String mTellNum;
 
         public PhoneCallAction tellNum(String tellNum) {
             mTellNum = tellNum;
             return this;
-        }
-
-        @Override
-        public PhoneCallAction createChooser(String title) {
-            return super.createChooser(title);
-        }
-
-        @Override
-        public PhoneCallAction alert(String a) {
-            return super.alert(a);
         }
 
         @Override
@@ -617,7 +506,7 @@ public class IntentAction {
         }
     }
 
-    public static class PhotoAction extends BaseAction {
+    public static class PhotoAction extends BaseAction<PhotoAction> {
         /**
          * 图片来源
          */
@@ -663,17 +552,6 @@ public class IntentAction {
             mSource = s;
             return this;
         }
-
-        @Override
-        public PhotoAction createChooser(String title) {
-            return super.createChooser(title);
-        }
-
-        @Override
-        public PhotoAction alert(String a) {
-            return super.alert(a);
-        }
-
 
         @Override
         public void launch() {
