@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * @since 2017/8/1
  */
 @Target(ElementType.FIELD)
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.CLASS)
 public @interface Arg {
     /**
      * 替换的key
