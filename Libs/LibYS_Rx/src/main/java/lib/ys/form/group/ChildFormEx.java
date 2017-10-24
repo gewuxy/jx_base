@@ -15,7 +15,8 @@ import lib.ys.form.FormEx;
  * @param <VH>
  * @deprecated
  */
-abstract public class ChildFormEx<VH extends ViewHolderEx> extends FormEx<VH> implements OnClickListener {
+abstract public class ChildFormEx<FORM extends FormEx<FORM, VH>, VH extends ViewHolderEx> extends FormEx<FORM, VH>
+        implements OnClickListener {
 
     private int mGroupPosition;
     private int mChildPosition;

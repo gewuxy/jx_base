@@ -24,7 +24,8 @@ import lib.ys.util.TextUtil;
 import lib.ys.util.res.ResLoader;
 import lib.ys.util.view.ViewUtil;
 
-abstract public class FormEx<VH extends IViewHolder> implements OnClickListener {
+abstract public class FormEx<T extends FormEx<T, VH>, VH extends IViewHolder>
+        implements OnClickListener {
 
     protected final String TAG = getClass().getSimpleName();
 
@@ -81,40 +82,40 @@ abstract public class FormEx<VH extends IViewHolder> implements OnClickListener 
     private VH mHolder;
 
 
-    public <T extends FormEx<VH>> T name(String name) {
+    public T name(String name) {
         mName = name;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T key(String key) {
+    public T key(String key) {
         mKey = key;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T val(String val) {
+    public T val(String val) {
         mVal = val;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T name(@StringRes int id) {
+    public T name(@StringRes int id) {
         mName = ResLoader.getString(id);
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T text(String text) {
+    public T text(String text) {
         mText = text;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T texts(String... texts) {
+    public T texts(String... texts) {
         mTexts = texts;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T texts(@StringRes int... ids) {
+    public T texts(@StringRes int... ids) {
         int len = ids.length;
         if (len == 0) {
-            return (T) this;
+            return getThis();
         }
 
         mTexts = new String[len];
@@ -122,167 +123,167 @@ abstract public class FormEx<VH extends IViewHolder> implements OnClickListener 
             mTexts[i] = ResLoader.getString(ids[i]);
         }
 
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T text(@StringRes int id) {
+    public T text(@StringRes int id) {
         mText = ResLoader.getString(id);
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T hint(String hint) {
+    public T hint(String hint) {
         mHint = hint;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T hint(@StringRes int id) {
+    public T hint(@StringRes int id) {
         mHint = ResLoader.getString(id);
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T tips(String tips) {
+    public T tips(String tips) {
         mTips = tips;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T tips(@StringRes int id) {
+    public T tips(@StringRes int id) {
         mTips = ResLoader.getString(id);
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T enable(boolean able) {
+    public T enable(boolean able) {
         mEnabled = able;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T related(Object related) {
+    public T related(Object related) {
         mRelated = related;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T data(Object data) {
+    public T data(Object data) {
         mData = data;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T option(Object option) {
+    public T option(Object option) {
         mOption = option;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T host(Object host) {
+    public T host(Object host) {
         mHost = host;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T width(int w) {
+    public T width(int w) {
         mWidth = w;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T height(int h) {
+    public T height(int h) {
         mHeight = h;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T column(int c) {
+    public T column(int c) {
         mColumn = c;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T limit(int limit) {
+    public T limit(int limit) {
         mLimit = limit;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T background(@ColorInt int color) {
+    public T background(@ColorInt int color) {
         mBgColor = color;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T backgroundRes(@ColorRes int id) {
+    public T backgroundRes(@ColorRes int id) {
         mBgColor = ResLoader.getColor(id);
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T mode(int mode) {
+    public T mode(int mode) {
         mMode = mode;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T drawable(@DrawableRes int id) {
+    public T drawable(@DrawableRes int id) {
         mDrawableId = id;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T layout(@LayoutRes int id) {
+    public T layout(@LayoutRes int id) {
         mLayoutId = id;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T textColorRes(@ColorRes int id) {
+    public T textColorRes(@ColorRes int id) {
         mTextColor = ResLoader.getColorStateList(id);
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T textColor(@ColorInt int color) {
+    public T textColor(@ColorInt int color) {
         mTextColor = ColorStateList.valueOf(color);
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T nameColor(@ColorInt int color) {
+    public T nameColor(@ColorInt int color) {
         mNameColor = ColorStateList.valueOf(color);
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T toast(String toast) {
+    public T toast(String toast) {
         mToast = toast;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T intent(Intent i) {
+    public T intent(Intent i) {
         mIntent = i;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T children(List children) {
+    public T children(List children) {
         mChildren = children;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T depend(Object depend) {
+    public T depend(Object depend) {
         mDepend = depend;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T regex(String regex) {
+    public T regex(String regex) {
         mRegex = regex;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T check(boolean check) {
+    public T check(boolean check) {
         mCheck = check;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T index(int index) {
+    public T index(int index) {
         mIndex = index;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T id(int id) {
+    public T id(int id) {
         mId = id;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T visible(boolean visible) {
+    public T visible(boolean visible) {
         mVisible = visible;
-        return (T) this;
+        return getThis();
     }
 
-    public <T extends FormEx<VH>> T observer(OnFormObserver observer) {
+    public T observer(OnFormObserver observer) {
         mObserver = observer;
-        return (T) this;
+        return getThis();
     }
 
     public void setAttrs(VH holder, int position, OnFormViewClickListener listener) {
@@ -580,5 +581,9 @@ abstract public class FormEx<VH extends IViewHolder> implements OnClickListener 
 
     protected boolean isEmpty(String text) {
         return TextUtil.isEmpty(text);
+    }
+
+    protected T getThis() {
+        return (T) this;
     }
 }

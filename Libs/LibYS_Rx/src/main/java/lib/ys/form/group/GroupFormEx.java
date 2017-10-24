@@ -16,7 +16,7 @@ import lib.ys.form.FormEx;
  * @param <VH>
  * @deprecated
  */
-abstract public class GroupFormEx<VH extends ViewHolderEx> extends FormEx<VH> {
+abstract public class GroupFormEx<FORM extends FormEx<FORM, VH>, VH extends ViewHolderEx> extends FormEx<FORM, VH> {
 
     private List<ChildFormEx> mChildItems;
 

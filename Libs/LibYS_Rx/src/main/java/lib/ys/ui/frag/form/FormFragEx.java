@@ -18,7 +18,6 @@ import java.util.Map;
 import io.reactivex.Observable;
 import lib.ys.ConstantsEx;
 import lib.ys.R;
-import lib.ys.adapter.VH.ViewHolderEx;
 import lib.ys.adapter.interfaces.IViewHolder;
 import lib.ys.form.FormEx;
 import lib.ys.form.FormHost;
@@ -32,7 +31,8 @@ import lib.ys.view.StayScrollView;
 
 
 @SuppressWarnings("rawtypes")
-abstract public class FormFragEx<T extends FormEx<VH>, VH extends ViewHolderEx> extends FragEx
+abstract public class FormFragEx<T extends FormEx<T, VH>, VH extends IViewHolder>
+        extends FragEx
         implements OnFormViewClickListener, FormHost {
 
     private List<T> mItems;
@@ -212,36 +212,36 @@ abstract public class FormFragEx<T extends FormEx<VH>, VH extends ViewHolderEx> 
         return mLayoutFooter;
     }
 
-    public void setItems(List<T> ts) {
+    public void setItems(List<T> TS) {
         mItems.clear();
         mRemandItems.clear();
         removeAllItem();
 
-        Observable.fromIterable(ts).subscribe(t -> addItem(t));
+        Observable.fromIterable(TS).subscribe(T -> addItem(T));
     }
 
-    public final T addItem(T t) {
-        if (t == null || t.getContentViewResId() <= 0) {
-            return t;
+    public final T addItem(T T) {
+        if (T == null || T.getContentViewResId() <= 0) {
+            return T;
         }
 
-        t.host(this);
+        T.host(this);
 
         if (mLayoutItems == null) {
-            mRemandItems.add(t);
-            return t;
+            mRemandItems.add(T);
+            return T;
         } else {
-            mItems.add(t);
-            Object related = t.getRelated();
+            mItems.add(T);
+            Object related = T.getRelated();
             if (related != null) {
-                mMapRelated.put(related, t);
+                mMapRelated.put(related, T);
             }
         }
 
-        View v = getLayoutInflater().inflate(t.getContentViewResId(), null);
-        addItemView(t, v, getLastItemPosition());
+        View v = getLayoutInflater().inflate(T.getContentViewResId(), null);
+        addItemView(T, v, getLastItemPosition());
 
-        return t;
+        return T;
     }
 
     @Override
@@ -269,9 +269,9 @@ abstract public class FormFragEx<T extends FormEx<VH>, VH extends ViewHolderEx> 
         }
     }
 
-    protected void refreshItem(T... ts) {
-        for (T t : ts) {
-            t.refresh();
+    protected void refreshItem(T... TS) {
+        for (T T : TS) {
+            T.refresh();
         }
     }
 
@@ -283,29 +283,29 @@ abstract public class FormFragEx<T extends FormEx<VH>, VH extends ViewHolderEx> 
         getItem(position).show();
     }
 
-    protected void hideItem(T... ts) {
-        for (T t : ts) {
-            t.hide();
+    protected void hideItem(T... TS) {
+        for (T T : TS) {
+            T.hide();
         }
     }
 
-    protected void showItem(T... ts) {
-        for (T t : ts) {
-            t.show();
+    protected void showItem(T... TS) {
+        for (T T : TS) {
+            T.show();
         }
     }
 
     protected void hideRelatedItem(Object related) {
-        T t = getRelatedItem(related);
-        if (t != null) {
-            t.hide();
+        T T = getRelatedItem(related);
+        if (T != null) {
+            T.hide();
         }
     }
 
     protected void showRelatedItem(Object related) {
-        T t = getRelatedItem(related);
-        if (t != null) {
-            t.show();
+        T T = getRelatedItem(related);
+        if (T != null) {
+            T.show();
         }
     }
 
@@ -322,11 +322,11 @@ abstract public class FormFragEx<T extends FormEx<VH>, VH extends ViewHolderEx> 
         mLayoutItems.removeAllViews();
     }
 
-    protected ViewHolderEx getViewHolder(int position) {
+    protected VH getViewHolder(int position) {
         return getItem(position).getHolder();
     }
 
-    protected ViewHolderEx getViewHolder(Object related) {
+    protected VH getViewHolder(Object related) {
         return getRelatedItem(related).getHolder();
     }
 

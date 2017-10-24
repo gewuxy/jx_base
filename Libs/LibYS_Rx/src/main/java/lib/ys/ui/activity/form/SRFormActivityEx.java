@@ -17,7 +17,7 @@ import lib.ys.view.swipeRefresh.interfaces.OnSRListener;
 /**
  * @author yuansui
  */
-abstract public class SRFormActivityEx<T extends FormEx<VH>, VH extends IViewHolder> extends FormActivityEx<T, VH> {
+abstract public class SRFormActivityEx<T extends FormEx<T, VH>, VH extends IViewHolder> extends FormActivityEx<T, VH> {
 
     private BaseSRLayout mSRLayout;
 

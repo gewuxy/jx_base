@@ -101,11 +101,10 @@ public class DownloadTask extends GetTask {
                     long bytesRead = super.read(sink, byteCount);
                     //增加当前读取的字节数，如果读取完成了bytesRead会返回-1
                     totalBytesRead += bytesRead != -1 ? bytesRead : 0;
-                    //回调，如果contentLength()不知道长度，会返回-1
-
-                    float progress = (float) totalBytesRead / responseBody.contentLength() * 100;
 
                     if (mListener != null) {
+                        //回调，如果contentLength()不知道长度，会返回-1
+                        float progress = (float) totalBytesRead / responseBody.contentLength() * 100;
                         NativeListener.inst().onProgress(mId, progress, responseBody.contentLength(), mListener);
                     }
                     return bytesRead;

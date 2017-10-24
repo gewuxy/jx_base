@@ -17,7 +17,8 @@ import lib.ys.view.swipeRefresh.interfaces.OnSRListener;
 /**
  * @author yuansui
  */
-abstract public class SRFormFragEx<T extends FormEx<VH>, VH extends ViewHolderEx> extends FormFragEx<T, VH> {
+abstract public class SRFormFragEx<T extends FormEx<T, VH>, VH extends ViewHolderEx>
+        extends FormFragEx<T, VH> {
 
     private BaseSRLayout mSRLayout;
 

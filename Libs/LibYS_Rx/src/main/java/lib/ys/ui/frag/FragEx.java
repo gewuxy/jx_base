@@ -277,10 +277,6 @@ abstract public class FragEx extends Fragment implements
         return AppEx.getConfig().getInitRefreshWay();
     }
 
-    protected LayoutInflater getLayoutInflater() {
-        return getActivity().getLayoutInflater();
-    }
-
     protected View inflate(@LayoutRes int resource, @Nullable ViewGroup root) {
         return getLayoutInflater().inflate(resource, root);
     }
