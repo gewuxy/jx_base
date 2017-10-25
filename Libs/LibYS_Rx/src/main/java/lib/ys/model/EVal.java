@@ -661,4 +661,15 @@ abstract public class EVal<E extends Enum<E>> implements Serializable, Cloneable
 
         return Arrays.hashCode(objs.toArray());
     }
+
+    public boolean increase(E key, int num) {
+        int val = getInt(key);
+        if (val != ConstantsEx.KInvalidValue) {
+            val += num;
+            put(key, val);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
