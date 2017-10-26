@@ -8,16 +8,16 @@
     
         ext.versions = [
                 minSdk        : 15,
-                compileSdk    : 24,
+                compileSdk    : 26,
                 buildTools    : '26.0.2',
     
-                androidPlugin : '3.0.0-beta7',
+                androidPlugin : '3.0.0',
     
                 versionCode   : 100,
                 versionName   : '1.0',
     
                 java          : JavaVersion.VERSION_1_8,
-                supportLibrary: '24+',
+                supportLibrary: '26+',
     
                 kotlin        : '1.1.51',
         ]
@@ -28,7 +28,7 @@
         ]
     
         ext.plugs = [
-                kotlin     : 'kotlin-android',
+                kotlin: 'kotlin-kapt',
     //            butterknife: 'com.jakewharton.butterknife',
         ]
     
@@ -50,7 +50,10 @@
                         binding: 'com.jakewharton.rxbinding2:rxbinding:2.0.0',
                 ],
                 lottie      : 'com.airbnb.android:lottie:2.2.1', // 加载AE制作出来的json直接展示效果的库
-                fresco      : 'com.facebook.fresco:fresco:1.5.0',
+                fresco      : [
+                        fresco: 'com.facebook.fresco:fresco:1.5.0',
+                        gif   : 'com.facebook.fresco:animated-gif:1.5.0',
+                ],
     //            butterknife : [
     //                    core    : 'com.jakewharton:butterknife:8.5.1',
     //                    compiler: 'com.jakewharton:butterknife-compiler:8.5.1'
@@ -91,6 +94,15 @@
                 ],
                 kotlin      : [
                         'stdLibJre8': "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",
+                ],
+                jsoup       : [
+                        // github: https://github.com/florent37/RxRetroJsoup
+                        rx  : [
+                                retro   : 'com.github.florent37:retrojsoup:1.0.4', // 依赖okhttp
+                                core    : 'com.github.florent37:rxjsoup:1.0.4', // 依赖jsoup
+                                compiler: 'com.github.florent37:retrojsoup-compiler:1.0.4', // 依赖RxJava
+                        ],
+                        core: 'org.jsoup:jsoup:1.10.2',
                 ],
                 javaParser  : 'com.github.javaparser:javaparser-core:3.3.5',
                 gradlePlugin: "com.android.tools.build:gradle:${versions.androidPlugin}",
@@ -171,3 +183,4 @@
     task clean(type: Delete) {
         delete rootProject.buildDir
     }
+    
