@@ -12,6 +12,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.SOURCE)
 public @interface DownloadFile {
-    // 拼接的路径
     String value() default "";
 }

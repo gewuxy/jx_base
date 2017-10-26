@@ -184,8 +184,8 @@ public class NetworkProcessor extends BaseProcessor {
         for (VariableElement e : all) {
             String paramName = e.getSimpleName().toString();
 
-            Url url = getAnnotation(e, Url.class);
-            if (url == null) {
+            if (!isUrlType(e)) {
+                // 不声明为@Url才添加为变量
                 typeBuilder.addField(getTypeName(e), paramName, PRIVATE);
             }
         }
@@ -197,8 +197,7 @@ public class NetworkProcessor extends BaseProcessor {
                 String paramName = e.getSimpleName().toString();
                 constructorBuilder.addParameter(createNonNullParam(e, paramName));
 
-                Url url = getAnnotation(e, Url.class);
-                if (url == null) {
+                if (!isUrlType(e)) {
                     constructorBuilder.addStatement("this.$N = $N", paramName, paramName);
                 }
             }
@@ -218,19 +217,22 @@ public class NetworkProcessor extends BaseProcessor {
             b.addStatement("$N.retry($L, $L)", FieldName.KBuilder, retry.count(), retry.delay());
         }
 
+        /**
+         * 构造函数的参数
+         */
         if (isDownloadFileType(ele)) {
             // 下载文件多加入两个默认参数
             typeBuilder.addField(FieldSpec.builder(String.class, FieldName.KDir, PRIVATE).build());
             typeBuilder.addField(FieldSpec.builder(String.class, FieldName.KFileName, PRIVATE).build());
 
+            // 构造函数增加参数
             constructorBuilder.addParameter(createNonNullParam(String.class, FieldName.KDir));
             constructorBuilder.addParameter(createNonNullParam(String.class, FieldName.KFileName));
             constructorBuilder.addStatement("this.$N = $L", FieldName.KDir, FieldName.KDir);
             constructorBuilder.addStatement("this.$N = $L", FieldName.KFileName, FieldName.KFileName);
 
-            b.addStatement("$N.download($L, $L)", FieldName.KBuilder, FieldName.KDir, FieldName.KFileName);
-
             pathVal = getAnnotation(ele, DownloadFile.class).value();
+            b.addStatement("$N.download($L, $L)", FieldName.KBuilder, FieldName.KDir, FieldName.KFileName);
         } else {
             if (getAnnotation(ele, Get.class) != null) {
                 pathVal = getAnnotation(ele, Get.class).value();
@@ -256,14 +258,16 @@ public class NetworkProcessor extends BaseProcessor {
             // 如果有声明@Url, 则使用@Url的作为baseHost
             for (VariableElement e : required) {
                 // @Url的声明只支持必需参数
-                Url url = getAnnotation(e, Url.class);
-                if (url != null) {
+                if (isUrlType(e)) {
                     urlName = e.getSimpleName().toString();
                     break;
                 }
             }
         }
 
+        /**
+         * 构造函数的代码
+         */
         if (urlName == null) {
             String apiVal = api.value();
             if (!apiVal.isEmpty()) {
@@ -289,6 +293,7 @@ public class NetworkProcessor extends BaseProcessor {
             constructorBuilder.addStatement("this.$N = $T.newBuilder($L)", FieldName.KBuilder, MyClassName.KNetworkReq, urlName);
         }
 
+        // 添加builder变量
         typeBuilder.addField(FieldSpec.builder(MyClassName.KNetworkReqBuilder, FieldName.KBuilder, PRIVATE)
                 .build());
 
@@ -304,9 +309,11 @@ public class NetworkProcessor extends BaseProcessor {
                     .build());
         }
 
-        for (VariableElement e : all) {
-            if (!isDownloadFileType(ele)) {
-                b.addStatement("$N.param($S, $L)", FieldName.KBuilder, getParamName(e), e);
+        if (!isDownloadFileType(ele)) {
+            for (VariableElement e : all) {
+                if (!isUrlType(e)) {
+                    b.addStatement("$N.param($S, $L)", FieldName.KBuilder, getParamName(e), e);
+                }
             }
         }
 
@@ -366,5 +373,16 @@ public class NetworkProcessor extends BaseProcessor {
 
     private <T extends Annotation> T getAnnotation(Element ele, Class<T> clz) {
         return ele.getAnnotation(clz);
+    }
+
+    /**
+     * 是否声明了{@link Url}
+     *
+     * @param e
+     * @return
+     */
+    private boolean isUrlType(Element e) {
+        Url url = getAnnotation(e, Url.class);
+        return url != null;
     }
 }
