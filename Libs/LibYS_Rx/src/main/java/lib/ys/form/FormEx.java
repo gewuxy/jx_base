@@ -82,37 +82,37 @@ abstract public class FormEx<T extends FormEx<T, VH>, VH extends IViewHolder>
     private VH mHolder;
 
 
-    public T name(String name) {
+    public <FORM extends T> FORM name(String name) {
         mName = name;
-        return getThis();
+        return (FORM) getThis();
     }
 
-    public T key(String key) {
+    public <FORM extends T> FORM key(String key) {
         mKey = key;
         return getThis();
     }
 
-    public T val(String val) {
+    public <FORM extends T> FORM val(String val) {
         mVal = val;
         return getThis();
     }
 
-    public T name(@StringRes int id) {
+    public <FORM extends T> FORM name(@StringRes int id) {
         mName = ResLoader.getString(id);
         return getThis();
     }
 
-    public T text(String text) {
+    public <FORM extends T> FORM text(String text) {
         mText = text;
         return getThis();
     }
 
-    public T texts(String... texts) {
+    public <FORM extends T> FORM texts(String... texts) {
         mTexts = texts;
         return getThis();
     }
 
-    public T texts(@StringRes int... ids) {
+    public <FORM extends T> FORM texts(@StringRes int... ids) {
         int len = ids.length;
         if (len == 0) {
             return getThis();
@@ -126,162 +126,162 @@ abstract public class FormEx<T extends FormEx<T, VH>, VH extends IViewHolder>
         return getThis();
     }
 
-    public T text(@StringRes int id) {
+    public <FORM extends T> FORM text(@StringRes int id) {
         mText = ResLoader.getString(id);
         return getThis();
     }
 
-    public T hint(String hint) {
+    public <FORM extends T> FORM hint(String hint) {
         mHint = hint;
         return getThis();
     }
 
-    public T hint(@StringRes int id) {
+    public <FORM extends T> FORM hint(@StringRes int id) {
         mHint = ResLoader.getString(id);
         return getThis();
     }
 
-    public T tips(String tips) {
+    public <FORM extends T> FORM tips(String tips) {
         mTips = tips;
         return getThis();
     }
 
-    public T tips(@StringRes int id) {
+    public <FORM extends T> FORM tips(@StringRes int id) {
         mTips = ResLoader.getString(id);
         return getThis();
     }
 
-    public T enable(boolean able) {
+    public <FORM extends T> FORM enable(boolean able) {
         mEnabled = able;
         return getThis();
     }
 
-    public T related(Object related) {
+    public <FORM extends T> FORM related(Object related) {
         mRelated = related;
         return getThis();
     }
 
-    public T data(Object data) {
+    public <FORM extends T> FORM data(Object data) {
         mData = data;
         return getThis();
     }
 
-    public T option(Object option) {
+    public <FORM extends T> FORM option(Object option) {
         mOption = option;
         return getThis();
     }
 
-    public T host(Object host) {
+    public <FORM extends T> FORM host(Object host) {
         mHost = host;
         return getThis();
     }
 
-    public T width(int w) {
+    public <FORM extends T> FORM width(int w) {
         mWidth = w;
         return getThis();
     }
 
-    public T height(int h) {
+    public <FORM extends T> FORM height(int h) {
         mHeight = h;
         return getThis();
     }
 
-    public T column(int c) {
+    public <FORM extends T> FORM column(int c) {
         mColumn = c;
         return getThis();
     }
 
-    public T limit(int limit) {
+    public <FORM extends T> FORM limit(int limit) {
         mLimit = limit;
         return getThis();
     }
 
-    public T background(@ColorInt int color) {
+    public <FORM extends T> FORM background(@ColorInt int color) {
         mBgColor = color;
         return getThis();
     }
 
-    public T backgroundRes(@ColorRes int id) {
+    public <FORM extends T> FORM backgroundRes(@ColorRes int id) {
         mBgColor = ResLoader.getColor(id);
         return getThis();
     }
 
-    public T mode(int mode) {
+    public <FORM extends T> FORM mode(int mode) {
         mMode = mode;
         return getThis();
     }
 
-    public T drawable(@DrawableRes int id) {
+    public <FORM extends T> FORM drawable(@DrawableRes int id) {
         mDrawableId = id;
         return getThis();
     }
 
-    public T layout(@LayoutRes int id) {
+    public <FORM extends T> FORM layout(@LayoutRes int id) {
         mLayoutId = id;
         return getThis();
     }
 
-    public T textColorRes(@ColorRes int id) {
+    public <FORM extends T> FORM textColorRes(@ColorRes int id) {
         mTextColor = ResLoader.getColorStateList(id);
         return getThis();
     }
 
-    public T textColor(@ColorInt int color) {
+    public <FORM extends T> FORM textColor(@ColorInt int color) {
         mTextColor = ColorStateList.valueOf(color);
         return getThis();
     }
 
-    public T nameColor(@ColorInt int color) {
+    public <FORM extends T> FORM nameColor(@ColorInt int color) {
         mNameColor = ColorStateList.valueOf(color);
         return getThis();
     }
 
-    public T toast(String toast) {
+    public <FORM extends T> FORM toast(String toast) {
         mToast = toast;
         return getThis();
     }
 
-    public T intent(Intent i) {
+    public <FORM extends T> FORM intent(Intent i) {
         mIntent = i;
         return getThis();
     }
 
-    public T children(List children) {
+    public <FORM extends T> FORM children(List children) {
         mChildren = children;
         return getThis();
     }
 
-    public T depend(Object depend) {
+    public <FORM extends T> FORM depend(Object depend) {
         mDepend = depend;
         return getThis();
     }
 
-    public T regex(String regex) {
+    public <FORM extends T> FORM regex(String regex) {
         mRegex = regex;
         return getThis();
     }
 
-    public T check(boolean check) {
+    public <FORM extends T> FORM check(boolean check) {
         mCheck = check;
         return getThis();
     }
 
-    public T index(int index) {
+    public <FORM extends T> FORM index(int index) {
         mIndex = index;
         return getThis();
     }
 
-    public T id(int id) {
+    public <FORM extends T> FORM id(int id) {
         mId = id;
         return getThis();
     }
 
-    public T visible(boolean visible) {
+    public <FORM extends T> FORM visible(boolean visible) {
         mVisible = visible;
         return getThis();
     }
 
-    public T observer(OnFormObserver observer) {
+    public <FORM extends T> FORM observer(OnFormObserver observer) {
         mObserver = observer;
         return getThis();
     }
@@ -583,7 +583,7 @@ abstract public class FormEx<T extends FormEx<T, VH>, VH extends IViewHolder>
         return TextUtil.isEmpty(text);
     }
 
-    protected T getThis() {
-        return (T) this;
+    protected <FORM extends T> FORM getThis() {
+        return (FORM) this;
     }
 }
