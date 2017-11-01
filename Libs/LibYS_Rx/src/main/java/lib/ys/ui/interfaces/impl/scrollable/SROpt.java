@@ -497,4 +497,9 @@ public class SROpt<T> implements OnSRListener {
     public boolean isFirstRefresh() {
         return mFirstRefresh;
     }
+
+    public void onDestroy() {
+        mHandler.removeMessages(0);
+        mHandler = null;
+    }
 }

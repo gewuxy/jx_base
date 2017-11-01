@@ -260,4 +260,11 @@ abstract public class SRListFragEx<T, A extends IAdapter<T>> extends ListFragEx<
     public void onDataSetChanged() {
         mSROpt.onDataSetChanged();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mSROpt.onDestroy();
+    }
 }

@@ -255,4 +255,11 @@ abstract public class SRListActivityEx<T, A extends IAdapter<T>> extends ListAct
     public void onDataSetChanged() {
         mSROpt.onDataSetChanged();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mSROpt.onDestroy();
+    }
 }

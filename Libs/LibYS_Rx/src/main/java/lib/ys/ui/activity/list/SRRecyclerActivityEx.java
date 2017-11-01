@@ -253,4 +253,10 @@ abstract public class SRRecyclerActivityEx<T, A extends IAdapter<T>> extends Rec
         mSROpt.onDataSetChanged();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mSROpt.onDestroy();
+    }
 }

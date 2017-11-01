@@ -258,4 +258,10 @@ abstract public class SRRecyclerFragEx<T, A extends IAdapter<T>>
         mSROpt.onDataSetChanged();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mSROpt.onDestroy();
+    }
 }
