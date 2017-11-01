@@ -98,15 +98,20 @@ public class OkProvider extends BaseProvider {
 
     @Override
     public void cancelAll(Object tag) {
-        Flowable.just(mMapTag.get(tag))
-                .filter(integerTaskMap -> integerTaskMap != null)
+        Map<Integer, Task> m = mMapTag.get(tag);
+        if (m == null) {
+            return;
+        }
+        Flowable.just(m)
                 .flatMap(integerTaskMap -> Flowable.fromIterable(integerTaskMap.values()))
+                .filter(task -> task != null)
                 .subscribe(task -> task.cancel());
     }
 
     @Override
     public void cancelAll() {
         Flowable.fromIterable(mMapTag.values())
+                .filter(integerTaskMap -> integerTaskMap != null)
                 .flatMap(integerTaskMap -> Flowable.fromIterable(integerTaskMap.values()))
                 .subscribe(task -> task.cancel());
         mMapTag.clear();
