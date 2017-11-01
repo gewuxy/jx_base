@@ -6,7 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 声明为全路径
+ * 地址声明
+ * 会根据是否使用了{@link Url#value()}来决定使用动态的url地址还是指定的url地址作为host
  *
  * @auther yuansui
  * @since 2017/8/16
@@ -19,5 +20,5 @@ public @interface Url {
      *
      * @return
      */
-    String assign() default "";
+    String value() default "";
 }

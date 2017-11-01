@@ -144,7 +144,7 @@ public class NetworkProcessor extends BaseProcessor {
 
                     // 判断是否声明了Url, 以便多添加一个参数
                     Url url = methodEle.getAnnotation(Url.class);
-                    boolean hasUrlParam = url != null && url.assign().isEmpty();
+                    boolean hasUrlParam = url != null && url.value().isEmpty();
                     if (hasUrlParam) {
                         if (paramStatements.length() != 0) {
                             paramStatements.append(KSplit);
@@ -259,9 +259,9 @@ public class NetworkProcessor extends BaseProcessor {
         String urlName = null;
         Url url = ele.getAnnotation(Url.class);
         if (url != null) {
-            if (!url.assign().isEmpty()) {
+            if (!url.value().isEmpty()) {
                 // 如果声明了@Url且带有前缀, 直接使用
-                urlName = url.assign();
+                urlName = url.value();
             } else {
                 urlName = FieldName.KUrl;
                 constructorBuilder.addParameter(createNonNullParam(String.class, FieldName.KUrl));
@@ -290,7 +290,7 @@ public class NetworkProcessor extends BaseProcessor {
                         FieldName.KBaseHost,
                         pathVal);
             }
-        } else if (url != null && !url.assign().isEmpty()) {
+        } else if (url != null && !url.value().isEmpty()) {
             constructorBuilder.addStatement("this.$N = $T.newBuilder($S)", FieldName.KBuilder, MyClassName.KNetworkReq, urlName);
         } else {
             constructorBuilder.addStatement("this.$N = $T.newBuilder($L)", FieldName.KBuilder, MyClassName.KNetworkReq, urlName);
