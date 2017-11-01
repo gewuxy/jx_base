@@ -245,6 +245,10 @@ abstract public class SRRecyclerActivityEx<T, A extends IAdapter<T>> extends Rec
     }
 
     @Override
+    public void onSwipeRefreshAction() {
+    }
+
+    @Override
     public void onDataSetChanged() {
         mSROpt.onDataSetChanged();
     }

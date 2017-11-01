@@ -250,6 +250,10 @@ abstract public class SRRecyclerFragEx<T, A extends IAdapter<T>>
     }
 
     @Override
+    public void onSwipeRefreshAction() {
+    }
+
+    @Override
     public void onDataSetChanged() {
         mSROpt.onDataSetChanged();
     }
