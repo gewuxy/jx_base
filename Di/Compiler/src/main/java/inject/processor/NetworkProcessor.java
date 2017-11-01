@@ -20,7 +20,6 @@ import javax.lang.model.element.VariableElement;
 import inject.android.MyClassName;
 import inject.annotation.network.Api;
 import inject.annotation.network.Descriptor;
-import inject.annotation.network.Host;
 import inject.annotation.network.Query;
 import inject.annotation.network.Retry;
 import inject.annotation.network.Url;
@@ -54,6 +53,7 @@ public class NetworkProcessor extends BaseProcessor {
         String KBuilder = "builder";
         String KDir = "dir";
         String KFileName = "fileName";
+        String KUrl = "url";
     }
 
     @Override
@@ -142,6 +142,16 @@ public class NetworkProcessor extends BaseProcessor {
                                 .append(FieldName.KFileName);
                     }
 
+                    // 判断是否声明了Url, 以便多添加一个参数
+                    Url url = methodEle.getAnnotation(Url.class);
+                    boolean hasUrlParam = url != null && url.assign().isEmpty();
+                    if (hasUrlParam) {
+                        if (paramStatements.length() != 0) {
+                            paramStatements.append(KSplit);
+                        }
+                        paramStatements.append(FieldName.KUrl);
+                    }
+
                     MethodSpec.Builder methodInstBuilder = MethodSpec.methodBuilder(methodName)
                             .addModifiers(PUBLIC, STATIC, FINAL)
                             .returns(ClassName.bestGuess(methodClassName))
@@ -152,6 +162,10 @@ public class NetworkProcessor extends BaseProcessor {
                         // 下载文件的参数
                         methodInstBuilder.addParameter(ParameterSpec.builder(String.class, FieldName.KDir).build());
                         methodInstBuilder.addParameter(ParameterSpec.builder(String.class, FieldName.KFileName).build());
+                    }
+
+                    if (hasUrlParam) {
+                        methodInstBuilder.addParameter(ParameterSpec.builder(String.class, FieldName.KUrl).build());
                     }
 
                     for (Element e : required) {
@@ -183,11 +197,7 @@ public class NetworkProcessor extends BaseProcessor {
         // 添加fields
         for (VariableElement e : all) {
             String paramName = e.getSimpleName().toString();
-
-            if (!isUrlType(e)) {
-                // 不声明为@Url才添加为变量
-                typeBuilder.addField(getTypeName(e), paramName, PRIVATE);
-            }
+            typeBuilder.addField(getTypeName(e), paramName, PRIVATE);
         }
 
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
@@ -196,10 +206,7 @@ public class NetworkProcessor extends BaseProcessor {
             for (VariableElement e : required) {
                 String paramName = e.getSimpleName().toString();
                 constructorBuilder.addParameter(createNonNullParam(e, paramName));
-
-                if (!isUrlType(e)) {
-                    constructorBuilder.addStatement("this.$N = $N", paramName, paramName);
-                }
+                constructorBuilder.addStatement("this.$N = $N", paramName, paramName);
             }
         }
 
@@ -250,18 +257,14 @@ public class NetworkProcessor extends BaseProcessor {
         }
 
         String urlName = null;
-        Host host = ele.getAnnotation(Host.class);
-        if (host != null) {
-            // 如果声明了@Host, 直接使用其value
-            urlName = host.value();
-        } else {
-            // 如果有声明@Url, 则使用@Url的作为baseHost
-            for (VariableElement e : required) {
-                // @Url的声明只支持必需参数
-                if (isUrlType(e)) {
-                    urlName = e.getSimpleName().toString();
-                    break;
-                }
+        Url url = ele.getAnnotation(Url.class);
+        if (url != null) {
+            if (!url.assign().isEmpty()) {
+                // 如果声明了@Url且带有前缀, 直接使用
+                urlName = url.assign();
+            } else {
+                urlName = FieldName.KUrl;
+                constructorBuilder.addParameter(createNonNullParam(String.class, FieldName.KUrl));
             }
         }
 
@@ -287,7 +290,7 @@ public class NetworkProcessor extends BaseProcessor {
                         FieldName.KBaseHost,
                         pathVal);
             }
-        } else if (host != null) {
+        } else if (url != null && !url.assign().isEmpty()) {
             constructorBuilder.addStatement("this.$N = $T.newBuilder($S)", FieldName.KBuilder, MyClassName.KNetworkReq, urlName);
         } else {
             constructorBuilder.addStatement("this.$N = $T.newBuilder($L)", FieldName.KBuilder, MyClassName.KNetworkReq, urlName);
@@ -311,9 +314,7 @@ public class NetworkProcessor extends BaseProcessor {
 
         if (!isDownloadFileType(ele)) {
             for (VariableElement e : all) {
-                if (!isUrlType(e)) {
-                    b.addStatement("$N.param($S, $L)", FieldName.KBuilder, getParamName(e), e);
-                }
+                b.addStatement("$N.param($S, $L)", FieldName.KBuilder, getParamName(e), e);
             }
         }
 
@@ -373,16 +374,5 @@ public class NetworkProcessor extends BaseProcessor {
 
     private <T extends Annotation> T getAnnotation(Element ele, Class<T> clz) {
         return ele.getAnnotation(clz);
-    }
-
-    /**
-     * 是否声明了{@link Url}
-     *
-     * @param e
-     * @return
-     */
-    private boolean isUrlType(Element e) {
-        Url url = getAnnotation(e, Url.class);
-        return url != null;
     }
 }
