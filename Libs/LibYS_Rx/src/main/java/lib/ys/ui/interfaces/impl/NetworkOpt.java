@@ -111,11 +111,9 @@ public class NetworkOpt implements INetworkOpt {
     public void onDestroy() {
         cancelAllNetworkReq();
 
-        if (mNetwork != null) {
-            mNetwork.cancelAll();
-            mNetwork = null;
+        if (mMapRetryTask != null) {
+            mMapRetryTask.clear();
+            mMapRetryTask = null;
         }
-
-        mMapRetryTask.clear();
     }
 }
