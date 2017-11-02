@@ -42,7 +42,7 @@ public class BuilderProcessor extends BaseProcessor {
     }
 
     @Override
-    protected TypeSpec getBuilderSpec(Element annotatedElement) {
+    protected TypeSpec createTypeSpec(Element annotatedElement) {
         final String name = String.format("%sBuilder", annotatedElement.getSimpleName());
         TypeSpec.Builder builder = TypeSpec.classBuilder(name)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL);

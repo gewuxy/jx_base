@@ -62,9 +62,9 @@ abstract public class BaseProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
         for (Element annotatedElement : env.getElementsAnnotatedWith(getAnnotationClass())) {
             try {
-                TypeSpec builderSpec = getBuilderSpec(annotatedElement);
-                if (builderSpec != null) {
-                    JavaFile builderFile = JavaFile.builder(getPackageName(annotatedElement), builderSpec).build();
+                TypeSpec spec = createTypeSpec(annotatedElement);
+                if (spec != null) {
+                    JavaFile builderFile = JavaFile.builder(getPackageName(annotatedElement), spec).build();
                     builderFile.writeTo(filer);
                 }
             } catch (Exception e) {
@@ -81,7 +81,7 @@ abstract public class BaseProcessor extends AbstractProcessor {
 
     abstract protected Class<? extends Annotation> getAnnotationClass();
 
-    abstract protected TypeSpec getBuilderSpec(Element annotatedElement);
+    abstract protected TypeSpec createTypeSpec(Element annotatedElement);
 
     protected Elements getElementUtils() {
         return elementUtils;

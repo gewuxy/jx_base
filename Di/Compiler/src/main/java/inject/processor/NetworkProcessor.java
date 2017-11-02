@@ -56,44 +56,41 @@ public class NetworkProcessor extends BaseProcessor {
         String KUrl = "url";
     }
 
+
     @Override
     protected Class<? extends Annotation> getAnnotationClass() {
         return Descriptor.class;
     }
 
     @Override
-    protected TypeSpec getBuilderSpec(Element annotatedElement) {
-        final String name = String.format("%sDescriptor", annotatedElement.getSimpleName());
-        TypeSpec.Builder builder = TypeSpec.classBuilder(name)
+    protected TypeSpec createTypeSpec(Element annotatedElement) {
+        final String typeName = String.format("%sDescriptor", annotatedElement.getSimpleName());
+        TypeSpec.Builder builder = TypeSpec.classBuilder(typeName)
                 .addModifiers(PUBLIC, FINAL);
 
         /**
          * 构造方法
          */
-        MethodSpec.Builder constructor = MethodSpec.constructorBuilder()
-                .addModifiers(PRIVATE);
-        builder.addMethod(constructor.build());
+        builder.addMethod(createConstructor());
 
         /**
          * 寻找{@link Descriptor}
          */
         Descriptor descriptor = annotatedElement.getAnnotation(Descriptor.class);
-        if (descriptor != null) {
-            // 加入host field
-            builder.addField(FieldSpec.builder(String.class, FieldName.KHost, PRIVATE, STATIC, FINAL)
-                    .initializer(Format.KString, descriptor.host())
-                    .build());
+        // 加入host field
+        builder.addField(FieldSpec.builder(String.class, FieldName.KHost, PRIVATE, STATIC, FINAL)
+                .initializer(Format.KString, descriptor.host())
+                .build());
 
-            if (!descriptor.hostDebuggable().isEmpty()) {
-                builder.addField(FieldSpec.builder(String.class, FieldName.KHostDebuggable, PRIVATE, STATIC, FINAL)
-                        .initializer(Format.KString, descriptor.hostDebuggable())
-                        .build());
-            }
-
-            builder.addField(FieldSpec.builder(String.class, FieldName.KBaseHost, PRIVATE, STATIC)
-                    .initializer(Format.KVal, FieldName.KHostDebuggable)
+        if (!descriptor.hostDebuggable().isEmpty()) {
+            builder.addField(FieldSpec.builder(String.class, FieldName.KHostDebuggable, PRIVATE, STATIC, FINAL)
+                    .initializer(Format.KString, descriptor.hostDebuggable())
                     .build());
         }
+
+        builder.addField(FieldSpec.builder(String.class, FieldName.KBaseHost, PRIVATE, STATIC)
+                .initializer(Format.KVal, FieldName.KHostDebuggable)
+                .build());
 
         /**
          * setDebuggable()
@@ -110,12 +107,15 @@ public class NetworkProcessor extends BaseProcessor {
 
         /**
          * 寻找{@link Api}
+         * 只有声明了@Api的interface才响应
          */
         for (Element apiEle : annotatedElement.getEnclosedElements()) {
             Api api = apiEle.getAnnotation(Api.class);
             if (api != null && apiEle.getKind().isInterface()) {
-                // 只支持interface
-                // 生成对应API的class
+                /**
+                 * 只支持interface, 生成对应API的class
+                 * 如: CommonAPI
+                 */
                 final String apiName = String.format("%sAPI", apiEle.getSimpleName());
                 TypeSpec.Builder apiBuilder = TypeSpec.classBuilder(apiName)
                         .addModifiers(PUBLIC, STATIC, FINAL);
@@ -123,7 +123,7 @@ public class NetworkProcessor extends BaseProcessor {
                 for (Element methodEle : apiEle.getEnclosedElements()) {
                     List<VariableElement> required = new ArrayList<>();
                     List<VariableElement> optional = new ArrayList<>();
-                    getAnnotatedFields(methodEle, required, optional);
+                    getQueryFields(methodEle, required, optional);
 
                     String methodName = methodEle.getSimpleName().toString();
 
@@ -172,7 +172,7 @@ public class NetworkProcessor extends BaseProcessor {
                         methodInstBuilder.addParameter(getTypeName(e), e.getSimpleName().toString());
                     }
 
-                    writeAPI(methodEle, methodClassName, methodClzBuilder, api);
+                    writeApi(methodEle, methodClassName, methodClzBuilder, api);
 
                     apiBuilder.addMethod(methodInstBuilder.build());
                     apiBuilder.addType(methodClzBuilder.build());
@@ -185,12 +185,18 @@ public class NetworkProcessor extends BaseProcessor {
         return builder.build();
     }
 
-    private void writeAPI(Element ele, String methodName, TypeSpec.Builder typeBuilder, Api api) {
+    private MethodSpec createConstructor() {
+        return MethodSpec.constructorBuilder()
+                .addModifiers(PRIVATE)
+                .build();
+    }
+
+    private void writeApi(Element ele, String methodName, TypeSpec.Builder typeBuilder, Api api) {
         List<VariableElement> required = new ArrayList<>();
         List<VariableElement> optional = new ArrayList<>();
         List<VariableElement> all = new ArrayList<>();
 
-        getAnnotatedFields(ele, required, optional);
+        getQueryFields(ele, required, optional);
         all.addAll(required);
         all.addAll(optional);
 
@@ -331,7 +337,7 @@ public class NetworkProcessor extends BaseProcessor {
         typeBuilder.addMethod(b.build());
     }
 
-    private void getAnnotatedFields(Element ele, List<VariableElement> required, List<VariableElement> optional) {
+    private void getQueryFields(Element ele, List<VariableElement> required, List<VariableElement> optional) {
         ExecutableElement executableElement = (ExecutableElement) ele;
         for (VariableElement e : executableElement.getParameters()) {
             Query query = e.getAnnotation(Query.class);

@@ -40,7 +40,7 @@ public class RouterProcessor extends BaseProcessor {
     }
 
     @Override
-    protected TypeSpec getBuilderSpec(Element annotatedElement) {
+    protected TypeSpec createTypeSpec(Element annotatedElement) {
         TypeName annotatedTypeName = getTypeName(annotatedElement);
         TypeMirror annotatedMirror = annotatedElement.asType();
 
