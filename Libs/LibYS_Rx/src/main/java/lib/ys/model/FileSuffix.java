@@ -29,4 +29,5 @@ public @interface FileSuffix {
     String pptx = ".pptx";
     String pdf = ".pdf";
     String amr = ".amr";
+    String mp4 = ".mp4";
 }

@@ -28,9 +28,11 @@ public interface NetworkConstants {
         String KAcceptRanges_bytes = "bytes";
 
         String KContentRanges = "Content-Range";
+        String KCharset = "charset";
     }
 
-    interface MediaType {
+    interface ContentType {
         String KStream = "application/octet-stream";
+        String KText = "text/html";
     }
 }
