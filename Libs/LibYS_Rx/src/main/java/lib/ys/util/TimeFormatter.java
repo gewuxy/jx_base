@@ -29,6 +29,7 @@ public class TimeFormatter {
             TimeFormat.from_h_to_m_12,
             TimeFormat.from_h_to_m_24,
             TimeFormat.from_m,
+            TimeFormat.form_MM_dd_24,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface TimeFormat {
@@ -46,6 +47,7 @@ public class TimeFormatter {
         String only_MM = "MM";
         String only_dd = "dd";
         String only_ss = "ss";
+        String form_MM_dd_24= "MM月dd日 HH:mm"; // 06月12日 15:00
     }
 
     /**
