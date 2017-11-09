@@ -7,7 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
-public class ConnectivityReceiver extends BaseReceiver {
+public class ConnectionReceiver extends BaseReceiver {
 
     /**
      * 网络类型码，如3G、4G等
@@ -23,8 +23,10 @@ public class ConnectivityReceiver extends BaseReceiver {
 
     private TConnType mType = TConnType.type_unknown;
     private ConnectivityManager mCm;
+    private OnConnectListener mListener;
 
-    public ConnectivityReceiver(Context context) {
+
+    public ConnectionReceiver(Context context) {
         super(context);
     }
 
@@ -82,6 +84,10 @@ public class ConnectivityReceiver extends BaseReceiver {
         } else {
             mType = TConnType.disconnect;
         }
+
+        if (mListener != null) {
+            mListener.onConnectChanged(mType);
+        }
     }
 
     @Override
@@ -91,5 +97,13 @@ public class ConnectivityReceiver extends BaseReceiver {
 
     public TConnType getType() {
         return mType;
+    }
+
+    public void setListener(OnConnectListener l) {
+        mListener = l;
+    }
+
+    public interface OnConnectListener {
+        void onConnectChanged(TConnType type);
     }
 }
