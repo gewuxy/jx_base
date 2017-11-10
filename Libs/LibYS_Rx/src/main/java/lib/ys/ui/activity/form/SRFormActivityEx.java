@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import lib.network.model.NetworkError;
 import lib.network.model.NetworkResp;
-import lib.network.model.interfaces.IListResult;
+import lib.network.model.interfaces.IResult;
 import lib.ys.R;
 import lib.ys.adapter.interfaces.IViewHolder;
 import lib.ys.config.AppConfig.RefreshWay;
@@ -80,8 +80,7 @@ abstract public class SRFormActivityEx<T extends FormEx<T, VH>, VH extends IView
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
-        IListResult<T> r = (IListResult<T>) result;
+    public void onNetworkSuccess(int id, IResult r) {
         if (r == null || !r.isSucceed() || r.getData() == null) {
             // 表示数据列表返回为null, 解析失败
             stopRefresh();
@@ -92,9 +91,10 @@ abstract public class SRFormActivityEx<T extends FormEx<T, VH>, VH extends IView
             return;
         }
 
-        setItems(r.getData());
+        setItems(r.getList());
         stopRefresh();
         setViewState(ViewState.normal);
+
     }
 
     @Override
@@ -119,8 +119,8 @@ abstract public class SRFormActivityEx<T extends FormEx<T, VH>, VH extends IView
     }
 
     @Override
-    public Object onNetworkResponse(int id, NetworkResp r) throws Exception {
-        return parseNetworkResponse(id, r.getText());
+    public IResult onNetworkResponse(int id, NetworkResp resp) throws Exception {
+        return parseNetworkResponse(id, resp.getText());
     }
 
     @Override
@@ -128,7 +128,7 @@ abstract public class SRFormActivityEx<T extends FormEx<T, VH>, VH extends IView
         mSRLayout.stopRefresh();
     }
 
-    abstract public IListResult<T> parseNetworkResponse(int id, String text) throws Exception;
+    abstract public IResult<T> parseNetworkResponse(int id, String text) throws Exception;
 
     @Override
     protected boolean enableHideKeyboardWhenChangeFocus() {

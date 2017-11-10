@@ -1,5 +1,6 @@
 package lib.ys.ui.frag;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -38,7 +39,7 @@ abstract public class FragMgrFragEx extends FragEx {
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
         mFm = getChildFragmentManager();
 
         mFrags = new ArrayList<>();

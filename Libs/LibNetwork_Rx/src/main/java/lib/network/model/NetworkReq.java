@@ -3,14 +3,11 @@ package lib.network.model;
 
 import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import lib.network.Network;
 import lib.network.NetworkUtil;
-import lib.network.model.param.BytePair;
-import lib.network.model.param.CommonPair;
-import lib.network.model.param.FilePair;
+import lib.network.model.pair.BytePairs;
+import lib.network.model.pair.FilePairs;
+import lib.network.model.pair.Pairs;
 
 /**
  * Network任务实例
@@ -19,11 +16,11 @@ import lib.network.model.param.FilePair;
  */
 public class NetworkReq {
 
-    private List<CommonPair> mParams;
-    private List<BytePair> mByteParams;
-    private List<FilePair> mFileParams;
+    private Pairs mParams;
+    private BytePairs mByteParams;
+    private FilePairs mFileParams;
 
-    private List<CommonPair> mHeaders;
+    private Pairs mHeaders;
 
     // 默认为get方式
     @NetworkMethod
@@ -51,19 +48,19 @@ public class NetworkReq {
         return mFileName;
     }
 
-    public List<BytePair> getByteParams() {
+    public BytePairs getByteParams() {
         return mByteParams;
     }
 
-    public List<FilePair> getFileParams() {
+    public FilePairs getFileParams() {
         return mFileParams;
     }
 
-    public List<CommonPair> getHeaders() {
+    public Pairs getHeaders() {
         return mHeaders;
     }
 
-    public List<CommonPair> getParams() {
+    public Pairs getParams() {
         return mParams;
     }
 
@@ -84,11 +81,11 @@ public class NetworkReq {
      * 内部builder
      */
     public static class Builder {
-        private List<CommonPair> mParams;
-        private List<BytePair> mByteParams;
-        private List<FilePair> mFileParams;
+        private Pairs mParams;
+        private BytePairs mByteParams;
+        private FilePairs mFileParams;
 
-        private List<CommonPair> mHeaders;
+        private Pairs mHeaders;
 
         private String mUrl;
 
@@ -103,8 +100,7 @@ public class NetworkReq {
 
         protected Builder(String baseUrl) {
             mUrl = baseUrl;
-
-            mParams = new ArrayList<>();
+            mParams = new Pairs();
         }
 
         public <T extends Builder> T get() {
@@ -148,15 +144,12 @@ public class NetworkReq {
         }
 
         public <T extends Builder> T param(String name, String val) {
-            if (val == null) {
-                return (T) this;
-            }
-            mParams.add(new CommonPair(name, String.valueOf(val)));
+            mParams.add(name, val);
             return (T) this;
         }
 
         public <T extends Builder> T param(String name, boolean val) {
-            mParams.add(new CommonPair(name, String.valueOf(val)));
+            mParams.add(name, String.valueOf(val));
             return (T) this;
         }
 
@@ -170,11 +163,11 @@ public class NetworkReq {
             return (T) this;
         }
 
-        public <T extends Builder> T param(@Nullable List<CommonPair> pairs) {
+        public <T extends Builder> T param(@Nullable Pairs pairs) {
             if (pairs == null) {
                 return (T) this;
             }
-            mParams.addAll(pairs);
+            mParams.add(pairs);
             return (T) this;
         }
 
@@ -195,15 +188,15 @@ public class NetworkReq {
          * 添加二进制param
          *
          * @param name
-         * @param value
+         * @param val
          * @param extend
          * @return
          */
-        public <T extends Builder> T param(String name, byte[] value, String extend) {
+        public <T extends Builder> T param(String name, byte[] val, String extend) {
             if (mByteParams == null) {
-                mByteParams = new ArrayList<>();
+                mByteParams = new BytePairs();
             }
-            mByteParams.add(new BytePair(name + extend, value));
+            mByteParams.add(name + extend, val);
             return (T) this;
         }
 
@@ -212,9 +205,9 @@ public class NetworkReq {
          *
          * @param pair
          */
-        public <T extends Builder> T param(FilePair pair) {
+        public <T extends Builder> T param(FilePairs pair) {
             if (mFileParams == null) {
-                mFileParams = new ArrayList<>();
+                mFileParams = new FilePairs();
             }
             mFileParams.add(pair);
             return (T) this;
@@ -224,13 +217,13 @@ public class NetworkReq {
          * 添加header数据
          *
          * @param name
-         * @param value
+         * @param val
          */
-        public <T extends Builder> T header(String name, String value) {
+        public <T extends Builder> T header(String name, String val) {
             if (mHeaders == null) {
-                mHeaders = new ArrayList<>();
+                mHeaders = new Pairs();
             }
-            mHeaders.add(new CommonPair(name, value));
+            mHeaders.add(name, val);
             return (T) this;
         }
 
@@ -239,15 +232,11 @@ public class NetworkReq {
             return (T) this;
         }
 
-        public <T extends Builder> T header(@Nullable List<CommonPair> pairs) {
-            if (pairs == null) {
-                return (T) this;
-            }
-
+        public <T extends Builder> T header(@Nullable Pairs pairs) {
             if (mHeaders == null) {
-                mHeaders = new ArrayList<>();
+                mHeaders = new Pairs();
             }
-            mHeaders.addAll(pairs);
+            mHeaders.add(pairs);
             return (T) this;
         }
 
@@ -256,7 +245,7 @@ public class NetworkReq {
             return (T) this;
         }
 
-        public List<CommonPair> getParams() {
+        public Pairs getParams() {
             return mParams;
         }
 

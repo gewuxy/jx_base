@@ -6,6 +6,7 @@ import lib.network.NetworkLog;
 import lib.network.model.NetworkErrorBuilder;
 import lib.network.model.NetworkResp;
 import lib.network.model.interfaces.OnNetworkListener;
+import lib.network.model.interfaces.IResult;
 import lib.network.provider.NativeListener;
 import okhttp3.Call;
 import okhttp3.Response;
@@ -29,7 +30,7 @@ public class DownloadCallback extends OkCallback {
 
         Integer id = (Integer) call.request().tag();
         try {
-            Object result = getListener().onNetworkResponse(id, resp);
+            IResult result = getListener().onNetworkResponse(id, resp);
             if (result != null) {
                 NativeListener.inst().onSuccess(id, result, getListener());
             }

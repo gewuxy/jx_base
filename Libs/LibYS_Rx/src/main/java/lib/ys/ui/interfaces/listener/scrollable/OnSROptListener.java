@@ -7,7 +7,7 @@ import org.json.JSONException;
 
 import java.util.List;
 
-import lib.network.model.interfaces.IListResult;
+import lib.network.model.interfaces.IResult;
 import lib.ys.config.AppConfig.RefreshWay;
 import lib.ys.config.ListConfig;
 import lib.ys.config.ListConfig.PageDownType;
@@ -79,7 +79,7 @@ public interface OnSROptListener<T> {
      * @param text
      * @return 解析结构体BaseResponse
      */
-    IListResult<T> parseNetworkResponse(int what, String text) throws JSONException;
+    IResult<T> parseNetworkResponse(int what, String text) throws JSONException;
 
     void stopLoadMore(boolean isSucceed);
 

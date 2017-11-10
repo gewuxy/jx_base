@@ -1,5 +1,7 @@
 package lib.network.model.interfaces;
 
+import java.util.List;
+
 import lib.network.model.NetworkError;
 
 /**
@@ -9,7 +11,17 @@ public interface IResult<T> {
 
     void setData(T data);
 
+    void setData(List<T> data);
+
     T getData();
+
+    List<T> getList();
+
+    void add(T item);
+
+    String getLastId();
+
+    void setLastId(String id);
 
     boolean isSucceed();
 

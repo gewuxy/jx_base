@@ -3,12 +3,10 @@ package lib.ys.ui.frag.list;
 import android.support.annotation.CallSuper;
 import android.view.View;
 
-import org.json.JSONException;
-
 import java.util.List;
 
 import lib.network.model.NetworkResp;
-import lib.network.model.interfaces.IListResult;
+import lib.network.model.interfaces.IResult;
 import lib.ys.AppEx;
 import lib.ys.ConstantsEx.ListConstants;
 import lib.ys.R;
@@ -79,11 +77,6 @@ abstract public class SRRecyclerFragEx<T, A extends IAdapter<T>>
     @Override
     public boolean isFirstRefresh() {
         return mSROpt.isFirstRefresh();
-    }
-
-    @Override
-    public IListResult<T> parseNetworkResponse(int id, String text) throws JSONException {
-        return null;
     }
 
     @Override
@@ -232,15 +225,17 @@ abstract public class SRRecyclerFragEx<T, A extends IAdapter<T>>
         mSROpt.stopSwipeRefresh();
     }
 
+    @CallSuper
     @Override
-    public Object onNetworkResponse(int id, NetworkResp r) throws Exception {
-        return mSROpt.onNetworkResponse(id, r, TAG);
+    public IResult onNetworkResponse(int id, NetworkResp resp) throws Exception {
+        return mSROpt.onNetworkResponse(id, resp, TAG);
     }
 
+    @CallSuper
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
         if (!isActivityFinishing()) {
-            mSROpt.onNetworkSuccess((IListResult) result);
+            mSROpt.onNetworkSuccess(r);
         }
     }
 

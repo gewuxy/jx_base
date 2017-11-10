@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import lib.network.model.interfaces.IListResult;
 import lib.network.model.interfaces.IResult;
 import lib.ys.YSLog;
 import lib.ys.model.EVal;
@@ -68,7 +67,7 @@ public class JsonUtil {
      * @param array
      * @throws JSONException
      */
-    public static <T extends EVal> void setEVs(Class<T> clz, IListResult<T> r, JSONArray array) throws JSONException {
+    public static <T extends EVal> void setEVs(Class<T> clz, IResult<T> r, JSONArray array) throws JSONException {
         if (array == null) {
             return;
         }

@@ -1,5 +1,8 @@
 package lib.ys.network.result;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lib.network.model.NetworkError;
 import lib.network.model.NetworkErrorBuilder;
 import lib.network.model.interfaces.IResult;
@@ -8,8 +11,12 @@ abstract public class ResultEx<T> implements IResult<T> {
 
     private int mCode;
     private String mMessage;
-    private T mT;
     private NetworkError mError;
+
+    private T mT;
+    private List<T> mTs;
+    private String mLastId;
+
 
     public ResultEx() {
     }
@@ -24,8 +31,40 @@ abstract public class ResultEx<T> implements IResult<T> {
     }
 
     @Override
+    public void setData(List<T> data) {
+        mTs = data;
+    }
+
+    @Override
+    public void add(T item) {
+        if (item == null) {
+            return;
+        }
+
+        if (mTs == null) {
+            mTs = new ArrayList<>();
+        }
+        mTs.add(item);
+    }
+
+    @Override
     public T getData() {
         return mT;
+    }
+
+    @Override
+    public List<T> getList() {
+        return mTs;
+    }
+
+    @Override
+    public String getLastId() {
+        return mLastId;
+    }
+
+    @Override
+    public void setLastId(String id) {
+        mLastId = id;
     }
 
     @Override

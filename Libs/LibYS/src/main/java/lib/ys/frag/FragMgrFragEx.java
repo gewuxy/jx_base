@@ -38,7 +38,7 @@ abstract public class FragMgrFragEx extends FragEx {
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
         mFm = getChildFragmentManager();
 
         mFrags = new ArrayList<>();

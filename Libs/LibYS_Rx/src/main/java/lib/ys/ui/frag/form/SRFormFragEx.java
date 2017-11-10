@@ -4,8 +4,7 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
 import lib.network.model.NetworkError;
-import lib.network.model.NetworkResp;
-import lib.network.model.interfaces.IListResult;
+import lib.network.model.interfaces.IResult;
 import lib.ys.R;
 import lib.ys.adapter.VH.ViewHolderEx;
 import lib.ys.config.AppConfig.RefreshWay;
@@ -84,12 +83,11 @@ abstract public class SRFormFragEx<T extends FormEx<T, VH>, VH extends ViewHolde
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
         if (isActivityFinishing()) {
             return;
         }
 
-        IListResult<T> r = (IListResult<T>) result;
         if (r == null || !r.isSucceed() || r.getData() == null) {
             // 表示数据列表返回为null, 解析失败
             stopRefresh();
@@ -100,7 +98,7 @@ abstract public class SRFormFragEx<T extends FormEx<T, VH>, VH extends ViewHolde
             return;
         }
 
-        setItems(r.getData());
+        setItems(r.getList());
         stopRefresh();
         setViewState(ViewState.normal);
     }
@@ -127,11 +125,6 @@ abstract public class SRFormFragEx<T extends FormEx<T, VH>, VH extends ViewHolde
     }
 
     @Override
-    public Object onNetworkResponse(int id, NetworkResp r) throws Exception {
-        return parseNetworkResponse(id, r.getText());
-    }
-
-    @Override
     public void swipeRefresh() {
         mSRLayout.startRefresh();
     }
@@ -140,6 +133,4 @@ abstract public class SRFormFragEx<T extends FormEx<T, VH>, VH extends ViewHolde
     public void stopSwipeRefresh() {
         mSRLayout.stopRefresh();
     }
-
-    abstract public IListResult<T> parseNetworkResponse(int id, String text) throws Exception;
 }

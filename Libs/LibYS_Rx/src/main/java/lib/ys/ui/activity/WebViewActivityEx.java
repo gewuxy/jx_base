@@ -2,8 +2,11 @@ package lib.ys.ui.activity;
 
 import android.content.Intent;
 import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
+
+import java.util.Map;
 
 import lib.ys.R;
 import lib.ys.ui.interfaces.impl.WebOption;
@@ -61,6 +64,15 @@ abstract public class WebViewActivityEx extends ActivityEx implements IWebViewHo
     @Override
     public void loadUrl(String url) {
         mWebView.loadUrl(url);
+    }
+
+    @Override
+    public void loadUrl(String url, @NonNull Map<String, String> headers) {
+        if (headers == null) {
+            loadUrl(url);
+        } else {
+            mWebView.loadUrl(url, headers);
+        }
     }
 
     @Override

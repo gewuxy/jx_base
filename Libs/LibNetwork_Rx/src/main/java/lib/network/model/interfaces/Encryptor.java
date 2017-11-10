@@ -8,6 +8,6 @@ import lib.network.model.NetworkReq;
  * @auther yuansui
  * @since 2017/8/24
  */
-public interface IEncryptor {
+public interface Encryptor {
     void encrypt(NetworkReq.Builder builder);
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 import lib.network.Network;
 import lib.network.model.NetworkResp;
-import lib.network.model.interfaces.IListResult;
+import lib.network.model.interfaces.IResult;
 import lib.ys.AppEx;
 import lib.ys.ConstantsEx.ListConstants;
 import lib.ys.R;
@@ -187,23 +187,23 @@ public class SROpt<T> implements OnSRListener {
         onLocalRefreshSuccess();
     }
 
-    public Object onNetworkResponse(int id, NetworkResp nr, String tag) throws Exception {
-        YSLog.d(tag, nr.getText());
-        return mSROptListener.parseNetworkResponse(id, nr.getText());
+    public IResult<T> onNetworkResponse(int id, NetworkResp resp, String tag) throws Exception {
+        YSLog.d(tag, resp.getText());
+        return mSROptListener.parseNetworkResponse(id, resp.getText());
     }
 
-    public void onNetworkSuccess(IListResult response) {
-        if (response == null || !response.isSucceed() || response.getData() == null) {
+    public void onNetworkSuccess(IResult<T> r) {
+        if (r == null || !r.isSucceed() || r.getList() == null) {
             // 表示数据列表返回为null, 解析失败
             stopRefresh();
 
-            if (response != null) {
-                AppEx.showToast(response.getMessage());
+            if (r != null) {
+                AppEx.showToast(r.getMessage());
             }
             return;
         }
 
-        mTsNet = response.getData();
+        mTsNet = r.getList();
 
         switch (getListPageDownType()) {
             case PageDownType.offset: {
@@ -215,7 +215,7 @@ public class SROpt<T> implements OnSRListener {
             }
             break;
             case PageDownType.last_id: {
-                mLastId = response.getLastId();
+                mLastId = r.getLastId();
             }
             break;
             default:

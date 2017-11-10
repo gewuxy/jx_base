@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnDismissListener;
+import android.os.Bundle;
 
 import lib.ys.R;
 import lib.ys.ui.decor.IProgressView;
@@ -31,7 +32,7 @@ public class LoadingDialogImpl extends MatchScreenDialog implements OnCancelList
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
     }
 
     @Override

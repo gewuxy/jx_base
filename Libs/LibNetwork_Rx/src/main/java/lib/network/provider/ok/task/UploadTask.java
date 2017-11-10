@@ -4,16 +4,16 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 import lib.network.Network;
 import lib.network.NetworkLog;
 import lib.network.NetworkUtil;
 import lib.network.model.NetworkReq;
 import lib.network.model.interfaces.OnNetworkListener;
-import lib.network.model.param.BytePair;
-import lib.network.model.param.CommonPair;
-import lib.network.model.param.FilePair;
+import lib.network.model.pair.BytePairs;
+import lib.network.model.pair.FilePairs;
+import lib.network.model.pair.Pair;
+import lib.network.model.pair.Pairs;
 import lib.network.provider.NativeListener;
 import lib.network.provider.ok.callback.OkCallback;
 import okhttp3.MediaType;
@@ -46,26 +46,26 @@ public class UploadTask extends Task {
 
         MultipartBody.Builder b = new Builder().setType(MultipartBody.FORM);
 
-        List<BytePair> bytes = getReq().getByteParams();
+        BytePairs bytes = getReq().getByteParams();
         if (bytes != null) {
-            for (BytePair p : bytes) {
+            for (Pair<byte[]> p : bytes.getData()) {
                 // FIXME: 图片流的上传只能使用存储到本地以后以文件形式上传(这样会残留本地图片文件在特定文件夹)
                 File f = UploadFile.create(p.getVal());
                 b.addFormDataPart(p.getName(), p.getName(), RequestBody.create(MultipartBody.FORM, f));
             }
         }
 
-        List<FilePair> files = getReq().getFileParams();
+        FilePairs files = getReq().getFileParams();
         if (files != null) {
-            for (FilePair p : files) {
+            for (Pair<String> p : files.getData()) {
                 File f = new File(p.getVal());
                 b.addFormDataPart(p.getName(), p.getName(), RequestBody.create(MultipartBody.FORM, f));
             }
         }
 
-        List<CommonPair> params = getReq().getParams();
+        Pairs params = getReq().getParams();
         if (params != null) {
-            for (CommonPair p : params) {
+            for (Pair<String> p : params.getData()) {
                 b.addFormDataPart(p.getName(), p.getVal());
             }
         }

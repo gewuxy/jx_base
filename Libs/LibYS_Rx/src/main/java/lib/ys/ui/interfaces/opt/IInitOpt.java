@@ -1,6 +1,7 @@
 package lib.ys.ui.interfaces.opt;
 
 
+import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,8 +18,10 @@ public interface IInitOpt {
     /**
      * 初始化数据
      * 由于提前初始化了, 所以这时候view还没有加载成功, 不要使用相关方法
+     *
+     * @param savedInstanceState
      */
-    void initData();
+    void initData(Bundle savedInstanceState);
 
     /**
      * 获取ContentView的Id

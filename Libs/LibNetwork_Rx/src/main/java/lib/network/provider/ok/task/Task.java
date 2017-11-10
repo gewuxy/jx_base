@@ -1,9 +1,8 @@
 package lib.network.provider.ok.task;
 
-import java.util.List;
-
 import lib.network.model.NetworkReq;
-import lib.network.model.param.CommonPair;
+import lib.network.model.pair.Pair;
+import lib.network.model.pair.Pairs;
 import lib.network.provider.ok.OkClient;
 import lib.network.provider.ok.callback.OkCallback;
 import okhttp3.Call;
@@ -38,9 +37,9 @@ abstract public class Task {
     }
 
     protected void addHeaders(Request.Builder builder) {
-        List<CommonPair> headers = getReq().getHeaders();
+        Pairs headers = getReq().getHeaders();
         if (headers != null && !headers.isEmpty()) {
-            for (CommonPair header : headers) {
+            for (Pair<String> header : headers.getData()) {
                 builder.addHeader(header.getName(), header.getVal());
             }
         }

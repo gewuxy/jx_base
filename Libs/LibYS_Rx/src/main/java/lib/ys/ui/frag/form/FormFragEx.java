@@ -1,6 +1,7 @@
 package lib.ys.ui.frag.form;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.ColorInt;
 import android.view.View;
@@ -61,7 +62,7 @@ abstract public class FormFragEx<T extends FormEx<T, VH>, VH extends IViewHolder
 
     @CallSuper
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
         mItems = new ArrayList<>();
 
         mMapRelated = new HashMap<>();

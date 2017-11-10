@@ -1,11 +1,10 @@
 package lib.network.provider.ok.task;
 
-import java.util.List;
-
 import lib.network.NetworkLog;
 import lib.network.NetworkUtil;
 import lib.network.model.NetworkReq;
-import lib.network.model.param.CommonPair;
+import lib.network.model.pair.Pair;
+import lib.network.model.pair.Pairs;
 import lib.network.provider.ok.callback.OkCallback;
 import okhttp3.FormBody;
 import okhttp3.Request;
@@ -28,9 +27,9 @@ public class PostTask extends Task {
         NetworkLog.d("url_post = " + url);
 
         FormBody.Builder b = new FormBody.Builder();
-        List<CommonPair> params = getReq().getParams();
+        Pairs params = getReq().getParams();
         if (params != null) {
-            for (CommonPair p : params) {
+            for (Pair<String> p : params.getData()) {
                 b.add(p.getName(), p.getVal());
             }
         }

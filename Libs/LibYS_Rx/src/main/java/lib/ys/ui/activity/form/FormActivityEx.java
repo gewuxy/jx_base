@@ -1,6 +1,7 @@
 package lib.ys.ui.activity.form;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.ColorInt;
 import android.view.View;
@@ -58,7 +59,7 @@ abstract public class FormActivityEx<T extends FormEx<T, VH>, VH extends IViewHo
 
     @CallSuper
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
         mVHClass = GenericUtil.getClassType(getClass(), IViewHolder.class);
 
         mItems = new ArrayList<>();

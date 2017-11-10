@@ -4,12 +4,11 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import org.json.JSONException;
-
 import lib.network.model.NetworkError;
 import lib.network.model.NetworkReq;
 import lib.network.model.NetworkResp;
 import lib.network.model.interfaces.OnNetworkListener;
+import lib.network.model.interfaces.IResult;
 import lib.ys.YSLog;
 import lib.ys.ui.interfaces.impl.NetworkOpt;
 import lib.ys.ui.interfaces.opt.INetworkOpt;
@@ -85,12 +84,12 @@ abstract public class ServiceEx extends Service implements INetworkOpt, OnNetwor
     }
 
     @Override
-    public Object onNetworkResponse(int id, NetworkResp r) throws JSONException {
+    public IResult onNetworkResponse(int id, NetworkResp resp) throws Exception {
         return null;
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
     }
 
     @Override

@@ -4,13 +4,12 @@ import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.List;
-
 import inject.annotation.builder.Builder;
 import lib.network.model.NetworkReq;
-import lib.network.model.interfaces.IConfigsMaker;
-import lib.network.model.interfaces.IEncryptor;
-import lib.network.model.param.CommonPair;
+import lib.network.model.interfaces.Encryptor;
+import lib.network.model.interfaces.ConfigSetter;
+import lib.network.model.interfaces.Interceptor;
+import lib.network.model.pair.Pairs;
 
 /**
  * @auther yuansui
@@ -39,11 +38,13 @@ public class NetworkConfig {
     // 网络未连接
     String mDisconnectToast;
     // 共用参数
-    IConfigsMaker mParamsMaker;
+    ConfigSetter mParamsMaker;
     // 共用headers
-    IConfigsMaker mHeadersMaker;
+    ConfigSetter mHeadersMaker;
     // 加密器
-    IEncryptor mEncryptor;
+    Encryptor mEncryptor;
+    // 解析后的拦截器
+    Interceptor mInterceptor;
 
     public NetworkConfig() {
         mConnectTimeout = 15;
@@ -78,8 +79,12 @@ public class NetworkConfig {
         return mCacheDir;
     }
 
+    public Interceptor getInterceptor() {
+        return mInterceptor;
+    }
+
     @Nullable
-    public List<CommonPair> getCommonParams() {
+    public Pairs getCommonParams() {
         if (mParamsMaker != null) {
             return mParamsMaker.make();
         } else {
@@ -88,7 +93,7 @@ public class NetworkConfig {
     }
 
     @Nullable
-    public List<CommonPair> getCommonHeaders() {
+    public Pairs getCommonHeaders() {
         if (mHeadersMaker != null) {
             return mHeadersMaker.make();
         } else {

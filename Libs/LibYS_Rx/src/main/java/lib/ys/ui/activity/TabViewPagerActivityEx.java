@@ -87,7 +87,7 @@ abstract public class TabViewPagerActivityEx<TITLE extends IPagerTitle> extends 
         }
     }
 
-    public class FragPagerAdapter extends FragPagerAdapterEx<Fragment, TITLE> {
+    public class FragPagerAdapter extends FragPagerAdapterEx<TITLE> {
 
         public FragPagerAdapter(FragmentManager fm) {
             super(fm);

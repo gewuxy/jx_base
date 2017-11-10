@@ -2,8 +2,11 @@ package lib.ys.ui.frag;
 
 import android.content.Intent;
 import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
+
+import java.util.Map;
 
 import lib.ys.R;
 import lib.ys.ui.interfaces.impl.WebOption;
@@ -64,6 +67,15 @@ abstract public class WebViewFragEx extends FragEx implements IWebViewHost {
     @Override
     public void loadUrl(String url) {
         mWebView.loadUrl(url);
+    }
+
+    @Override
+    public void loadUrl(String url, @NonNull Map<String, String> headers) {
+        if (headers == null) {
+            loadUrl(url);
+        } else {
+            mWebView.loadUrl(url, headers);
+        }
     }
 
     @Override

@@ -78,6 +78,9 @@ abstract public class ViewPagerFragEx extends FragEx {
     }
 
     protected void setCurrentItem(int item) {
+        if (mVp == null) {
+            return;
+        }
         mVp.setCurrentItem(item);
     }
 
@@ -127,6 +130,9 @@ abstract public class ViewPagerFragEx extends FragEx {
     }
 
     protected int getCurrentItem() {
+        if (mVp == null) {
+            return 0;
+        }
         return mVp.getCurrentItem();
     }
 

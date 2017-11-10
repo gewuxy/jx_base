@@ -25,13 +25,12 @@ import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout.LayoutParams;
 
-import org.json.JSONException;
-
 import lib.network.Network;
 import lib.network.model.NetworkError;
 import lib.network.model.NetworkReq;
 import lib.network.model.NetworkResp;
 import lib.network.model.interfaces.OnNetworkListener;
+import lib.network.model.interfaces.IResult;
 import lib.ys.AppEx;
 import lib.ys.ConstantsEx;
 import lib.ys.YSLog;
@@ -112,7 +111,7 @@ abstract public class PopupWindowEx implements
 //        mPopupWindow.setHeight(getWindowHeight());
         mPopupWindow.setBackgroundDrawable(null);
 
-        initData();
+        initData(null);
         findViews();
         setViews();
 
@@ -206,12 +205,12 @@ abstract public class PopupWindowEx implements
     }
 
     @Override
-    public Object onNetworkResponse(int id, NetworkResp r) throws JSONException {
+    public IResult onNetworkResponse(int id, NetworkResp resp) throws Exception {
         return null;
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
     }
 
     @Override

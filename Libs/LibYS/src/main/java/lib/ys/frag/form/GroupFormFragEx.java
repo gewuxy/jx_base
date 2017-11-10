@@ -60,7 +60,7 @@ abstract public class GroupFormFragEx<T extends GroupFormItemEx> extends FragEx 
 
     @CallSuper
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
         mMapGroupClick = new HashMap<>();
 
         // group

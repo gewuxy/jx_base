@@ -2,10 +2,9 @@ package lib.network;
 
 import android.support.annotation.NonNull;
 
-import java.util.List;
+import lib.network.model.pair.Pair;
+import lib.network.model.pair.Pairs;
 
-import lib.network.model.param.BasePair;
-import lib.network.model.param.CommonPair;
 
 /**
  * http里使用的一些小工具
@@ -26,7 +25,7 @@ public class NetworkUtil {
      * @param params
      * @return
      */
-    public static String generateGetUrl(@NonNull String url, @NonNull List<CommonPair> params) {
+    public static String generateGetUrl(@NonNull String url, @NonNull Pairs params) {
         if (params == null || params.isEmpty()) {
             return url;
         }
@@ -45,22 +44,22 @@ public class NetworkUtil {
      * @param params
      * @return
      */
-    public static String generateGetParams(List<CommonPair> params) {
+    public static String generateGetParams(Pairs params) {
         if (params == null || params.isEmpty()) {
             return KTextEmpty;
         }
 
         StringBuilder sb = new StringBuilder();
-        BasePair pair;
+        Pair p;
         int size = params.size();
         for (int i = 0; i < size; i++) {
-            pair = params.get(i);
-            if (pair == null) {
+            p = params.get(i);
+            if (p == null) {
                 continue;
             }
-            sb.append(pair.getName());
+            sb.append(p.getName());
             sb.append(KSymbolEqual);
-            sb.append(pair.getVal());
+            sb.append(p.getVal());
 
             if (i != size - 1) {
                 sb.append(KSymbolAnd);

@@ -1,5 +1,9 @@
 package lib.ys.ui.interfaces.web;
 
+import android.support.annotation.NonNull;
+
+import java.util.Map;
+
 import lib.ys.ui.interfaces.impl.WebOption;
 
 /**
@@ -18,12 +22,21 @@ public interface IWebViewHost {
      */
     void setH5Title(String h5Title);
 
+
     /**
      * 加载数据
      *
      * @param url
      */
     void loadUrl(String url);
+
+    /**
+     * 加载数据
+     *
+     * @param url
+     * @param headers
+     */
+    void loadUrl(String url, @NonNull Map<String, String> headers);
 
     /**
      * 是否可后退

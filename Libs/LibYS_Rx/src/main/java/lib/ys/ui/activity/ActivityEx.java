@@ -35,6 +35,7 @@ import lib.network.Network;
 import lib.network.model.NetworkError;
 import lib.network.model.NetworkReq;
 import lib.network.model.NetworkResp;
+import lib.network.model.interfaces.IResult;
 import lib.network.model.interfaces.OnNetworkListener;
 import lib.ys.AppEx;
 import lib.ys.R;
@@ -122,6 +123,9 @@ abstract public class ActivityEx extends SwipeBackActivity implements
         getWindow().setFormat(PixelFormat.TRANSPARENT);
         super.onCreate(savedInstanceState);
 
+        InjectUtil.bind(this);
+        // 数据的初始化提前, 可以根据数据来装载不同的view id
+        initData(savedInstanceState);
         setContentView(getContentViewId());
 
         if (enableSwipeFinish() == null) {
@@ -150,11 +154,6 @@ abstract public class ActivityEx extends SwipeBackActivity implements
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
-        InjectUtil.bind(this);
-
-        // 数据的初始化提前, 可以根据数据来装载不同的view id
-        initData();
-
         mDecorView = new DecorViewEx(this, getNavBarState(), getInitRefreshWay(), initLoadingDialog(), this);
         mDecorView.setContentView(layoutResID, getContentHeaderViewId(), getContentFooterViewId());
 
@@ -270,17 +269,13 @@ abstract public class ActivityEx extends SwipeBackActivity implements
         }
     }
 
-    /**
-     * http task callback part
-     */
-
     @Override
-    public Object onNetworkResponse(int id, NetworkResp r) throws Exception {
+    public IResult onNetworkResponse(int id, NetworkResp resp) throws Exception {
         return null;
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
     }
 
     @Override

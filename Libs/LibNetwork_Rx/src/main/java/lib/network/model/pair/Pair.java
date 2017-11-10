@@ -1,15 +1,14 @@
-package lib.network.model.param;
+package lib.network.model.pair;
 
 import android.text.TextUtils;
 
 import lib.network.NetworkConstants;
 
-
-abstract public class BasePair<T> {
+public class Pair<T> {
     private String mName = NetworkConstants.KEmpty;
     private T mVal;
 
-    public BasePair(String name, T val) {
+    public Pair(String name, T val) {
         setName(name);
         setVal(val);
     }

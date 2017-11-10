@@ -1,6 +1,7 @@
 package lib.ys.ui.decor;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -47,7 +48,7 @@ abstract public class ErrorDecorEx extends RelativeLayout implements IInitOpt {
         LayoutParams params = LayoutUtil.getRelativeParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         addView(v, params);
 
-        initData();
+        initData(null);
         findViews();
         setViews();
     }
@@ -94,7 +95,7 @@ abstract public class ErrorDecorEx extends RelativeLayout implements IInitOpt {
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
     }
 
     @Override

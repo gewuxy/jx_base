@@ -86,7 +86,7 @@ public class RecyclerScrollable<T, A extends IAdapter<T>> extends BaseScrollable
     @Override
     public void findViews(@NonNull View contentView, @IdRes int scrollableId, @Nullable View header, @Nullable View footer, @Nullable View empty) {
         super.findViews(contentView, scrollableId, header, footer, empty);
-        mRv = (WrapRecyclerView) contentView.findViewById(scrollableId);
+        mRv = contentView.findViewById(scrollableId);
     }
 
     /**

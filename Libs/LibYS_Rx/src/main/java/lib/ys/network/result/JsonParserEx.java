@@ -6,7 +6,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import lib.network.model.interfaces.IListResult;
 import lib.network.model.interfaces.IResult;
 import lib.ys.model.EVal;
 import lib.ys.util.JsonUtil;
@@ -19,7 +18,7 @@ public class JsonParserEx {
         JsonUtil.setEV(clz, r, obj);
     }
 
-    protected static <T extends EVal> void setEVs(Class<T> clz, IListResult<T> r, JSONArray array) throws JSONException {
+    protected static <T extends EVal> void setEVs(Class<T> clz, IResult<T> r, JSONArray array) throws JSONException {
         JsonUtil.setEVs(clz, r, array);
     }
 

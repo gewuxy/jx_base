@@ -8,7 +8,7 @@ import org.json.JSONException;
 import java.util.List;
 
 import lib.network.model.NetworkResp;
-import lib.network.model.interfaces.IListResult;
+import lib.network.model.interfaces.IResult;
 import lib.ys.AppEx;
 import lib.ys.ConstantsEx.ListConstants;
 import lib.ys.R;
@@ -84,7 +84,7 @@ abstract public class SRGroupListActivityEx<GROUP, CHILD, A extends IGroupAdapte
     }
 
     @Override
-    abstract public IListResult<GROUP> parseNetworkResponse(int id, String text) throws JSONException;
+    abstract public IResult<GROUP> parseNetworkResponse(int id, String text) throws JSONException;
 
     @Override
     public void setOnScrollListener(OnScrollMixListener listener) {
@@ -232,15 +232,17 @@ abstract public class SRGroupListActivityEx<GROUP, CHILD, A extends IGroupAdapte
         mSROpt.stopSwipeRefresh();
     }
 
+    @CallSuper
     @Override
-    public Object onNetworkResponse(int id, NetworkResp r) throws Exception {
-        return mSROpt.onNetworkResponse(id, r, TAG);
+    public IResult onNetworkResponse(int id, NetworkResp resp) throws Exception {
+        return mSROpt.onNetworkResponse(id, resp, TAG);
     }
 
+    @CallSuper
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
         if (!isFinishing()) {
-            mSROpt.onNetworkSuccess((IListResult) result);
+            mSROpt.onNetworkSuccess(r);
         }
     }
 

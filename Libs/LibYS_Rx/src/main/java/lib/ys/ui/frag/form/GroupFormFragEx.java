@@ -2,6 +2,7 @@ package lib.ys.ui.frag.form;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.CallSuper;
 import android.view.View;
@@ -61,7 +62,7 @@ abstract public class GroupFormFragEx<T extends GroupFormEx> extends FragEx impl
 
     @CallSuper
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
         mMapGroupClick = new HashMap<>();
 
         // group

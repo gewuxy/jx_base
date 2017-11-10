@@ -1,5 +1,6 @@
 package lib.ys.ui.activity;
 
+import android.os.Bundle;
 import android.view.ViewTreeObserver.OnPreDrawListener;
 
 import java.util.concurrent.TimeUnit;
@@ -12,7 +13,7 @@ import lib.ys.ui.other.NavBar;
 abstract public class SplashActivityEx extends ActivityEx {
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
     }
 
     @Override

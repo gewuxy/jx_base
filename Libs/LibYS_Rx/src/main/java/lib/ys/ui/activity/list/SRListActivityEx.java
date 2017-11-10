@@ -8,7 +8,7 @@ import org.json.JSONException;
 import java.util.List;
 
 import lib.network.model.NetworkResp;
-import lib.network.model.interfaces.IListResult;
+import lib.network.model.interfaces.IResult;
 import lib.ys.AppEx;
 import lib.ys.R;
 import lib.ys.adapter.interfaces.IAdapter;
@@ -82,7 +82,7 @@ abstract public class SRListActivityEx<T, A extends IAdapter<T>> extends ListAct
     }
 
     @Override
-    abstract public IListResult<T> parseNetworkResponse(int id, String text) throws JSONException;
+    abstract public IResult<T> parseNetworkResponse(int id, String text) throws JSONException;
 
     @Override
     public void setOnScrollListener(OnScrollMixListener listener) {
@@ -230,15 +230,17 @@ abstract public class SRListActivityEx<T, A extends IAdapter<T>> extends ListAct
         mSROpt.stopSwipeRefresh();
     }
 
+    @CallSuper
     @Override
-    public Object onNetworkResponse(int id, NetworkResp r) throws Exception {
-        return mSROpt.onNetworkResponse(id, r, TAG);
+    public IResult onNetworkResponse(int id, NetworkResp resp) throws Exception {
+        return mSROpt.onNetworkResponse(id, resp, TAG);
     }
 
+    @CallSuper
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
         if (!isFinishing()) {
-            mSROpt.onNetworkSuccess((IListResult) result);
+            mSROpt.onNetworkSuccess(r);
         }
     }
 

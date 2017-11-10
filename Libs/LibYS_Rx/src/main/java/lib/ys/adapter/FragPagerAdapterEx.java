@@ -26,14 +26,13 @@ import lib.ys.adapter.interfaces.IPagerTitle;
  * 所以使用自己的{@link FragmentTransaction}来保证依附是在分离之后被调用, 详情见{@link #finishUpdate(ViewGroup)}
  * </p>
  *
- * @param <T>
  * @param <TITLE>
  */
-abstract public class FragPagerAdapterEx<T extends Fragment, TITLE extends IPagerTitle> extends FragmentPagerAdapter {
+abstract public class FragPagerAdapterEx<TITLE extends IPagerTitle> extends FragmentPagerAdapter {
 
     private String TAG = getClass().getSimpleName();
 
-    private List<T> mTs;
+    private List<Fragment> mFrags;
     private List<TITLE> mTitles;
 
     private boolean mModify;
@@ -49,17 +48,17 @@ abstract public class FragPagerAdapterEx<T extends Fragment, TITLE extends IPage
     }
 
     @Override
-    public T getItem(int position) {
-        if (mTs == null) {
+    public Fragment getItem(int position) {
+        if (mFrags == null) {
             return null;
         }
 
-        T t = null;
+        Fragment t = null;
         try {
             if (isLoop()) {
                 position %= getRealCount();
             }
-            t = mTs.get(position);
+            t = mFrags.get(position);
         } catch (Exception e) {
             YSLog.e(TAG, e);
         }
@@ -69,7 +68,7 @@ abstract public class FragPagerAdapterEx<T extends Fragment, TITLE extends IPage
 
     @Override
     public int getCount() {
-        int count = mTs == null ? 0 : mTs.size();
+        int count = mFrags == null ? 0 : mFrags.size();
         if (isLoop()) {
             if (count < 3) {
                 // 不够3个. 无法建立frag循环
@@ -82,59 +81,59 @@ abstract public class FragPagerAdapterEx<T extends Fragment, TITLE extends IPage
     }
 
     public int getRealCount() {
-        return mTs == null ? 0 : mTs.size();
+        return mFrags == null ? 0 : mFrags.size();
     }
 
     public boolean isEmpty() {
         return getCount() == 0;
     }
 
-    public void setData(List<T> data) {
-        mTs = data;
+    public void setData(List<Fragment> data) {
+        mFrags = data;
     }
 
-    public void add(T item) {
+    public void add(Fragment item) {
         if (item == null) {
             return;
         }
 
-        if (mTs == null) {
-            mTs = new ArrayList<>();
+        if (mFrags == null) {
+            mFrags = new ArrayList<>();
         }
-        mTs.add(item);
+        mFrags.add(item);
     }
 
-    public void add(int position, T item) {
+    public void add(int position, Fragment item) {
         if (item == null) {
             return;
         }
 
-        if (mTs == null) {
-            mTs = new ArrayList<>();
+        if (mFrags == null) {
+            mFrags = new ArrayList<>();
         }
-        mTs.add(position, item);
+        mFrags.add(position, item);
     }
 
-    public void addAll(List<T> data) {
+    public void addAll(List<Fragment> data) {
         if (data == null || data.isEmpty()) {
             return;
         }
 
-        if (mTs == null) {
-            mTs = data;
+        if (mFrags == null) {
+            mFrags = data;
         } else {
-            mTs.addAll(data);
+            mFrags.addAll(data);
         }
     }
 
-    public void addAll(int position, List<T> item) {
-        if (mTs != null && item != null) {
-            mTs.addAll(position, item);
+    public void addAll(int position, List<Fragment> item) {
+        if (mFrags != null && item != null) {
+            mFrags.addAll(position, item);
         }
     }
 
-    public List<T> getData() {
-        return mTs;
+    public List<Fragment> getData() {
+        return mFrags;
     }
 
     @Override
@@ -160,8 +159,8 @@ abstract public class FragPagerAdapterEx<T extends Fragment, TITLE extends IPage
     }
 
     public void removeAll() {
-        if (mTs != null) {
-            mTs.clear();
+        if (mFrags != null) {
+            mFrags.clear();
             mModify = true;
         }
     }

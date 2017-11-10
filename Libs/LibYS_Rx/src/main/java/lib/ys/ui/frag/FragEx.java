@@ -29,6 +29,7 @@ import lib.network.model.NetworkError;
 import lib.network.model.NetworkReq;
 import lib.network.model.NetworkResp;
 import lib.network.model.interfaces.OnNetworkListener;
+import lib.network.model.interfaces.IResult;
 import lib.ys.AppEx;
 import lib.ys.R;
 import lib.ys.YSLog;
@@ -98,8 +99,11 @@ abstract public class FragEx extends Fragment implements
     private PermissionOpt mPermission;
     private TouchDelegateImpl mTouchDelegateImpl;
 
+    private Bundle mSavedInstanceState;
+
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mSavedInstanceState = savedInstanceState;
         if (mDecorView != null) {
             return mDecorView;
         }
@@ -219,7 +223,7 @@ abstract public class FragEx extends Fragment implements
         InjectUtil.bind(this);
 
         // 数据的初始化提前, 可以根据数据来装载不同的view id
-        initData();
+        initData(mSavedInstanceState);
 
         mDecorView = new DecorViewEx(getActivity(), getNavBarState(), getInitRefreshWay(), initLoadingDialog(), this);
         mDecorView.setContentView(getContentViewId(), getContentHeaderViewId(), getContentFooterViewId());
@@ -294,16 +298,13 @@ abstract public class FragEx extends Fragment implements
         UtilEx.runOnUIThread(r, ResLoader.getInteger(R.integer.anim_default_duration));
     }
 
-    /**
-     * http task callback part
-     */
     @Override
-    public Object onNetworkResponse(int id, NetworkResp r) throws Exception {
+    public IResult onNetworkResponse(int id, NetworkResp resp) throws Exception {
         return null;
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
     }
 
     @Override

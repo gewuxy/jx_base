@@ -25,7 +25,7 @@ abstract public class SplashActivityEx extends ActivityEx {
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
     }
 
     @Override

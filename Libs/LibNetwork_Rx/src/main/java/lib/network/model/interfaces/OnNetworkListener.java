@@ -14,18 +14,18 @@ public interface OnNetworkListener {
      * 任务数据回调
      *
      * @param id 编号
-     * @param r  返回的数据
+     * @param resp  返回的数据
      * @return
      */
-    Object onNetworkResponse(int id, NetworkResp r) throws Exception;
+    IResult onNetworkResponse(int id, NetworkResp resp) throws Exception;
 
     /**
      * 任务成功
      *
      * @param id     编号
-     * @param result 解析后的数据
+     * @param r 解析后的数据
      */
-    void onNetworkSuccess(int id, Object result);
+    void onNetworkSuccess(int id, IResult r);
 
     /**
      * 任务错误
