@@ -6,6 +6,12 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import com.sun.source.util.Trees;
+import com.sun.tools.javac.processing.JavacProcessingEnvironment;
+import com.sun.tools.javac.tree.TreeMaker;
+import com.sun.tools.javac.util.Context;
+import com.sun.tools.javac.util.Name;
+import com.sun.tools.javac.util.Names;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -47,10 +53,21 @@ abstract public class BaseProcessor extends AbstractProcessor {
     private Types typeUtils;
     private Filer filer;
     private Messager messager;
+    protected RoundEnvironment roundEnv;
+
+    private Trees trees;
+    private TreeMaker maker;
+    private Name.Table names;
 
     @Override
     public synchronized void init(ProcessingEnvironment env) {
         super.init(env);
+
+        JavacProcessingEnvironment jcEnv = (JavacProcessingEnvironment) env;
+        Context context = jcEnv.getContext();
+        trees = Trees.instance(jcEnv);
+        maker = TreeMaker.instance(context);
+        names = Names.instance(context).table;
 
         elementUtils = env.getElementUtils();
         typeUtils = env.getTypeUtils();
@@ -60,6 +77,7 @@ abstract public class BaseProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
+        roundEnv = env;
         for (Element annotatedElement : env.getElementsAnnotatedWith(getAnnotationClass())) {
             try {
                 TypeSpec spec = createTypeSpec(annotatedElement);
@@ -190,5 +208,17 @@ abstract public class BaseProcessor extends AbstractProcessor {
 
     protected void printErr(Element e, String msg, Object... args) {
         messager.printMessage(Kind.ERROR, String.format(msg, args), e);
+    }
+
+    protected Trees trees() {
+        return trees;
+    }
+
+    protected TreeMaker maker() {
+        return maker;
+    }
+
+    protected Name.Table names() {
+        return names;
     }
 }

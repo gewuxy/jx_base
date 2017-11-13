@@ -1,6 +1,7 @@
 apply plugin: 'java-library'
 
 dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(deps.ys.annotation)
     implementation deps.square.poet
     implementation deps.google.auto.service
