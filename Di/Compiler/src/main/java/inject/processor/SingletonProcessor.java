@@ -12,33 +12,29 @@ import com.sun.tools.javac.tree.TreeTranslator;
 import com.sun.tools.javac.util.ListBuffer;
 
 import java.lang.annotation.Annotation;
-import java.util.Set;
 
 import javax.annotation.processing.Processor;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 
-import inject.annotation.builder.Builder;
+import inject.annotation.Singleton;
 
 @AutoService(Processor.class)
 public class SingletonProcessor extends BaseProcessor {
 
     @Override
     protected Class<? extends Annotation> getAnnotationClass() {
-        return Builder.class;
+        return Singleton.class;
     }
 
     @Override
     protected TypeSpec createTypeSpec(Element annotatedElement) {
-        Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(Builder.class);
-        for (Element element : elements) {
-            if (element.getKind() == ElementKind.CLASS) {
-                print(" assertions inlined class " + ((TypeElement) element).getQualifiedName().toString());
-                JCTree tree = (JCTree) trees().getTree(element);
-                TreeTranslator visitor = new Inliner();
-                tree.accept(visitor);
-            }
+        if (annotatedElement.getKind() == ElementKind.CLASS) {
+            print(" assertions inlined class " + ((TypeElement) annotatedElement).getQualifiedName().toString());
+            JCTree tree = (JCTree) trees().getTree(annotatedElement);
+            TreeTranslator visitor = new Inliner();
+            tree.accept(visitor);
         }
         return null;
     }
