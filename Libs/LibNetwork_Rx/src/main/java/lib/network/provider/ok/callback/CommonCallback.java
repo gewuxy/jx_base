@@ -3,10 +3,10 @@ package lib.network.provider.ok.callback;
 import java.io.IOException;
 
 import lib.network.NetworkLog;
-import lib.network.model.NetworkErrorBuilder;
+import lib.network.model.NetworkError;
 import lib.network.model.NetworkResp;
-import lib.network.model.interfaces.OnNetworkListener;
 import lib.network.model.interfaces.IResult;
+import lib.network.model.interfaces.OnNetworkListener;
 import lib.network.provider.NativeListener;
 import okhttp3.Call;
 import okhttp3.Response;
@@ -47,7 +47,7 @@ public class CommonCallback extends OkCallback {
         } catch (Exception e) {
             NetworkLog.e("onResponse", e);
             NativeListener.inst().onError(id,
-                    NetworkErrorBuilder.create().code(id).exception(e).message(e.getMessage()).build(),
+                    NetworkError.newBuilder().code(id).exception(e).message(e.getMessage()).build(),
                     getListener());
         }
     }

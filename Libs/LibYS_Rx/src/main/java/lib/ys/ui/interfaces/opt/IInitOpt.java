@@ -17,11 +17,11 @@ public interface IInitOpt {
 
     /**
      * 初始化数据
-     * 由于提前初始化了, 所以这时候view还没有加载成功, 不要使用相关方法
+     * 由于提前初始化了, 所以这时候view还没有加载成功, 不要使用view相关方法
      *
-     * @param savedInstanceState
+     * @param state 如果被回收了, state不为空, 暂时只对activity有效
      */
-    void initData(Bundle savedInstanceState);
+    void initData(Bundle state);
 
     /**
      * 获取ContentView的Id

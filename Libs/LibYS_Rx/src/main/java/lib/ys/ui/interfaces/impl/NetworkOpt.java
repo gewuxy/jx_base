@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import lib.network.Network;
 import lib.network.model.NetworkError;
-import lib.network.model.NetworkErrorBuilder;
 import lib.network.model.NetworkReq;
 import lib.network.model.interfaces.OnNetworkListener;
 import lib.ys.ui.interfaces.opt.INetworkOpt;
@@ -58,7 +57,7 @@ public class NetworkOpt implements INetworkOpt {
         }
 
         if (!DeviceUtil.isNetworkEnabled()) {
-            mNetworkLsn.onNetworkError(id, NetworkErrorBuilder.create().message(Network.getConfig().getDisconnectToast()).build());
+            mNetworkLsn.onNetworkError(id, NetworkError.newBuilder().message(Network.getConfig().getDisconnectToast()).build());
             return;
         }
 

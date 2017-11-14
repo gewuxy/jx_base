@@ -40,7 +40,7 @@ abstract public class FragMgrActivityEx extends ActivityEx {
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void initData(Bundle state) {
         mFm = getSupportFragmentManager();
 
         mFrags = new ArrayList<>();

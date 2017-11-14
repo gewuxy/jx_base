@@ -79,7 +79,7 @@ public interface OnSROptListener<T> {
      * @param text
      * @return 解析结构体BaseResponse
      */
-    IResult<T> parseNetworkResponse(int what, String text) throws JSONException;
+    IResult parseNetworkResponse(int id, String text) throws JSONException;
 
     void stopLoadMore(boolean isSucceed);
 

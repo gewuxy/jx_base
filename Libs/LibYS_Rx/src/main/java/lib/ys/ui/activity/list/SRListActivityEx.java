@@ -82,7 +82,7 @@ abstract public class SRListActivityEx<T, A extends IAdapter<T>> extends ListAct
     }
 
     @Override
-    abstract public IResult<T> parseNetworkResponse(int id, String text) throws JSONException;
+    abstract public IResult parseNetworkResponse(int id, String text) throws JSONException;
 
     @Override
     public void setOnScrollListener(OnScrollMixListener listener) {
@@ -129,6 +129,7 @@ abstract public class SRListActivityEx<T, A extends IAdapter<T>> extends ListAct
         return AppEx.getListConfig().getLimit();
     }
 
+    @CallSuper
     @Override
     public void onNetRefreshSuccess() {
         showView(getDecorView().getContentView());

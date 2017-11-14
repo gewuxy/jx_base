@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lib.network.model.NetworkError;
-import lib.network.model.NetworkErrorBuilder;
 import lib.network.model.interfaces.IResult;
 
 abstract public class ResultEx<T> implements IResult<T> {
@@ -95,7 +94,7 @@ abstract public class ResultEx<T> implements IResult<T> {
     @Override
     public NetworkError getError() {
         if (mError == null) {
-            mError = NetworkErrorBuilder.create()
+            mError = NetworkError.newBuilder()
                     .code(mCode)
                     .message(mMessage)
                     .build();

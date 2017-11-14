@@ -13,7 +13,7 @@ import lib.ys.ui.other.NavBar;
 abstract public class SplashActivityEx extends ActivityEx {
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void initData(Bundle state) {
     }
 
     @Override

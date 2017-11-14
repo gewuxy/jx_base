@@ -95,7 +95,7 @@ abstract public class ErrorDecorEx extends RelativeLayout implements IInitOpt {
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void initData(Bundle state) {
     }
 
     @Override

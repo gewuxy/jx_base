@@ -32,7 +32,7 @@ public class LoadingDialogImpl extends MatchScreenDialog implements OnCancelList
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void initData(Bundle state) {
     }
 
     @Override

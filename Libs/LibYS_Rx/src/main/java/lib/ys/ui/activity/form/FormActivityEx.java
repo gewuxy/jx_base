@@ -59,7 +59,7 @@ abstract public class FormActivityEx<T extends FormEx<T, VH>, VH extends IViewHo
 
     @CallSuper
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void initData(Bundle state) {
         mVHClass = GenericUtil.getClassType(getClass(), IViewHolder.class);
 
         mItems = new ArrayList<>();

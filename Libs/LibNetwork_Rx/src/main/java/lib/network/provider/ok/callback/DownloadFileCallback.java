@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.RandomAccessFile;
 
 import lib.network.NetworkLog;
-import lib.network.model.NetworkErrorBuilder;
+import lib.network.model.NetworkError;
 import lib.network.model.interfaces.OnNetworkListener;
 import lib.network.provider.NativeListener;
 import okhttp3.Call;
@@ -42,7 +42,7 @@ public class DownloadFileCallback extends OkCallback {
             if (!dir.exists()) {
                 if (!dir.mkdirs()) {
                     NativeListener.inst().onError(id,
-                            NetworkErrorBuilder.create().code(id).message("创建文件失败, 请检查权限").build(),
+                            NetworkError.newBuilder().code(id).message("创建文件失败, 请检查权限").build(),
                             getListener());
                 }
             }
@@ -67,7 +67,7 @@ public class DownloadFileCallback extends OkCallback {
         } catch (Exception e) {
             NetworkLog.e(e);
             NativeListener.inst().onError(id,
-                    NetworkErrorBuilder.create().code(id).exception(e).message(e.getMessage()).build(),
+                    NetworkError.newBuilder().code(id).exception(e).message(e.getMessage()).build(),
                     getListener());
         } finally {
             if (raf != null) {

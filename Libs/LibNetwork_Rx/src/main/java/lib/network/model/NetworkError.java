@@ -27,6 +27,10 @@ public class NetworkError {
         return mException;
     }
 
+    public static NetworkErrorBuilder newBuilder() {
+        return NetworkErrorBuilder.create();
+    }
+
     @Override
     public String toString() {
         return "[message = " + mMessage + "], \r\n [code = " + mCode + "]";
