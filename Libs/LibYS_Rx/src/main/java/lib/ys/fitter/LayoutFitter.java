@@ -255,7 +255,7 @@ public class LayoutFitter {
      * @param v
      */
     private static void fitParams(View v) {
-        if (v.getParent() instanceof ViewGroup) {
+        if (v.getParent() instanceof LinearLayout || v.getParent() instanceof RelativeLayout) {
             MarginLayoutParams params = (MarginLayoutParams) v.getLayoutParams();
             setMarginParams(v, params);
             v.setLayoutParams(params);

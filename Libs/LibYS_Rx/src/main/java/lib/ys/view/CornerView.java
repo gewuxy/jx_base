@@ -8,7 +8,7 @@ import android.graphics.Path;
 import android.graphics.Path.Direction;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import lib.ys.ConstantsEx;
 import lib.ys.R;
@@ -16,7 +16,7 @@ import lib.ys.util.XmlAttrUtil;
 import lib.ys.util.view.ViewUtil;
 
 
-public class CornerView extends FrameLayout {
+public class CornerView extends RelativeLayout {
 
     private static final int KDefaultRadiusDp = 5;
     private static final int KDefaultStrokeColor = Color.parseColor("#cccccc");
@@ -67,10 +67,6 @@ public class CornerView extends FrameLayout {
             return;
         }
 
-        if (mPathContent != null) {
-            return;
-        }
-
         int w = getMeasuredWidth();
         int h = getMeasuredHeight();
 
@@ -78,7 +74,12 @@ public class CornerView extends FrameLayout {
             return;
         }
 
-        mPathContent = new Path();
+        if (mPathContent == null) {
+            mPathContent = new Path();
+        } else {
+            mPathContent.reset();
+        }
+
         if (mUseStroke) {
             mRoundRectContent = new RectF(mStrokeWidth, mStrokeWidth, w - mStrokeWidth, h - mStrokeWidth);
 

@@ -82,7 +82,7 @@ abstract public class TabViewPagerActivityEx<TITLE extends IPagerTitle> extends 
             }
         });
 
-        if (!getPagerAdapter().isEmpty()) {
+        if (!getAdapter().isEmpty()) {
             setCurrentScrollableContainer(0);
         }
     }
@@ -106,7 +106,7 @@ abstract public class TabViewPagerActivityEx<TITLE extends IPagerTitle> extends 
     }
 
     protected void setTitles(List<TITLE> titles) {
-        getPagerAdapter().setTitles(titles);
+        getAdapter().setTitles(titles);
     }
 
     @CallSuper

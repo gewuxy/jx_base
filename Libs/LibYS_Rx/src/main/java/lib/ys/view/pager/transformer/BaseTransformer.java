@@ -11,7 +11,7 @@ import android.view.View;
 abstract public class BaseTransformer implements PageTransformer {
 
     @Override
-    public final void transformPage(View page, float position) {
+    public void transformPage(View page, float position) {
         if (position < -1) {
             onLeft(page, position);
         } else if (position <= 1) {

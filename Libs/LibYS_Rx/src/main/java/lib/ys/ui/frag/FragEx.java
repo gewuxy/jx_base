@@ -227,6 +227,8 @@ abstract public class FragEx extends Fragment implements
 
         mDecorView = new DecorViewEx(getActivity(), getNavBarState(), getInitRefreshWay(), initLoadingDialog(), this);
         mDecorView.setContentView(getContentViewId(), getContentHeaderViewId(), getContentFooterViewId());
+
+        fit(mDecorView);
     }
 
     /**
