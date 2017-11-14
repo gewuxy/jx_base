@@ -174,6 +174,12 @@ abstract public class ViewPagerFragEx extends FragEx {
      */
     protected void setPageTransformer(boolean reverseDrawingOrder, BaseTransformer transformer) {
         mVp.setPageTransformer(reverseDrawingOrder, transformer);
+        /**
+         * 必须模拟一次fake的拖动, 才能在初始化的时候调起transformer的效果
+         */
+        mVp.beginFakeDrag();
+        mVp.fakeDragBy(-1);
+        mVp.endFakeDrag();
     }
 
     protected ViewPagerEx getViewPager() {
