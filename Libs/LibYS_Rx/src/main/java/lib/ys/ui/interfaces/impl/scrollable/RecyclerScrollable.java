@@ -143,13 +143,13 @@ public class RecyclerScrollable<T, A extends IAdapter<T>> extends BaseScrollable
             }
         };
 
-//        mAdapter.registerDataSetObserver(mDataObserver);
+        mAdapter.registerDataSetObserver(mDataObserver);
     }
 
     public void onDestroy() {
         if (mAdapter != null) {
             if (mDataObserver != null) {
-//            mAdapter.unregisterDataSetObserver(mDataObserver);
+                mAdapter.unregisterDataSetObserver(mDataObserver);
             }
             mAdapter.removeAll();
         }
