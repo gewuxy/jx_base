@@ -8,7 +8,7 @@ import android.graphics.Path;
 import android.graphics.Path.Direction;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 
 import lib.ys.ConstantsEx;
 import lib.ys.R;
@@ -16,7 +16,7 @@ import lib.ys.util.XmlAttrUtil;
 import lib.ys.util.view.ViewUtil;
 
 
-public class CornerView extends RelativeLayout {
+public class CornerView extends FrameLayout {
 
     private static final int KDefaultRadiusDp = 5;
     private static final int KDefaultStrokeColor = Color.parseColor("#cccccc");

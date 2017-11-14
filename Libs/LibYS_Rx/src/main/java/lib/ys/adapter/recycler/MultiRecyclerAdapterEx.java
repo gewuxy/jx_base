@@ -70,10 +70,7 @@ abstract public class MultiRecyclerAdapterEx<T, VH extends RecyclerViewHolderEx>
         View v = getLayoutInflater().inflate(getConvertViewResId(viewType), parent, false);
         fit(v);
 
-        final VH holder = ReflectUtil.newInst(mVHClass, v);
-
-
-        return holder;
+        return ReflectUtil.newInst(mVHClass, v);
     }
 
     @Override

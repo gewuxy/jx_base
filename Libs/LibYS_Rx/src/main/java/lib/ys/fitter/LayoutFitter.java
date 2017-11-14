@@ -239,7 +239,7 @@ public class LayoutFitter {
             }
 
             if (v instanceof ViewGroup) {
-                fit(v);
+                fit((ViewGroup) v);
             } else if (v instanceof TextView) {
                 fitTvParams((TextView) v);
             }
@@ -255,7 +255,7 @@ public class LayoutFitter {
      * @param v
      */
     private static void fitParams(View v) {
-        if (v.getParent() instanceof RelativeLayout || v.getParent() instanceof LinearLayout) {
+        if (v.getParent() instanceof ViewGroup) {
             MarginLayoutParams params = (MarginLayoutParams) v.getLayoutParams();
             setMarginParams(v, params);
             v.setLayoutParams(params);
