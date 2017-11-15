@@ -106,6 +106,9 @@ abstract public class FragEx extends Fragment implements
 
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            YSLog.d("www", "onCreateView: state = " + savedInstanceState);
+        }
         mInflater = inflater;
         mSavedInstanceState = savedInstanceState;
         if (mDecorView != null) {
@@ -850,5 +853,17 @@ abstract public class FragEx extends Fragment implements
             return mTouchDelegateImpl.onInterceptTouchEvent(ev);
         }
         return false;
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        YSLog.d(TAG, "onViewStateRestored:  = " + savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        YSLog.d(TAG, "onSaveInstanceState: out = " + outState);
     }
 }

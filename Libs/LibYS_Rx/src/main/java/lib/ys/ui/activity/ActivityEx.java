@@ -91,6 +91,7 @@ abstract public class ActivityEx extends SwipeBackActivity implements
         ITouchDelegate {
 
     protected final String TAG = getClass().getSimpleName();
+    private static final String FRAGMENTS_TAG = "android:support:fragments";
 
     /**
      * 两次按下退出
@@ -121,6 +122,11 @@ abstract public class ActivityEx extends SwipeBackActivity implements
         }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFormat(PixelFormat.TRANSPARENT);
+
+        if (savedInstanceState != null) {
+            // 清除所有fragment的保存
+            savedInstanceState.putParcelable(FRAGMENTS_TAG, null);
+        }
         super.onCreate(savedInstanceState);
 
         InjectUtil.bind(this);

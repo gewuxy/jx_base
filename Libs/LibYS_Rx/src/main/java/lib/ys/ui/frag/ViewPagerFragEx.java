@@ -136,11 +136,15 @@ abstract public class ViewPagerFragEx extends FragEx {
         return getAdapter().isEmpty();
     }
 
-    protected int getCurrentItem() {
+    protected int getCurrPosition() {
         if (mVp == null) {
             return 0;
         }
         return mVp.getCurrentItem();
+    }
+
+    protected Fragment getCurrItem() {
+        return getItem(getCurrPosition());
     }
 
     protected Fragment getItem(int position) {

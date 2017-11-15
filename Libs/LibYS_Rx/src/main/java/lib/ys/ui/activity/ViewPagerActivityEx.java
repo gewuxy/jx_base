@@ -1,6 +1,5 @@
 package lib.ys.ui.activity;
 
-import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -72,27 +71,6 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
         if (mIndicator != null) {
             mIndicator.setViewPager(mVp);
         }
-    }
-
-    @CallSuper
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        List<Fragment> frags = getSupportFragmentManager().getFragments();
-        if (frags != null) {
-            for (int i = 0; i < frags.size(); ++i) {
-                add(getSupportFragmentManager().findFragmentByTag(makeFragmentName(mVp.getId(), i)));
-            }
-        }
-    }
-
-    protected <T extends Fragment> T restoreFragment(long id) {
-        return (T) getSupportFragmentManager().findFragmentByTag(makeFragmentName(mVp.getId(), id));
-    }
-
-    private String makeFragmentName(int viewId, long id) {
-        return "android:switcher:" + viewId + ":" + id;
     }
 
     public View createHeaderView() {
@@ -168,11 +146,15 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
         return getAdapter().isEmpty();
     }
 
-    protected int getCurrentItem() {
+    protected int getCurrPosition() {
         if (mVp == null) {
             return 0;
         }
         return mVp.getCurrentItem();
+    }
+
+    protected Fragment getCurrItem() {
+        return getItem(getCurrPosition());
     }
 
     protected Fragment getItem(int position) {
