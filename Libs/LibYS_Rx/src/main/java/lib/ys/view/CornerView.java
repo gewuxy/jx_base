@@ -31,6 +31,7 @@ public class CornerView extends RelativeLayout {
     private float mRadius;
     private int mStrokeColor;
 
+    // FIXME: 去掉此属性. 参考cardview
     private boolean mUseStroke;
 
     public CornerView(Context context, AttributeSet attrs) {
