@@ -32,7 +32,7 @@ abstract public class RecyclerActivityEx<T, A extends IAdapter<T>>
 
     @Override
     public int getContentViewId() {
-        return R.layout.layout_recycler;
+        return R.layout.layout_scrollable_recycler;
     }
 
     @Override

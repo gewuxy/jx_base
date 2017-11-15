@@ -32,7 +32,7 @@ abstract public class RecyclerFragEx<T, A extends IAdapter<T>> extends FragEx
 
     @Override
     public int getContentViewId() {
-        return R.layout.layout_recycler;
+        return R.layout.layout_scrollable_recycler;
     }
 
     @Override

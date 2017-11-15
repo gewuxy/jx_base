@@ -31,7 +31,7 @@ abstract public class GroupListActivityEx<GROUP, CHILD, A extends IGroupAdapter<
 
     @Override
     public int getContentViewId() {
-        return R.layout.layout_group_list;
+        return R.layout.layout_scrollable_group;
     }
 
     @Override

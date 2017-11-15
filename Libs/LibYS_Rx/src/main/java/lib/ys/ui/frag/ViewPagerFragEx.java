@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 import lib.ys.R;
+import lib.ys.adapter.FragPagerAdapterEx;
 import lib.ys.impl.FragPagerAdapterImpl;
 import lib.ys.util.view.LayoutUtil;
 import lib.ys.util.view.ViewUtil;
@@ -20,7 +21,7 @@ import lib.ys.view.pager.transformer.BaseTransformer;
 abstract public class ViewPagerFragEx extends FragEx {
     private LinearLayout mLayoutHeader;
     private ViewPagerEx mVp;
-    private FragPagerAdapterImpl mAdapter;
+    private FragPagerAdapterEx mAdapter;
     private PageIndicator mIndicator;
 
     private boolean mFakeDrag;
@@ -111,7 +112,7 @@ abstract public class ViewPagerFragEx extends FragEx {
         getAdapter().add(frag);
     }
 
-    protected final FragPagerAdapterImpl getAdapter() {
+    protected final FragPagerAdapterEx getAdapter() {
         if (mAdapter == null) {
             mAdapter = createPagerAdapter();
         }
@@ -119,7 +120,7 @@ abstract public class ViewPagerFragEx extends FragEx {
     }
 
     @NonNull
-    protected FragPagerAdapterImpl createPagerAdapter() {
+    protected FragPagerAdapterEx createPagerAdapter() {
         return new FragPagerAdapterImpl(getChildFragmentManager());
     }
 

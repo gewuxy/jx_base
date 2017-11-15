@@ -28,7 +28,7 @@ abstract public class SRRecyclerFragEx<T, A extends IAdapter<T>>
 
     @Override
     public int getContentViewId() {
-        return R.layout.layout_sr_recycler;
+        return R.layout.layout_sr_scrollable_recycler;
     }
 
 

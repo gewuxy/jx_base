@@ -55,7 +55,7 @@ abstract public class BaseScrollable<T> implements IScrollable<T> {
         if (header != null) {
             mHeaderView = header;
 
-            FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.layout_list_extend, null);
+            FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.layout_scrollable_extend, null);
             layout.addView(header, LayoutUtil.getFrameParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
             LayoutFitter.fit(layout);
             nativeAddHeader(layout);
@@ -64,7 +64,7 @@ abstract public class BaseScrollable<T> implements IScrollable<T> {
         if (footer != null) {
             mFooterView = footer;
 
-            FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.layout_list_extend, null);
+            FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.layout_scrollable_extend, null);
             layout.addView(footer, LayoutUtil.getFrameParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
             LayoutFitter.fit(layout);
             nativeAddFooter(layout);

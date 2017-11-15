@@ -24,7 +24,7 @@ abstract public class ListFragEx<T, A extends IAdapter<T>> extends FragEx implem
 
     @Override
     public int getContentViewId() {
-        return R.layout.layout_list;
+        return R.layout.layout_scrollable_list;
     }
 
     @Override

@@ -30,7 +30,7 @@ abstract public class SRListActivityEx<T, A extends IAdapter<T>> extends ListAct
 
     @Override
     public int getContentViewId() {
-        return R.layout.layout_sr_list;
+        return R.layout.layout_sr_scrollable_list;
     }
 
     @Override

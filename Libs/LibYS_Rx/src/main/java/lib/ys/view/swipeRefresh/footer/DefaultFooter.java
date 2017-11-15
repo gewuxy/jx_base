@@ -21,7 +21,7 @@ public class DefaultFooter extends BaseFooter {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.layout_sr_footer;
+        return R.layout.layout_sr_scrollable_footer;
     }
 
     @Override

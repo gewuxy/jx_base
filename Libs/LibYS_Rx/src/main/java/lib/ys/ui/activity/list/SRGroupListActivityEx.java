@@ -32,7 +32,7 @@ abstract public class SRGroupListActivityEx<GROUP, CHILD, A extends IGroupAdapte
 
     @Override
     public int getContentViewId() {
-        return R.layout.layout_sr_group_list;
+        return R.layout.layout_sr_scrollable_group;
     }
 
     @Override

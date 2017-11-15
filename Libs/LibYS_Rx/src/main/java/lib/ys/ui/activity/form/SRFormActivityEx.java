@@ -24,7 +24,7 @@ abstract public class SRFormActivityEx<T extends FormEx<T, VH>, VH extends IView
     @NonNull
     @Override
     public int getContentViewId() {
-        return R.layout.layout_sr_scroll;
+        return R.layout.layout_sr_form;
     }
 
     @CallSuper

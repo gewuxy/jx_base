@@ -96,7 +96,7 @@ abstract public class TabViewPagerActivityEx<TITLE extends IPagerTitle> extends 
 
     @NonNull
     @Override
-    protected final FragPagerAdapterEx createPagerAdapter() {
+    protected FragPagerAdapterEx createPagerAdapter() {
         return new FragPagerAdapter(getSupportFragmentManager());
     }
 

@@ -30,12 +30,22 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
     private FragPagerAdapterEx mAdapter;
     private PageIndicator mIndicator;
 
+    private boolean mFakeDrag;
+
     @Override
     public int getContentViewId() {
         return R.layout.layout_viewpager;
     }
 
-    @CallSuper
+    /**
+     * 如果有自定义的viewpagerId, 重写此方法
+     *
+     * @return
+     */
+    protected int getViewPagerResId() {
+        return R.id.vp;
+    }
+
     @Override
     public void findViews() {
         mVp = findView(getViewPagerResId());
@@ -85,15 +95,6 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
         return "android:switcher:" + viewId + ":" + id;
     }
 
-    /**
-     * 如果有自定义的viewpagerId, 重写此方法
-     *
-     * @return
-     */
-    protected int getViewPagerResId() {
-        return R.id.vp;
-    }
-
     public View createHeaderView() {
         return null;
     }
@@ -108,6 +109,9 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
     }
 
     protected void setCurrentItem(int item) {
+        if (mVp == null) {
+            return;
+        }
         mVp.setCurrentItem(item);
     }
 
@@ -132,19 +136,15 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
         }
     }
 
+    protected void add(Fragment frag) {
+        getAdapter().add(frag);
+    }
+
     protected final FragPagerAdapterEx getAdapter() {
         if (mAdapter == null) {
             mAdapter = createPagerAdapter();
         }
         return mAdapter;
-    }
-
-    protected void add(Fragment frag) {
-        getAdapter().add(frag);
-    }
-
-    protected void removeAll() {
-        getAdapter().removeAll();
     }
 
     @NonNull
@@ -160,11 +160,18 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
         return getAdapter().getData();
     }
 
+    protected void removeAll() {
+        getAdapter().removeAll();
+    }
+
     protected boolean isEmpty() {
         return getAdapter().isEmpty();
     }
 
     protected int getCurrentItem() {
+        if (mVp == null) {
+            return 0;
+        }
         return mVp.getCurrentItem();
     }
 
@@ -206,6 +213,7 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
      */
     protected void setPageTransformer(boolean reverseDrawingOrder, BaseTransformer transformer) {
         mVp.setPageTransformer(reverseDrawingOrder, transformer);
+        mFakeDrag = true;
     }
 
     protected ViewPagerEx getViewPager() {
@@ -214,6 +222,16 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
 
     protected void invalidate() {
         getAdapter().notifyDataSetChanged();
+        if (mFakeDrag && !isEmpty()) {
+            /**
+             * 必须模拟一次fake的拖动, 才能在初始化的时候调起transformer的效果
+             */
+            mVp.beginFakeDrag();
+            mVp.fakeDragBy(-1);
+            mVp.endFakeDrag();
+
+            mFakeDrag = false;
+        }
     }
 
     @Override
