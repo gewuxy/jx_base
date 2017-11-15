@@ -147,7 +147,7 @@ abstract public class GroupFormFragEx<T extends GroupFormEx> extends FragEx impl
      * @return 成功则返回v, 失败返回null
      */
     private boolean addGroupItemView(T item, ViewGroup root, int groupPosition) {
-        View v = getLayoutInflater().inflate(mMapGroupResId.get(item), null);
+        View v = inflate(mMapGroupResId.get(item), null);
         if (v == null) {
             return false;
         }

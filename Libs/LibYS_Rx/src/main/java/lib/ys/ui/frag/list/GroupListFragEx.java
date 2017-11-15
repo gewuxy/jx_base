@@ -40,7 +40,7 @@ abstract public class GroupListFragEx<GROUP, CHILD, A extends IGroupAdapter<GROU
 
     @Override
     public int getScrollableViewId() {
-        return R.id.group_list;
+        return R.id.scrollable_view;
     }
 
     @CallSuper

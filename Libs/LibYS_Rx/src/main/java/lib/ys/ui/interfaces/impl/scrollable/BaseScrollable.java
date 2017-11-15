@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import lib.ys.R;
@@ -30,7 +30,7 @@ abstract public class BaseScrollable<T> implements IScrollable<T> {
 
     private View mHeaderView;
     private View mFooterView;
-    private RelativeLayout mEmptyView;
+    private FrameLayout mEmptyView;
 
     public BaseScrollable(BaseOnScrollableListener<T> l) {
         if (l == null) {
@@ -55,8 +55,8 @@ abstract public class BaseScrollable<T> implements IScrollable<T> {
         if (header != null) {
             mHeaderView = header;
 
-            RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.layout_list_extend, null);
-            layout.addView(header, LayoutUtil.getRelativeParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
+            FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.layout_list_extend, null);
+            layout.addView(header, LayoutUtil.getFrameParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
             LayoutFitter.fit(layout);
             nativeAddHeader(layout);
         }
@@ -64,18 +64,18 @@ abstract public class BaseScrollable<T> implements IScrollable<T> {
         if (footer != null) {
             mFooterView = footer;
 
-            RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.layout_list_extend, null);
-            layout.addView(footer, LayoutUtil.getRelativeParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
+            FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.layout_list_extend, null);
+            layout.addView(footer, LayoutUtil.getFrameParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
             LayoutFitter.fit(layout);
             nativeAddFooter(layout);
         }
 
         // 添加empty view
         if (empty != null) {
-            mEmptyView = (RelativeLayout) contentView.findViewById(R.id.list_empty_view);
+            mEmptyView = contentView.findViewById(R.id.layout_empty);
             if (mEmptyView != null) {
                 // 有可能布局没有保持要求的格式
-                mEmptyView.addView(empty, LayoutUtil.getRelativeParams(LayoutUtil.MATCH_PARENT, LayoutUtil.MATCH_PARENT));
+                mEmptyView.addView(empty, LayoutUtil.getFrameParams(LayoutUtil.MATCH_PARENT, LayoutUtil.MATCH_PARENT));
             }
         }
     }

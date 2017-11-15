@@ -22,7 +22,7 @@ public class SRGroupListLayout extends BaseSRLoadMoreLayout<FloatingGroupListVie
     @Override
     protected FloatingGroupListView initContentView(Context context, AttributeSet attrs) {
         FloatingGroupListView lv = new FloatingGroupListView(context, attrs);
-        lv.setId(R.id.sr_group_list_view);
+        lv.setId(R.id.scrollable_view);
         return lv;
     }
 

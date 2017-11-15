@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.widget.AbsoluteLayout;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
@@ -255,7 +256,9 @@ public class LayoutFitter {
      * @param v
      */
     private static void fitParams(View v) {
-        if (v.getParent() instanceof LinearLayout || v.getParent() instanceof RelativeLayout) {
+        if (v.getParent() instanceof LinearLayout
+                || v.getParent() instanceof RelativeLayout
+                || v.getParent() instanceof FrameLayout) {
             MarginLayoutParams params = (MarginLayoutParams) v.getLayoutParams();
             setMarginParams(v, params);
             v.setLayoutParams(params);
@@ -268,6 +271,7 @@ public class LayoutFitter {
      * {@link TextView}
      * {@link RelativeLayout}
      * {@link LinearLayout}
+     * {@link FrameLayout}
      * </p>
      *
      * @param v

@@ -34,13 +34,8 @@ abstract public class SRListActivityEx<T, A extends IAdapter<T>> extends ListAct
     }
 
     @Override
-    public int getScrollableViewId() {
-        return R.id.sr_list_view;
-    }
-
-    @Override
     public int getSRLayoutResId() {
-        return R.id.sr_list_layout;
+        return R.id.layout_scrollable;
     }
 
     @CallSuper

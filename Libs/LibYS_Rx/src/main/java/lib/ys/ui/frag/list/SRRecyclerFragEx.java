@@ -31,14 +31,10 @@ abstract public class SRRecyclerFragEx<T, A extends IAdapter<T>>
         return R.layout.layout_sr_recycler;
     }
 
-    @Override
-    public int getScrollableViewId() {
-        return R.id.sr_recycler_view;
-    }
 
     @Override
     public int getSRLayoutResId() {
-        return R.id.sr_recycler_layout;
+        return R.id.layout_scrollable;
     }
 
     @CallSuper

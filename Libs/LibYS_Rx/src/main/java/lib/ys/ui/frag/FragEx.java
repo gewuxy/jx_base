@@ -28,8 +28,8 @@ import lib.network.Network;
 import lib.network.model.NetworkError;
 import lib.network.model.NetworkReq;
 import lib.network.model.NetworkResp;
-import lib.network.model.interfaces.OnNetworkListener;
 import lib.network.model.interfaces.IResult;
+import lib.network.model.interfaces.OnNetworkListener;
 import lib.ys.AppEx;
 import lib.ys.R;
 import lib.ys.YSLog;
@@ -101,8 +101,12 @@ abstract public class FragEx extends Fragment implements
 
     private Bundle mSavedInstanceState;
 
+    private LayoutInflater mInflater;
+
+
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mInflater = inflater;
         mSavedInstanceState = savedInstanceState;
         if (mDecorView != null) {
             return mDecorView;
@@ -284,11 +288,11 @@ abstract public class FragEx extends Fragment implements
     }
 
     protected View inflate(@LayoutRes int resource, @Nullable ViewGroup root) {
-        return getLayoutInflater().inflate(resource, root);
+        return mInflater.inflate(resource, root);
     }
 
     protected View inflate(@LayoutRes int resource) {
-        return getLayoutInflater().inflate(resource, null);
+        return mInflater.inflate(resource, null);
     }
 
     protected void runOnUIThread(Runnable r, long delay) {

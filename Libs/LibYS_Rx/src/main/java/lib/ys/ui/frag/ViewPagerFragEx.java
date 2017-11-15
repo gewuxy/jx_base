@@ -23,6 +23,8 @@ abstract public class ViewPagerFragEx extends FragEx {
     private FragPagerAdapterImpl mAdapter;
     private PageIndicator mIndicator;
 
+    private boolean mFakeDrag;
+
     @Override
     public int getContentViewId() {
         return R.layout.layout_viewpager;
@@ -47,7 +49,7 @@ abstract public class ViewPagerFragEx extends FragEx {
 
     @Override
     public void setViews() {
-        mVp.setAdapter(getPagerAdapter());
+        mVp.setAdapter(getAdapter());
 
         mIndicator = initPageIndicator();
         if (mIndicator != null) {
@@ -106,10 +108,10 @@ abstract public class ViewPagerFragEx extends FragEx {
     }
 
     protected void add(Fragment frag) {
-        getPagerAdapter().add(frag);
+        getAdapter().add(frag);
     }
 
-    protected final FragPagerAdapterImpl getPagerAdapter() {
+    protected final FragPagerAdapterImpl getAdapter() {
         if (mAdapter == null) {
             mAdapter = createPagerAdapter();
         }
@@ -122,11 +124,15 @@ abstract public class ViewPagerFragEx extends FragEx {
     }
 
     protected int getCount() {
-        return getPagerAdapter().getCount();
+        return getAdapter().getCount();
     }
 
     protected List<Fragment> getData() {
-        return getPagerAdapter().getData();
+        return getAdapter().getData();
+    }
+
+    protected boolean isEmpty() {
+        return getAdapter().isEmpty();
     }
 
     protected int getCurrentItem() {
@@ -137,7 +143,7 @@ abstract public class ViewPagerFragEx extends FragEx {
     }
 
     protected Fragment getItem(int position) {
-        return getPagerAdapter().getItem(position);
+        return getAdapter().getItem(position);
     }
 
     protected void showHeaderView() {
@@ -172,14 +178,12 @@ abstract public class ViewPagerFragEx extends FragEx {
      * @param reverseDrawingOrder
      * @param transformer
      */
-    protected void setPageTransformer(boolean reverseDrawingOrder, BaseTransformer transformer) {
+    protected void setPageTransformer(boolean reverseDrawingOrder, @NonNull BaseTransformer transformer) {
+        if (transformer == null) {
+            return;
+        }
         mVp.setPageTransformer(reverseDrawingOrder, transformer);
-        /**
-         * 必须模拟一次fake的拖动, 才能在初始化的时候调起transformer的效果
-         */
-        mVp.beginFakeDrag();
-        mVp.fakeDragBy(-1);
-        mVp.endFakeDrag();
+        mFakeDrag = true;
     }
 
     protected ViewPagerEx getViewPager() {
@@ -187,11 +191,21 @@ abstract public class ViewPagerFragEx extends FragEx {
     }
 
     protected void invalidate() {
-        getPagerAdapter().notifyDataSetChanged();
+        getAdapter().notifyDataSetChanged();
+        if (mFakeDrag && !isEmpty()) {
+            /**
+             * 必须模拟一次fake的拖动, 才能在初始化的时候调起transformer的效果
+             */
+            mVp.beginFakeDrag();
+            mVp.fakeDragBy(-1);
+            mVp.endFakeDrag();
+
+            mFakeDrag = false;
+        }
     }
 
     protected void removeAll() {
-        getPagerAdapter().removeAll();
+        getAdapter().removeAll();
     }
 
     @Override

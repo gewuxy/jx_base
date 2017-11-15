@@ -38,14 +38,14 @@ public class SRScrollableLayout extends BaseSRLoadMoreLayout<ScrollableLayout> i
         ScrollableLayout layout = new ScrollableLayout(context, attrs);
         layout.getHelper().setCurrentScrollableContainer(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setId(R.id.sr_scrollable_view);
+        layout.setId(R.id.scrollable_view);
         return layout;
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (getContentView().getChildCount() == 0) {
-            List<View> views = new ArrayList<View>();
+            List<View> views = new ArrayList<>();
 
             // 先寻找需要修改的几个view, 不能直接同步删除和添加
             int count = getChildCount();

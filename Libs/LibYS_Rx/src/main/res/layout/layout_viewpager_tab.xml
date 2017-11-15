@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
     </RelativeLayout>
 
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/vp_tab_layout_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="41dp"/>
 
-    </RelativeLayout>
+    </FrameLayout>
 
     <include layout="@layout/layout_viewpager"/>
 

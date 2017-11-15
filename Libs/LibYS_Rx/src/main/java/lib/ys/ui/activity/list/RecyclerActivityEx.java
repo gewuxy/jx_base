@@ -36,6 +36,11 @@ abstract public class RecyclerActivityEx<T, A extends IAdapter<T>>
     }
 
     @Override
+    public int getScrollableViewId() {
+        return R.id.scrollable_view;
+    }
+
+    @Override
     public void findViews() {
         mScrollable.findViews(getDecorView(), getScrollableViewId(), createHeaderView(), createFooterView(), createEmptyView());
     }
@@ -70,11 +75,6 @@ abstract public class RecyclerActivityEx<T, A extends IAdapter<T>>
      */
     protected LayoutManager initLayoutManager() {
         return new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-    }
-
-    @Override
-    public int getScrollableViewId() {
-        return R.id.recycler_view;
     }
 
     @Override

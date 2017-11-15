@@ -20,7 +20,7 @@ public class SRRecyclerLayout extends BaseSRLoadMoreLayout<WrapRecyclerView> {
     @Override
     protected WrapRecyclerView initContentView(Context context, AttributeSet attrs) {
         WrapRecyclerView rv = new WrapRecyclerView(context, attrs);
-        rv.setId(R.id.sr_recycler_view);
+        rv.setId(R.id.scrollable_view);
         return rv;
     }
 

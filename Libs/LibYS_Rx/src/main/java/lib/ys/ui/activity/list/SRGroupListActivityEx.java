@@ -36,13 +36,8 @@ abstract public class SRGroupListActivityEx<GROUP, CHILD, A extends IGroupAdapte
     }
 
     @Override
-    public int getScrollableViewId() {
-        return R.id.sr_group_list_view;
-    }
-
-    @Override
     public int getSRLayoutResId() {
-        return R.id.sr_group_list_layout;
+        return R.id.layout_scrollable;
     }
 
     @CallSuper

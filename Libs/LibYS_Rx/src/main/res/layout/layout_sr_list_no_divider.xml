@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <lib.ys.view.swipeRefresh.SRListLayout
-        android:id="@+id/sr_list_layout"
+        android:id="@id/layout_scrollable"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/transparent"
@@ -17,11 +17,11 @@
         android:listSelector="@drawable/transparent"
         android:scrollingCache="false"/>
 
-    <RelativeLayout
-        android:id="@+id/list_empty_view"
+    <FrameLayout
+        android:id="@id/layout_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
-    </RelativeLayout>
+    </FrameLayout>
 
-</RelativeLayout>
+</FrameLayout>

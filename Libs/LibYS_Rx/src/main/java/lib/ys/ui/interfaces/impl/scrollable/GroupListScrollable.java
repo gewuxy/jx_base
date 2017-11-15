@@ -45,7 +45,7 @@ public class GroupListScrollable<GROUP, CHILD, A extends IGroupAdapter<GROUP, CH
     @Override
     public void findViews(@NonNull View contentView, @IdRes int scrollableId, @Nullable View header, @Nullable View footer, @Nullable View empty) {
         super.findViews(contentView, scrollableId, header, footer, empty);
-        mGroupLv = (FloatingGroupListView) contentView.findViewById(scrollableId);
+        mGroupLv = contentView.findViewById(scrollableId);
     }
 
     @Override

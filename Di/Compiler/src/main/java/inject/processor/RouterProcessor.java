@@ -210,6 +210,9 @@ public class RouterProcessor extends BaseProcessor {
                     .addParameter(AndroidClassName.KIntent, "intent")
                     .addStatement("$T extras = intent.getExtras()", AndroidClassName.KBundle);
         }
+        injectMethod.beginControlFlow("if (extras == null)")
+                .addStatement("return")
+                .endControlFlow();
 
         for (Element e : all) {
             String paramName = getParamName(e);

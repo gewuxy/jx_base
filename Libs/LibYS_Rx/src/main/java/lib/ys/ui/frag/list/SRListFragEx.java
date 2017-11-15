@@ -32,18 +32,13 @@ abstract public class SRListFragEx<T, A extends IAdapter<T>> extends ListFragEx<
     }
 
     @Override
+    public int getSRLayoutResId() {
+        return R.id.layout_scrollable;
+    }
+
+    @Override
     protected void onVisible() {
         super.onVisible();
-    }
-
-    @Override
-    public int getScrollableViewId() {
-        return R.id.sr_list_view;
-    }
-
-    @Override
-    public int getSRLayoutResId() {
-        return R.id.sr_list_layout;
     }
 
     @CallSuper

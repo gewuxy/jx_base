@@ -22,7 +22,7 @@ public class SRListLayout extends BaseSRLoadMoreLayout<ListView> {
     @Override
     protected ListView initContentView(Context context, AttributeSet attrs) {
         ListView lv = new ListView(context, attrs);
-        lv.setId(R.id.sr_list_view);
+        lv.setId(R.id.scrollable_view);
         return lv;
     }
 

@@ -29,13 +29,8 @@ abstract public class SRRecyclerActivityEx<T, A extends IAdapter<T>> extends Rec
     }
 
     @Override
-    public int getScrollableViewId() {
-        return R.id.sr_recycler_view;
-    }
-
-    @Override
     public int getSRLayoutResId() {
-        return R.id.sr_recycler_layout;
+        return R.id.layout_scrollable;
     }
 
     @CallSuper

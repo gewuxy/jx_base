@@ -29,7 +29,7 @@ abstract public class ListFragEx<T, A extends IAdapter<T>> extends FragEx implem
 
     @Override
     public int getScrollableViewId() {
-        return R.id.list;
+        return R.id.scrollable_view;
     }
 
     @CallSuper

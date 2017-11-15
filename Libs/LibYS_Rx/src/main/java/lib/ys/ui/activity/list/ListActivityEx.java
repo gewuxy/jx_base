@@ -30,7 +30,7 @@ abstract public class ListActivityEx<T, A extends IAdapter<T>>
 
     @Override
     public int getScrollableViewId() {
-        return R.id.list;
+        return R.id.scrollable_view;
     }
 
     @CallSuper

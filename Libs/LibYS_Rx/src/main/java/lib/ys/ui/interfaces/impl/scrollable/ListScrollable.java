@@ -60,7 +60,7 @@ public class ListScrollable<T, A extends IAdapter<T>> extends BaseScrollable<T>
     @Override
     public void findViews(@NonNull View contentView, @IdRes int scrollableId, @Nullable View header, @Nullable View footer, @Nullable View empty) {
         super.findViews(contentView, scrollableId, header, footer, empty);
-        mLv = (ListView) contentView.findViewById(scrollableId);
+        mLv = contentView.findViewById(scrollableId);
     }
 
     @Override

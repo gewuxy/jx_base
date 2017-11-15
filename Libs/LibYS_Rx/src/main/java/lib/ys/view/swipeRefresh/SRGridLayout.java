@@ -22,7 +22,7 @@ public class SRGridLayout extends BaseSRLoadMoreLayout<GridViewEx> {
     @Override
     protected GridViewEx initContentView(Context context, AttributeSet attrs) {
         GridViewEx gv = new GridViewEx(context, attrs);
-        gv.setId(R.id.sr_grid_view);
+        gv.setId(R.id.scrollable_view);
         return gv;
     }
 

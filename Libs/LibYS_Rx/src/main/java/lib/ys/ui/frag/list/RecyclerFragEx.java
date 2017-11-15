@@ -37,7 +37,7 @@ abstract public class RecyclerFragEx<T, A extends IAdapter<T>> extends FragEx
 
     @Override
     public int getScrollableViewId() {
-        return R.id.recycler_view;
+        return R.id.scrollable_view;
     }
 
     @CallSuper

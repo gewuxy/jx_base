@@ -106,7 +106,7 @@ abstract public class FormFragEx<T extends FormEx<T, VH>, VH extends IViewHolder
                 mMapRelated.put(related, item);
             }
 
-            View v = getLayoutInflater().inflate(item.getContentViewResId(), null);
+            View v = inflate(item.getContentViewResId(), null);
             addItemView(item, v, getLastItemPosition());
         }
 
@@ -239,7 +239,7 @@ abstract public class FormFragEx<T extends FormEx<T, VH>, VH extends IViewHolder
             }
         }
 
-        View v = getLayoutInflater().inflate(T.getContentViewResId(), null);
+        View v = inflate(T.getContentViewResId(), null);
         addItemView(T, v, getLastItemPosition());
 
         return T;

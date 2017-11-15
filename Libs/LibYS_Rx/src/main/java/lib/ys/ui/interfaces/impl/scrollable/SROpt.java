@@ -6,7 +6,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 
 import java.util.List;
 
@@ -59,7 +59,7 @@ public class SROpt<T> implements OnSRListener {
 
     private boolean mRefreshLocal = false;
 
-    private RelativeLayout mFooterEmptyView;
+    private FrameLayout mLayoutEmptyFooter;
 
     private Handler mHandler;
 
@@ -86,16 +86,16 @@ public class SROpt<T> implements OnSRListener {
     }
 
     public void findViews(View contentView, @IdRes int srLayoutResId) {
-        mSRLayout = (BaseSRLoadMoreLayout) contentView.findViewById(srLayoutResId);
+        mSRLayout = contentView.findViewById(srLayoutResId);
 
         View footerEmpty = createFooterEmptyView();
         if (footerEmpty != null) {
             LayoutInflater inflater = LayoutInflater.from(AppEx.ct());
-            View layoutFooterEmpty = inflater.inflate(R.layout.layout_list_footer_empty_container, null);
-            mFooterEmptyView = (RelativeLayout) layoutFooterEmpty.findViewById(R.id.list_footer_empty_container);
-            mFooterEmptyView.addView(footerEmpty, LayoutUtil.getRelativeParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
-            LayoutFitter.fit(layoutFooterEmpty);
-            mScrollable.addFooterView(layoutFooterEmpty);
+            View container = inflater.inflate(R.layout.layout_scrollable_empty_footer_container, null);
+            mLayoutEmptyFooter = container.findViewById(R.id.empty_footer_container);
+            mLayoutEmptyFooter.addView(footerEmpty, LayoutUtil.getFrameParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
+            LayoutFitter.fit(container);
+            mScrollable.addFooterView(container);
         }
     }
 
@@ -424,7 +424,7 @@ public class SROpt<T> implements OnSRListener {
                     stopSwipeRefresh();
                 }
 
-                if (mFooterEmptyView == null) {
+                if (mLayoutEmptyFooter == null) {
                     mScrollable.showFooterView();
                 }
             }
@@ -464,14 +464,14 @@ public class SROpt<T> implements OnSRListener {
     }
 
     private void showFooterEmptyView() {
-        if (mFooterEmptyView != null) {
-            ViewUtil.showView(mFooterEmptyView);
+        if (mLayoutEmptyFooter != null) {
+            ViewUtil.showView(mLayoutEmptyFooter);
         }
     }
 
     private void hideFooterEmptyView() {
-        if (mFooterEmptyView != null) {
-            ViewUtil.goneView(mFooterEmptyView);
+        if (mLayoutEmptyFooter != null) {
+            ViewUtil.goneView(mLayoutEmptyFooter);
         }
     }
 

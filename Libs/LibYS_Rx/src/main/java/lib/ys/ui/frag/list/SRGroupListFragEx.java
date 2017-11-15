@@ -34,13 +34,8 @@ abstract public class SRGroupListFragEx<GROUP, CHILD, A extends IGroupAdapter<GR
     }
 
     @Override
-    public int getScrollableViewId() {
-        return R.id.sr_group_list_view;
-    }
-
-    @Override
     public int getSRLayoutResId() {
-        return R.id.sr_group_list_layout;
+        return R.id.layout_scrollable;
     }
 
     @CallSuper
