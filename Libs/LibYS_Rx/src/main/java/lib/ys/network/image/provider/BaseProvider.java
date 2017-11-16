@@ -4,13 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import lib.ys.ConstantsEx;
+import lib.ys.network.image.Functions;
 import lib.ys.network.image.NetworkImageListener;
+import lib.ys.network.image.NetworkImageView;
 import lib.ys.network.image.interceptor.Interceptor;
 import lib.ys.network.image.renderer.Renderer;
 
@@ -19,10 +20,10 @@ import lib.ys.network.image.renderer.Renderer;
  *
  * @author yuansui
  */
-abstract public class BaseProvider {
+abstract public class BaseProvider implements Functions {
 
     private Context mContext;
-    private ImageView mIv;
+    private NetworkImageView mIv;
 
     /**
      * 以下是详细属性
@@ -47,13 +48,14 @@ abstract public class BaseProvider {
     private NetworkImageListener mListener;
 
 
-    public BaseProvider(Context context, ImageView iv) {
+    public BaseProvider(Context context, NetworkImageView iv) {
         mContext = context;
         mIv = iv;
         mInterceptors = new ArrayList<>();
     }
 
-    public void url(String url) {
+    @Override
+    public NetworkImageView url(String url) {
         mHttpUrl = url;
 
         mIdUrl = null;
@@ -61,9 +63,12 @@ abstract public class BaseProvider {
         mUri = null;
         mContentProviderPath = null;
         mStorageUrl = null;
+
+        return mIv;
     }
 
-    public void storage(String s) {
+    @Override
+    public NetworkImageView storage(String s) {
         mStorageUrl = s;
 
         mHttpUrl = null;
@@ -71,9 +76,12 @@ abstract public class BaseProvider {
         mResId = 0;
         mUri = null;
         mContentProviderPath = null;
+
+        return mIv;
     }
 
-    public void res(@DrawableRes int id) {
+    @Override
+    public NetworkImageView res(@DrawableRes int id) {
         mResId = id;
 
         mHttpUrl = null;
@@ -81,9 +89,12 @@ abstract public class BaseProvider {
         mUri = null;
         mContentProviderPath = null;
         mStorageUrl = null;
+
+        return mIv;
     }
 
-    public void id(String id) {
+    @Override
+    public NetworkImageView id(String id) {
         mIdUrl = id;
 
         mHttpUrl = null;
@@ -91,9 +102,12 @@ abstract public class BaseProvider {
         mUri = null;
         mContentProviderPath = null;
         mStorageUrl = null;
+
+        return mIv;
     }
 
-    public void contentProvider(String path) {
+    @Override
+    public NetworkImageView contentProvider(String path) {
         mContentProviderPath = path;
 
         mHttpUrl = null;
@@ -101,9 +115,12 @@ abstract public class BaseProvider {
         mResId = 0;
         mUri = null;
         mStorageUrl = null;
+
+        return mIv;
     }
 
-    public void uri(Uri uri) {
+    @Override
+    public NetworkImageView uri(Uri uri) {
         mUri = uri;
 
         mHttpUrl = null;
@@ -111,35 +128,51 @@ abstract public class BaseProvider {
         mResId = 0;
         mContentProviderPath = null;
         mStorageUrl = null;
+
+        return mIv;
     }
 
-    public void renderer(Renderer renderer) {
+    @Override
+    public NetworkImageView renderer(Renderer renderer) {
         mRenderer = renderer;
+        return mIv;
     }
 
-    public void addInterceptor(Interceptor i) {
+    @Override
+    public NetworkImageView addInterceptor(Interceptor i) {
         mInterceptors.add(i);
+        return mIv;
     }
 
-    public void removeInterceptor(Interceptor i) {
+    @Override
+    public NetworkImageView removeInterceptor(Interceptor i) {
         mInterceptors.remove(i);
+        return mIv;
     }
 
-    public void listener(NetworkImageListener listener) {
+    @Override
+    public NetworkImageView listener(NetworkImageListener listener) {
         mListener = listener;
+        return mIv;
     }
 
-    public void placeHolderRid(@DrawableRes int id) {
+    @Override
+    public NetworkImageView placeHolder(@DrawableRes int id) {
         mPlaceHolder = id;
+        return mIv;
     }
 
-    public void fade(int duration) {
+    @Override
+    public NetworkImageView fade(int duration) {
         mFade = duration;
+        return mIv;
     }
 
-    public void resize(@IntRange(from = 1, to = Integer.MAX_VALUE) int w, @IntRange(from = 1, to = Integer.MAX_VALUE) int h) {
+    @Override
+    public NetworkImageView resize(@IntRange(from = 1, to = Integer.MAX_VALUE) int w, @IntRange(from = 1, to = Integer.MAX_VALUE) int h) {
         mW = w;
         mH = h;
+        return mIv;
     }
 
     protected String getHttpUrl() {

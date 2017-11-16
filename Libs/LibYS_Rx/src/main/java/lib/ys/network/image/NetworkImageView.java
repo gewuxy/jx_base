@@ -23,7 +23,7 @@ import lib.ys.network.image.provider.BaseProvider;
 import lib.ys.network.image.provider.FrescoProvider;
 import lib.ys.network.image.renderer.Renderer;
 
-public class NetworkImageView extends SimpleDraweeView {
+public class NetworkImageView extends SimpleDraweeView implements Functions {
 
     private BaseProvider mProvider;
 
@@ -49,69 +49,69 @@ public class NetworkImageView extends SimpleDraweeView {
         mProvider = new FrescoProvider(context, this);
     }
 
+    @Override
     public NetworkImageView url(String url) {
-        mProvider.url(url);
-        return this;
+        return mProvider.url(url);
     }
 
+    @Override
     public NetworkImageView storage(String s) {
-        mProvider.storage(s);
-        return this;
+        return mProvider.storage(s);
     }
 
+    @Override
     public NetworkImageView res(@DrawableRes int id) {
-        mProvider.res(id);
-        return this;
+        return mProvider.res(id);
     }
 
+    @Override
     public NetworkImageView id(String id) {
-        mProvider.id(id);
-        return this;
+        return mProvider.id(id);
     }
 
+    @Override
     public NetworkImageView contentProvider(String path) {
-        mProvider.contentProvider(path);
-        return this;
+        return mProvider.contentProvider(path);
     }
 
+    @Override
     public NetworkImageView uri(Uri u) {
-        mProvider.uri(u);
-        return this;
+        return mProvider.uri(u);
     }
 
+    @Override
     public NetworkImageView renderer(Renderer renderer) {
-        mProvider.renderer(renderer);
-        return this;
+        return mProvider.renderer(renderer);
     }
 
+    @Override
     public NetworkImageView addInterceptor(Interceptor i) {
-        mProvider.addInterceptor(i);
-        return this;
+        return mProvider.addInterceptor(i);
     }
 
-    /**
-     * 设置图片加载监听
-     *
-     * @param listener
-     */
+    @Override
+    public NetworkImageView removeInterceptor(Interceptor i) {
+        return mProvider.removeInterceptor(i);
+    }
+
+    @Override
     public NetworkImageView listener(NetworkImageListener listener) {
-        mProvider.listener(listener);
-        return this;
+        return mProvider.listener(listener);
     }
 
+    @Override
     public NetworkImageView placeHolder(@DrawableRes int id) {
-        mProvider.placeHolderRid(id);
-        return this;
+        return mProvider.placeHolder(id);
     }
 
+    @Override
     public NetworkImageView fade(int duration) {
-        mProvider.fade(duration);
-        return this;
+        return mProvider.fade(duration);
     }
 
+    @Override
     public NetworkImageView resize(@IntRange(from = 1, to = Integer.MAX_VALUE) int w, @IntRange(from = 1, to = Integer.MAX_VALUE) int h) {
-        mProvider.resize(w, h);
-        return this;
+        return mProvider.resize(w, h);
     }
 
     public void load() {

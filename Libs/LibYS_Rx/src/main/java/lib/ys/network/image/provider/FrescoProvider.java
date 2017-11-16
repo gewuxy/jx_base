@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
-import android.widget.ImageView;
 
 import com.facebook.common.references.CloseableReference;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -28,6 +27,7 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import lib.ys.ConstantsEx;
 import lib.ys.network.image.NetworkImageListener;
+import lib.ys.network.image.NetworkImageView;
 import lib.ys.network.image.interceptor.Interceptor;
 import lib.ys.network.image.renderer.CircleRenderer;
 import lib.ys.network.image.renderer.CornerRenderer;
@@ -53,10 +53,10 @@ public class FrescoProvider extends BaseProvider {
 
     private Renderer mRendererKeeper;
 
-    public FrescoProvider(Context context, ImageView iv) {
+    public FrescoProvider(Context context, NetworkImageView iv) {
         super(context, iv);
         mBuilder = Fresco.newDraweeControllerBuilder();
-        mSdv = (SimpleDraweeView) iv;
+        mSdv = iv;
         mSdv.getHierarchy().setActualImageScaleType(ScaleType.CENTER_CROP);
     }
 
@@ -117,11 +117,10 @@ public class FrescoProvider extends BaseProvider {
     }
 
     @Override
-    public void listener(final NetworkImageListener listener) {
-        super.listener(listener);
-
+    public NetworkImageView listener(final NetworkImageListener listener) {
+        NetworkImageView iv = super.listener(listener);
         if (listener == null) {
-            return;
+            return iv;
         }
 
         if (mCtrlListener == null) {
@@ -157,6 +156,8 @@ public class FrescoProvider extends BaseProvider {
                 }
             };
         }
+
+        return iv;
     }
 
     /**
