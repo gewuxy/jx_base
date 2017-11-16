@@ -22,18 +22,25 @@ public class BasePairs<T> {
         mData.add(new Pair(name, val));
     }
 
+    public void add(Pair<T> pair) {
+        if (pair == null) {
+            return;
+        }
+        mData.add(pair);
+    }
+
     public void add(BasePairs<T> pairs) {
         if (pairs == null) {
             return;
         }
-        mData.addAll(pairs.getData());
+        mData.addAll(pairs.list());
     }
 
     public Pair<T> get(int index) {
         return mData.get(index);
     }
 
-    public List<Pair<T>> getData() {
+    public List<Pair<T>> list() {
         return mData;
     }
 

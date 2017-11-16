@@ -29,7 +29,7 @@ public class PostTask extends Task {
         FormBody.Builder b = new FormBody.Builder();
         Pairs params = getReq().getParams();
         if (params != null) {
-            for (Pair<String> p : params.getData()) {
+            for (Pair<String> p : params.list()) {
                 b.add(p.getName(), p.getVal());
             }
         }

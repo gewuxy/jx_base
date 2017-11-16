@@ -86,15 +86,15 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
         return null;
     }
 
-    protected void setCurrentItem(int item) {
+    protected void setCurrPosition(int pos) {
         if (mVp == null) {
             return;
         }
-        mVp.setCurrentItem(item);
+        mVp.setCurrentItem(pos);
     }
 
-    protected void setCurrentItem(int item, boolean smoothScroll) {
-        mVp.setCurrentItem(item, smoothScroll);
+    protected void setCurrPosition(int pos, boolean smoothScroll) {
+        mVp.setCurrentItem(pos, smoothScroll);
     }
 
     protected void setOffscreenPageLimit(int limit) {
@@ -153,8 +153,8 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
         return mVp.getCurrentItem();
     }
 
-    protected Fragment getCurrItem() {
-        return getItem(getCurrPosition());
+    protected <T extends Fragment> T getCurrItem() {
+        return (T) getItem(getCurrPosition());
     }
 
     protected Fragment getItem(int position) {

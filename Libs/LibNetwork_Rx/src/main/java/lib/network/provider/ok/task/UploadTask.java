@@ -48,7 +48,7 @@ public class UploadTask extends Task {
 
         BytePairs bytes = getReq().getByteParams();
         if (bytes != null) {
-            for (Pair<byte[]> p : bytes.getData()) {
+            for (Pair<byte[]> p : bytes.list()) {
                 // FIXME: 图片流的上传只能使用存储到本地以后以文件形式上传(这样会残留本地图片文件在特定文件夹)
                 File f = UploadFile.create(p.getVal());
                 b.addFormDataPart(p.getName(), p.getName(), RequestBody.create(MultipartBody.FORM, f));
@@ -57,7 +57,7 @@ public class UploadTask extends Task {
 
         FilePairs files = getReq().getFileParams();
         if (files != null) {
-            for (Pair<String> p : files.getData()) {
+            for (Pair<String> p : files.list()) {
                 File f = new File(p.getVal());
                 b.addFormDataPart(p.getName(), p.getName(), RequestBody.create(MultipartBody.FORM, f));
             }
@@ -65,7 +65,7 @@ public class UploadTask extends Task {
 
         Pairs params = getReq().getParams();
         if (params != null) {
-            for (Pair<String> p : params.getData()) {
+            for (Pair<String> p : params.list()) {
                 b.addFormDataPart(p.getName(), p.getVal());
             }
         }

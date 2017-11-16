@@ -39,7 +39,7 @@ abstract public class Task {
     protected void addHeaders(Request.Builder builder) {
         Pairs headers = getReq().getHeaders();
         if (headers != null && !headers.isEmpty()) {
-            for (Pair<String> header : headers.getData()) {
+            for (Pair<String> header : headers.list()) {
                 builder.addHeader(header.getName(), header.getVal());
             }
         }
