@@ -111,18 +111,18 @@ abstract public class TabViewPagerActivityEx<TITLE extends IPagerTitle> extends 
 
     @CallSuper
     @Override
-    protected void setCurrentItem(int item) {
-        super.setCurrentItem(item);
+    protected void setCurrPosition(int pos) {
+        super.setCurrPosition(pos);
 
-        setCurrentScrollableContainer(item);
+        setCurrentScrollableContainer(pos);
     }
 
     @CallSuper
     @Override
-    protected void setCurrentItem(int item, boolean smoothScroll) {
-        super.setCurrentItem(item, smoothScroll);
+    protected void setCurrPosition(int pos, boolean smoothScroll) {
+        super.setCurrPosition(pos, smoothScroll);
 
-        setCurrentScrollableContainer(item);
+        setCurrentScrollableContainer(pos);
     }
 
     private void setCurrentScrollableContainer(int item) {
