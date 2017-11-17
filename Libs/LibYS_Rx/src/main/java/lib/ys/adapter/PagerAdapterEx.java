@@ -20,6 +20,7 @@ import lib.ys.fitter.LayoutFitter;
 import lib.ys.ui.interfaces.opt.ICommonOpt;
 import lib.ys.ui.interfaces.opt.IFitOpt;
 import lib.ys.util.GenericUtil;
+import lib.ys.util.LaunchUtil;
 import lib.ys.util.ReflectUtil;
 import lib.ys.util.view.ViewUtil;
 import lib.ys.view.pager.indicator.IconPagerAdapter;
@@ -196,7 +197,7 @@ abstract public class PagerAdapterEx<T, VH extends IViewHolder> extends PagerAda
 
     @Override
     public boolean isViewFromObject(View arg0, Object arg1) {
-        return arg0 == ((View) arg1);
+        return arg0 == arg1;
     }
 
     protected Context getContext() {
@@ -241,15 +242,12 @@ abstract public class PagerAdapterEx<T, VH extends IViewHolder> extends PagerAda
 
     @Override
     public void startActivity(Class<?> clz) {
-        Intent intent = new Intent(AppEx.ct(), clz);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getContext().startActivity(intent);
+        LaunchUtil.startActivity(getContext(), clz);
     }
 
     @Override
     public void startActivity(Intent intent) {
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getContext().startActivity(intent);
+        LaunchUtil.startActivity(getContext(), intent);
     }
 
     /**
@@ -257,9 +255,6 @@ abstract public class PagerAdapterEx<T, VH extends IViewHolder> extends PagerAda
      */
     @Override
     public void startActivityForResult(Class<?> clz, int requestCode) {
-        Intent intent = new Intent(AppEx.ct(), clz);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getContext().startActivity(intent);
     }
 
     /********************************
