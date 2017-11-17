@@ -18,7 +18,6 @@
         <attr name="corner_radius" format="dimension"/>
         <attr name="corner_strokeWidth" format="dimension"/>
         <attr name="corner_strokeColor" format="color"/>
-        <attr name="corner_useStroke" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="AnimArcView">

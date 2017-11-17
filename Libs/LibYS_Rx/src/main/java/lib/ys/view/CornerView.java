@@ -31,8 +31,6 @@ public class CornerView extends RelativeLayout {
     private float mRadius;
     private int mStrokeColor;
 
-    // FIXME: 去掉此属性. 参考cardview
-    private boolean mUseStroke;
 
     public CornerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -46,10 +44,9 @@ public class CornerView extends RelativeLayout {
         }
 
         TypedArray typeArray = context.obtainStyledAttributes(attrs, R.styleable.CornerView);
-        mStrokeWidth = typeArray.getDimensionPixelOffset(R.styleable.CornerView_corner_strokeWidth, 1);
+        mStrokeWidth = typeArray.getDimensionPixelOffset(R.styleable.CornerView_corner_strokeWidth, 0);
         mRadius = typeArray.getDimensionPixelOffset(R.styleable.CornerView_corner_radius, ConstantsEx.KInvalidValue);
         mStrokeColor = typeArray.getColor(R.styleable.CornerView_corner_strokeColor, KDefaultStrokeColor);
-        mUseStroke = typeArray.getBoolean(R.styleable.CornerView_corner_useStroke, true);
         typeArray.recycle();
 
         // 宽默认就使用1px就好
@@ -71,6 +68,10 @@ public class CornerView extends RelativeLayout {
         int w = getMeasuredWidth();
         int h = getMeasuredHeight();
 
+        set(w, h);
+    }
+
+    private void set(int w, int h) {
         if (w == 0 || h == 0) {
             return;
         }
@@ -81,7 +82,7 @@ public class CornerView extends RelativeLayout {
             mPathContent.reset();
         }
 
-        if (mUseStroke) {
+        if (mStrokeWidth != 0) {
             mRoundRectContent = new RectF(mStrokeWidth, mStrokeWidth, w - mStrokeWidth, h - mStrokeWidth);
 
             mRoundRectStroke = new RectF(0, 0, w, h);
@@ -94,6 +95,20 @@ public class CornerView extends RelativeLayout {
     }
 
     @Override
+    public void setScaleX(float scaleX) {
+        super.setScaleX(scaleX);
+
+        set((int) (getWidth() * scaleX), getHeight());
+    }
+
+    @Override
+    public void setScaleY(float scaleY) {
+        super.setScaleY(scaleY);
+
+        set(getWidth(), (int) (getHeight() * scaleY));
+    }
+
+    @Override
     protected void dispatchDraw(Canvas canvas) {
         if (isInEditMode()) {
             super.dispatchDraw(canvas);
@@ -101,7 +116,7 @@ public class CornerView extends RelativeLayout {
         }
 
         int saveCount = 0;
-        if (mUseStroke) {
+        if (mStrokeWidth != 0) {
             saveCount = canvas.save();
             canvas.clipPath(mPathStroke);
             canvas.drawColor(mStrokeColor);
