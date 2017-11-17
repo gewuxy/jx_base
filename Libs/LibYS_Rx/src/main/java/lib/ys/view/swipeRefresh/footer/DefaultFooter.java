@@ -12,7 +12,7 @@ import lib.ys.view.ProgressView;
 public class DefaultFooter extends BaseFooter {
 
     private View mLayoutLoading;
-    private View mLayoutReLoadMore;
+    private View mLayoutReloadMore;
     private ProgressView mProgressView;
 
     public DefaultFooter(Context context) {
@@ -27,19 +27,19 @@ public class DefaultFooter extends BaseFooter {
     @Override
     protected void findViews() {
         mLayoutLoading = findViewById(R.id.sr_footer_layout_loading);
-        mLayoutReLoadMore = findViewById(R.id.sr_footer_btn_reload_more);
-        mProgressView = (ProgressView) findViewById(R.id.sr_footer_progress_view);
+        mLayoutReloadMore = findViewById(R.id.sr_scrollable_footer_tv_reload_more);
+        mProgressView = findViewById(R.id.sr_footer_progress_view);
     }
 
     @Override
     protected void setViews() {
-        setOnRetryClickView(mLayoutReLoadMore);
+        setOnRetryClickView(mLayoutReloadMore);
     }
 
     @Override
     public void onNormal() {
         showView(mLayoutLoading);
-        hideView(mLayoutReLoadMore);
+        hideView(mLayoutReloadMore);
         mProgressView.stop();
     }
 
@@ -50,14 +50,14 @@ public class DefaultFooter extends BaseFooter {
     @Override
     public void onLoading() {
         showView(mLayoutLoading);
-        hideView(mLayoutReLoadMore);
+        hideView(mLayoutReloadMore);
         mProgressView.start();
     }
 
     @Override
     public void onFailed() {
         hideView(mLayoutLoading);
-        showView(mLayoutReLoadMore);
+        showView(mLayoutReloadMore);
         mProgressView.stop();
     }
 

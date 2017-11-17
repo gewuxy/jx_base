@@ -35,11 +35,11 @@ public class DefaultLayoutHeader extends BaseLayoutHeader {
 
     @Override
     protected void findViews() {
-        mLayoutRefresh = findViewById(R.id.sr_header_layout_refresh);
-        mTvHint = findViewById(R.id.sr_header_tv_hint);
-        mIvArrow = findViewById(R.id.sr_header_iv_arrow);
+        mLayoutRefresh = findViewById(R.id.sr_scrollable_header_layout_refresh);
+        mTvHint = findViewById(R.id.sr_scrollable_header_tv_hint);
+        mIvArrow = findViewById(R.id.sr_scrollable_header_iv_arrow);
         mLayoutLoading = findViewById(R.id.sr_header_layout_loading);
-        mProgressView = findViewById(R.id.sr_list_header_progress_view);
+        mProgressView = findViewById(R.id.sr_scrollable_header_progress_view);
     }
 
     @Override

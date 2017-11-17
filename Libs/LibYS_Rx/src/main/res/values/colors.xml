@@ -19,5 +19,5 @@
     <color name="wheel_view_bottom_shadow">#00000000</color>
 
     <!-- list -->
-    <color name="text_sr_list_header">#929292</color>
+    <color name="text_sr_scrollable_header">#929292</color>
 </resources>

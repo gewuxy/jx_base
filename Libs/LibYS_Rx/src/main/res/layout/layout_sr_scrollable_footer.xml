@@ -1,34 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/pull_listview_footer_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:id="@+id/sr_footer_btn_reload_more"
+    <TextView
+        android:id="@+id/sr_scrollable_footer_tv_reload_more"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="加载失败，点击重试"/>
-    </RelativeLayout>
+        android:layout_height="@dimen/scrollable_extend_height"
+        android:gravity="center"
+        android:text="加载失败，点击重试"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/sr_footer_layout_loading"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_header_footer_height"
+        android:layout_height="@dimen/scrollable_extend_height"
         android:gravity="center"
         android:orientation="horizontal">
 
         <lib.ys.view.ProgressView
             android:id="@+id/sr_footer_progress_view"
-            android:layout_width="@dimen/list_header_footer_loading_size"
-            android:layout_height="@dimen/list_header_footer_loading_size"
+            android:layout_width="@dimen/scrollable_extend_loading_size"
+            android:layout_height="@dimen/scrollable_extend_loading_size"
             android:src="@drawable/ic_loading"/>
 
         <TextView
@@ -37,8 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:text="@string/sr_list_header_hint_loading"
-            android:textColor="@color/text_sr_list_header"
-            android:textSize="@dimen/list_header_footer_text"/>
+            android:textColor="@color/text_sr_scrollable_header"
+            android:textSize="@dimen/scrollable_header_footer_text"/>
     </LinearLayout>
 
-</RelativeLayout>
+</FrameLayout>
