@@ -65,8 +65,8 @@ abstract public class BaseScrollable<T, V extends View> implements IScrollable<T
         if (footer != null) {
             mFooterView = footer;
 
-            FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.layout_scrollable_extend, null);
-            layout.addView(footer, LayoutUtil.getFrameParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
+            RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.layout_scrollable_extend, null);
+            layout.addView(footer, LayoutUtil.getRelativeParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
             LayoutFitter.fit(layout);
             nativeAddFooter(layout);
         }
