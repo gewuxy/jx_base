@@ -1,22 +1,28 @@
 package lib.ys.view;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.Path.Direction;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
-import android.widget.RelativeLayout;
+import android.view.MotionEvent;
+import android.widget.FrameLayout;
 
 import lib.ys.ConstantsEx;
 import lib.ys.R;
+import lib.ys.YSLog;
 import lib.ys.util.XmlAttrUtil;
 import lib.ys.util.view.ViewUtil;
 
 
-public class CornerView extends RelativeLayout {
+public class CornerView extends FrameLayout {
 
     private static final int KDefaultRadiusDp = 5;
     private static final int KDefaultStrokeColor = Color.parseColor("#cccccc");
@@ -31,6 +37,8 @@ public class CornerView extends RelativeLayout {
     private float mRadius;
     private int mStrokeColor;
 
+    private Drawable mForeground;
+
 
     public CornerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -43,11 +51,15 @@ public class CornerView extends RelativeLayout {
             return;
         }
 
-        TypedArray typeArray = context.obtainStyledAttributes(attrs, R.styleable.CornerView);
-        mStrokeWidth = typeArray.getDimensionPixelOffset(R.styleable.CornerView_corner_strokeWidth, 0);
-        mRadius = typeArray.getDimensionPixelOffset(R.styleable.CornerView_corner_radius, ConstantsEx.KInvalidValue);
-        mStrokeColor = typeArray.getColor(R.styleable.CornerView_corner_strokeColor, KDefaultStrokeColor);
-        typeArray.recycle();
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CornerView);
+        mStrokeWidth = a.getDimensionPixelOffset(R.styleable.CornerView_corner_strokeWidth, 0);
+        mRadius = a.getDimensionPixelOffset(R.styleable.CornerView_corner_radius, ConstantsEx.KInvalidValue);
+        mStrokeColor = a.getColor(R.styleable.CornerView_corner_strokeColor, KDefaultStrokeColor);
+
+        Drawable d = a.getDrawable(R.styleable.CornerView_corner_foreground);
+        setForeground(d);
+
+        a.recycle();
 
         // 宽默认就使用1px就好
         mStrokeWidth = XmlAttrUtil.convert(mStrokeWidth, 1);
@@ -65,10 +77,7 @@ public class CornerView extends RelativeLayout {
             return;
         }
 
-        int w = getMeasuredWidth();
-        int h = getMeasuredHeight();
-
-        set(w, h);
+        set(getMeasuredWidth(), getMeasuredHeight());
     }
 
     private void set(int w, int h) {
@@ -92,6 +101,10 @@ public class CornerView extends RelativeLayout {
             mRoundRectContent = new RectF(0, 0, w, h);
         }
         mPathContent.addRoundRect(mRoundRectContent, mRadius, mRadius, Direction.CW);
+
+        if (mForeground != null) {
+            mForeground.setBounds(new Rect(0, 0, w, h));
+        }
     }
 
     @Override
@@ -126,7 +139,71 @@ public class CornerView extends RelativeLayout {
         saveCount = canvas.save();
         canvas.clipPath(mPathContent);
         super.dispatchDraw(canvas);
+
+        if (mForeground != null) {
+            mForeground.draw(canvas);
+            YSLog.d("www", "dispatchDraw: draw foreground = ");
+        }
+
         canvas.restoreToCount(saveCount);
     }
 
+    public void setForeground(Drawable drawable) {
+        if (mForeground != drawable) {
+            if (mForeground != null) {
+                mForeground.setCallback(null);
+                unscheduleDrawable(mForeground);
+            }
+
+            mForeground = drawable;
+
+            if (drawable != null) {
+                setWillNotDraw(false);
+                drawable.setCallback(this);
+                if (drawable.isStateful()) {
+                    drawable.setState(getDrawableState());
+                }
+            } else {
+                setWillNotDraw(true);
+            }
+            requestLayout();
+            invalidate();
+        }
+    }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+
+        if (mForeground != null && mForeground.isStateful()) {
+            mForeground.setState(getDrawableState());
+        }
+    }
+
+    @Override
+    public void jumpDrawablesToCurrentState() {
+        super.jumpDrawablesToCurrentState();
+
+        if (mForeground != null) {
+            mForeground.jumpToCurrentState();
+        }
+    }
+
+    @Override
+    protected boolean verifyDrawable(Drawable who) {
+        return super.verifyDrawable(who) || (who == mForeground);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public boolean onTouchEvent(MotionEvent e) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (e.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                if (mForeground != null) {
+                    mForeground.setHotspot(e.getX(), e.getY());
+                }
+            }
+        }
+        return super.onTouchEvent(e);
+    }
 }
