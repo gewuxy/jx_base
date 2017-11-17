@@ -1,12 +1,19 @@
 package lib.ys.network.image;
 
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.common.internal.Supplier;
@@ -18,15 +25,19 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig;
 
 import java.io.File;
 
+import lib.ys.R;
 import lib.ys.network.image.interceptor.Interceptor;
 import lib.ys.network.image.provider.BaseProvider;
 import lib.ys.network.image.provider.FrescoProvider;
 import lib.ys.network.image.renderer.Renderer;
+import lib.ys.util.res.ResLoader;
+import lib.ys.util.view.ViewUtil;
 
 public class NetworkImageView extends SimpleDraweeView implements Functions {
 
     private BaseProvider mProvider;
 
+    private Drawable mForeground;
 
     public NetworkImageView(Context context) {
         this(context, null, 0);
@@ -42,6 +53,12 @@ public class NetworkImageView extends SimpleDraweeView implements Functions {
             setBackgroundColor(Color.BLUE);
             return;
         }
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.NetworkImageView);
+        Drawable d = a.getDrawable(R.styleable.NetworkImageView_niv_foreground);
+        setForeground(d);
+        a.recycle();
+
         init(context);
     }
 
@@ -176,5 +193,70 @@ public class NetworkImageView extends SimpleDraweeView implements Functions {
 
     public void clearFromCache(String url) {
         mProvider.clearFromCache(url);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        if (mForeground != null) {
+            mForeground.setBounds(new Rect(0, 0, getMeasuredWidth(), getMeasuredHeight()));
+        }
+    }
+
+    @Override
+    public void setForeground(Drawable d) {
+        if (ViewUtil.setForeground(this, mForeground, d)) {
+            mForeground = d;
+        }
+    }
+
+    public void setForeground(@DrawableRes int id) {
+        setForeground(ResLoader.getDrawable(id));
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+
+        if (mForeground != null) {
+            mForeground.draw(canvas);
+        }
+    }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+
+        if (mForeground != null && mForeground.isStateful()) {
+            mForeground.setState(getDrawableState());
+        }
+    }
+
+    @Override
+    public void jumpDrawablesToCurrentState() {
+        super.jumpDrawablesToCurrentState();
+
+        if (mForeground != null) {
+            mForeground.jumpToCurrentState();
+        }
+    }
+
+    @Override
+    protected boolean verifyDrawable(Drawable who) {
+        return super.verifyDrawable(who) || (who == mForeground);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public boolean onTouchEvent(MotionEvent e) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (e.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                if (mForeground != null) {
+                    mForeground.setHotspot(e.getX(), e.getY());
+                }
+            }
+        }
+        return super.onTouchEvent(e);
     }
 }

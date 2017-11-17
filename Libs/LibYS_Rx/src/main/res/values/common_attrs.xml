@@ -41,4 +41,8 @@
         <attr name="toggle_colorUnCheck" format="color"/>
     </declare-styleable>
 
+    <declare-styleable name="NetworkImageView">
+        <attr name="niv_foreground" format="reference"/>
+    </declare-styleable>
+
 </resources>

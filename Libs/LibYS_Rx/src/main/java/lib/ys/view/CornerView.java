@@ -17,7 +17,6 @@ import android.widget.FrameLayout;
 
 import lib.ys.ConstantsEx;
 import lib.ys.R;
-import lib.ys.YSLog;
 import lib.ys.util.XmlAttrUtil;
 import lib.ys.util.view.ViewUtil;
 
@@ -142,32 +141,14 @@ public class CornerView extends FrameLayout {
 
         if (mForeground != null) {
             mForeground.draw(canvas);
-            YSLog.d("www", "dispatchDraw: draw foreground = ");
         }
 
         canvas.restoreToCount(saveCount);
     }
 
     public void setForeground(Drawable drawable) {
-        if (mForeground != drawable) {
-            if (mForeground != null) {
-                mForeground.setCallback(null);
-                unscheduleDrawable(mForeground);
-            }
-
+        if (ViewUtil.setForeground(this, mForeground, drawable)) {
             mForeground = drawable;
-
-            if (drawable != null) {
-                setWillNotDraw(false);
-                drawable.setCallback(this);
-                if (drawable.isStateful()) {
-                    drawable.setState(getDrawableState());
-                }
-            } else {
-                setWillNotDraw(true);
-            }
-            requestLayout();
-            invalidate();
         }
     }
 

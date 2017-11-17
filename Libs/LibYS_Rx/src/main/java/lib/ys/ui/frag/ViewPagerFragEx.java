@@ -80,14 +80,17 @@ abstract public class ViewPagerFragEx extends FragEx {
         return null;
     }
 
-    protected void setCurrPosition(int pos) {
+    public void setCurrPosition(int pos) {
         if (mVp == null) {
             return;
         }
         mVp.setCurrentItem(pos);
     }
 
-    protected void setCurrPosition(int pos, boolean smoothScroll) {
+    public void setCurrPosition(int pos, boolean smoothScroll) {
+        if (mVp == null) {
+            return;
+        }
         mVp.setCurrentItem(pos, smoothScroll);
     }
 

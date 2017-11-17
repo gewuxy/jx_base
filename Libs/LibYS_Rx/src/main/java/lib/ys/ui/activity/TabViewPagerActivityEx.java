@@ -111,7 +111,7 @@ abstract public class TabViewPagerActivityEx<TITLE extends IPagerTitle> extends 
 
     @CallSuper
     @Override
-    protected void setCurrPosition(int pos) {
+    public void setCurrPosition(int pos) {
         super.setCurrPosition(pos);
 
         setCurrentScrollableContainer(pos);
@@ -119,7 +119,7 @@ abstract public class TabViewPagerActivityEx<TITLE extends IPagerTitle> extends 
 
     @CallSuper
     @Override
-    protected void setCurrPosition(int pos, boolean smoothScroll) {
+    public void setCurrPosition(int pos, boolean smoothScroll) {
         super.setCurrPosition(pos, smoothScroll);
 
         setCurrentScrollableContainer(pos);
@@ -144,18 +144,6 @@ abstract public class TabViewPagerActivityEx<TITLE extends IPagerTitle> extends 
      * 简易builder
      */
     public static class IndicatorSetter {
-//            <style name="v.tab_strip_indicator">
-//        <item name="android:layout_width">wrap_content</item>
-//        <item name="android:layout_height">41dp</item>
-//        <item name="spiIndicatorColor">#f5f5f5</item>
-//        <item name="spiIndicatorHeight">2dp</item>
-//        <item name="spiTabPaddingLeftRight">10dp</item>
-//        <item name="colorTabTextDefault">@color/black</item>
-//        <item name="colorTabTextSelected">@color/blue</item>
-//        <item name="spiTabTextSize">16dp</item>
-//        <item name="android:layout_gravity">center_vertical</item>
-//    </style>
-
 
         @ColorInt
         private int mTextColorNormal;

@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
@@ -206,5 +207,38 @@ public class ViewUtil {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
             BmpUtil.recycle(bitmapDrawable.getBitmap());
         }
+    }
+
+    /**
+     * 绑定前景
+     *
+     * @param v
+     * @param oldDrawable
+     * @param newDrawable
+     * @return
+     */
+    public static boolean setForeground(View v, @NonNull Drawable oldDrawable, @NonNull Drawable newDrawable) {
+        if (oldDrawable != newDrawable) {
+            if (oldDrawable != null) {
+                oldDrawable.setCallback(null);
+                v.unscheduleDrawable(oldDrawable);
+            }
+
+            if (newDrawable != null) {
+                v.setWillNotDraw(false);
+                newDrawable.setCallback(v);
+                if (newDrawable.isStateful()) {
+                    newDrawable.setState(v.getDrawableState());
+                }
+            } else {
+                v.setWillNotDraw(true);
+            }
+            v.requestLayout();
+            v.invalidate();
+
+            return true;
+        }
+
+        return false;
     }
 }
