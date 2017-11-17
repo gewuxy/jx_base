@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <lib.ys.view.FloatingGroupListView
+    <lib.ys.view.GroupListView
         android:id="@id/scrollable_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

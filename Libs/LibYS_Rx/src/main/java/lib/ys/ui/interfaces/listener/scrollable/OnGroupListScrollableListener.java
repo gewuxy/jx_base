@@ -9,6 +9,7 @@ import lib.ys.adapter.MultiGroupAdapterEx.OnChildAdapterClickListener;
 import lib.ys.adapter.MultiGroupAdapterEx.OnGroupAdapterClickListener;
 import lib.ys.adapter.interfaces.IGroupAdapter;
 import lib.ys.adapter.interfaces.IViewHolder;
+import lib.ys.view.GroupListView;
 
 /**
  * group children view的所有方法
@@ -16,7 +17,7 @@ import lib.ys.adapter.interfaces.IViewHolder;
  * @author yuansui
  */
 public interface OnGroupListScrollableListener<GROUP, CHILD, A extends IGroupAdapter<GROUP, CHILD>>
-        extends OnListScrollableListener<GROUP, A> {
+        extends OnListScrollableListener<GROUP, GroupListView, A> {
 
     void setSelectedGroup(int groupPosition);
 

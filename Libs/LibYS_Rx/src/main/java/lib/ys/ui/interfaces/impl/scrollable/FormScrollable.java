@@ -1,6 +1,6 @@
 package lib.ys.ui.interfaces.impl.scrollable;
 
-import android.view.View;
+import android.widget.ScrollView;
 
 import java.util.List;
 
@@ -10,15 +10,10 @@ import lib.ys.ui.interfaces.listener.scrollable.OnFormScrollableListener;
  * @auther yuansui
  * @since 2017/7/20
  */
-public class FormScrollable<T> extends BaseScrollable<T> {
+public class FormScrollable<T> extends BaseScrollable<T, ScrollView> {
 
     public FormScrollable(OnFormScrollableListener<T> l) {
         super(l);
-    }
-
-    @Override
-    public <VIEW extends View> VIEW getScrollableView() {
-        return null;
     }
 
     @Override

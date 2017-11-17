@@ -3,6 +3,7 @@ package lib.ys.ui.activity.list;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ListView;
 
 import java.util.List;
 
@@ -18,9 +19,9 @@ import lib.ys.ui.other.NavBar;
 
 abstract public class ListActivityEx<T, A extends IAdapter<T>>
         extends ActivityEx
-        implements OnListScrollableListener<T, A> {
+        implements OnListScrollableListener<T, ListView, A> {
 
-    private ListScrollable<T, A> mScrollable = new ListScrollable<>(this);
+    private ListScrollable<T, ListView, A> mScrollable = new ListScrollable<>(this);
 
 
     @Override
@@ -258,12 +259,12 @@ abstract public class ListActivityEx<T, A extends IAdapter<T>>
     }
 
     @Override
-    public IScrollable<T> getScrollable() {
+    public IScrollable<T, ListView> getScrollable() {
         return mScrollable;
     }
 
     @Override
-    public View getScrollableView() {
+    public ListView getScrollableView() {
         return mScrollable.getScrollableView();
     }
 }

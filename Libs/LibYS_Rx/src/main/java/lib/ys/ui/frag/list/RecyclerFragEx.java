@@ -2,7 +2,6 @@ package lib.ys.ui.frag.list;
 
 import android.support.annotation.CallSuper;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ItemAnimator;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.support.v7.widget.RecyclerView.LayoutManager;
@@ -280,12 +279,12 @@ abstract public class RecyclerFragEx<T, A extends IAdapter<T>> extends FragEx
     }
 
     @Override
-    public IScrollable<T> getScrollable() {
+    public IScrollable<T, WrapRecyclerView> getScrollable() {
         return mScrollable;
     }
 
     @Override
-    public RecyclerView getScrollableView() {
+    public WrapRecyclerView getScrollableView() {
         return mScrollable.getScrollableView();
     }
 

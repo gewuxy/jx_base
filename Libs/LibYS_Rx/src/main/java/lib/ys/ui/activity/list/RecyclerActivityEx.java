@@ -277,13 +277,14 @@ abstract public class RecyclerActivityEx<T, A extends IAdapter<T>>
         return mScrollable.getHeaderViewPosition();
     }
 
+
     @Override
-    public IScrollable<T> getScrollable() {
+    public IScrollable<T, WrapRecyclerView> getScrollable() {
         return mScrollable;
     }
 
     @Override
-    public View getScrollableView() {
+    public WrapRecyclerView getScrollableView() {
         return mScrollable.getScrollableView();
     }
 

@@ -2,6 +2,7 @@ package lib.ys.ui.activity.list;
 
 import android.support.annotation.CallSuper;
 import android.view.View;
+import android.widget.ListView;
 
 import org.json.JSONException;
 
@@ -24,9 +25,11 @@ import lib.ys.ui.interfaces.listener.scrollable.OnSROptListener;
  *
  * @param <T>
  */
-abstract public class SRListActivityEx<T, A extends IAdapter<T>> extends ListActivityEx<T, A> implements OnSROptListener {
+abstract public class SRListActivityEx<T, A extends IAdapter<T>>
+        extends ListActivityEx<T, A>
+        implements OnSROptListener<T, ListView> {
 
-    private SROpt<T> mSROpt = new SROpt<>(this);
+    private SROpt<T, ListView> mSROpt = new SROpt<>(this);
 
     @Override
     public int getContentViewId() {

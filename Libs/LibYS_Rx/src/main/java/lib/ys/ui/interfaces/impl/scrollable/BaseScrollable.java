@@ -10,12 +10,13 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import lib.ys.R;
 import lib.ys.fitter.LayoutFitter;
 import lib.ys.ui.interfaces.IScrollable;
-import lib.ys.ui.interfaces.listener.scrollable.BaseOnScrollableListener;
+import lib.ys.ui.interfaces.listener.scrollable.OnScrollableListener;
 import lib.ys.util.view.LayoutUtil;
 import lib.ys.util.view.ViewUtil;
 import lib.ys.view.recycler.WrapRecyclerView;
@@ -24,15 +25,15 @@ import lib.ys.view.recycler.WrapRecyclerView;
  * @auther yuansui
  * @since 2017/7/20
  */
-abstract public class BaseScrollable<T> implements IScrollable<T> {
+abstract public class BaseScrollable<T, V extends View> implements IScrollable<T, V> {
 
-    private View mSv;
+    private V mSv;
 
     private View mHeaderView;
     private View mFooterView;
     private FrameLayout mEmptyView;
 
-    public BaseScrollable(BaseOnScrollableListener<T> l) {
+    public BaseScrollable(OnScrollableListener<T, V> l) {
         if (l == null) {
             throw new IllegalStateException("OnScrollableListener can not be null");
         }
@@ -55,8 +56,8 @@ abstract public class BaseScrollable<T> implements IScrollable<T> {
         if (header != null) {
             mHeaderView = header;
 
-            FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.layout_scrollable_extend, null);
-            layout.addView(header, LayoutUtil.getFrameParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
+            RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.layout_scrollable_extend, null);
+            layout.addView(header, LayoutUtil.getRelativeParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
             LayoutFitter.fit(layout);
             nativeAddHeader(layout);
         }
@@ -112,6 +113,11 @@ abstract public class BaseScrollable<T> implements IScrollable<T> {
             }
             // FIXME: RecyclerView暂不支持emptyView
         }
+    }
+
+    @Override
+    public V getScrollableView() {
+        return mSv;
     }
 
     @Override

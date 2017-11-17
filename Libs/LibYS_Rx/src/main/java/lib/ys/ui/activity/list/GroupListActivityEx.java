@@ -21,6 +21,7 @@ import lib.ys.ui.interfaces.impl.scrollable.GroupListScrollable;
 import lib.ys.ui.interfaces.listener.OnScrollMixListener;
 import lib.ys.ui.interfaces.listener.scrollable.OnGroupListScrollableListener;
 import lib.ys.ui.other.NavBar;
+import lib.ys.view.GroupListView;
 
 abstract public class GroupListActivityEx<GROUP, CHILD, A extends IGroupAdapter<GROUP, CHILD>>
         extends ActivityEx
@@ -368,12 +369,12 @@ abstract public class GroupListActivityEx<GROUP, CHILD, A extends IGroupAdapter<
     }
 
     @Override
-    public View getScrollableView() {
+    public GroupListView getScrollableView() {
         return mScrollable.getScrollableView();
     }
 
     @Override
-    public IScrollable<GROUP> getScrollable() {
+    public IScrollable<GROUP, GroupListView> getScrollable() {
         return mScrollable;
     }
 

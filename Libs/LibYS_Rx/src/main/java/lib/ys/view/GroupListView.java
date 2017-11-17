@@ -25,7 +25,7 @@ import java.lang.reflect.Method;
 
 import lib.ys.util.view.ViewUtil;
 
-public class FloatingGroupListView extends ExpandableListView {
+public class GroupListView extends ExpandableListView {
 
     private static final int[] EMPTY_STATE_SET = {};
 
@@ -78,17 +78,17 @@ public class FloatingGroupListView extends ExpandableListView {
 
     private final Rect mIndicatorRect = new Rect();
 
-    public FloatingGroupListView(Context context) {
+    public GroupListView(Context context) {
         super(context);
         init();
     }
 
-    public FloatingGroupListView(Context context, AttributeSet attrs) {
+    public GroupListView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public FloatingGroupListView(Context context, AttributeSet attrs, int defStyle) {
+    public GroupListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
@@ -130,7 +130,7 @@ public class FloatingGroupListView extends ExpandableListView {
                 boolean allowSelection = true;
 
                 if (mOnGroupClickListener != null) {
-                    allowSelection = !mOnGroupClickListener.onGroupClick(FloatingGroupListView.this, mFloatingGroupView, mFloatingGroupPosition,
+                    allowSelection = !mOnGroupClickListener.onGroupClick(GroupListView.this, mFloatingGroupView, mFloatingGroupPosition,
                             mAdapter.getGroupId(mFloatingGroupPosition));
                 }
 
@@ -178,7 +178,7 @@ public class FloatingGroupListView extends ExpandableListView {
                 if (mFloatingGroupView != null && !mFloatingGroupView.isLongClickable()) {
                     final ContextMenuInfo contextMenuInfo = new ExpandableListContextMenuInfo(mFloatingGroupView, getPackedPositionForGroup(mFloatingGroupPosition),
                             mAdapter.getGroupId(mFloatingGroupPosition));
-                    setFieldValue(AbsListView.class, "mContextMenuInfo", FloatingGroupListView.this, contextMenuInfo);
+                    setFieldValue(AbsListView.class, "mContextMenuInfo", GroupListView.this, contextMenuInfo);
                     showContextMenu();
                 }
             }
@@ -205,12 +205,12 @@ public class FloatingGroupListView extends ExpandableListView {
     protected void dispatchDraw(Canvas canvas) {
         // Reflection is used here to obtain info about the selector
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            mSelectorPosition = (Integer) getFieldValue(AbsListView.class, "mSelectorPosition", FloatingGroupListView.this);
+            mSelectorPosition = (Integer) getFieldValue(AbsListView.class, "mSelectorPosition", GroupListView.this);
         } else {
-            mSelectorPosition = (Integer) getFieldValue(AbsListView.class, "mMotionPosition", FloatingGroupListView.this);
+            mSelectorPosition = (Integer) getFieldValue(AbsListView.class, "mMotionPosition", GroupListView.this);
         }
 
-        mSelectorRect.set((Rect) getFieldValue(AbsListView.class, "mSelectorRect", FloatingGroupListView.this));
+        mSelectorRect.set((Rect) getFieldValue(AbsListView.class, "mSelectorRect", GroupListView.this));
 
         if (!mDrawSelectorOnTop) {
             drawDefaultSelector(canvas);
@@ -464,7 +464,7 @@ public class FloatingGroupListView extends ExpandableListView {
 
     private void loadAttachInfo() {
         if (mViewAttachInfo == null) {
-            mViewAttachInfo = getFieldValue(View.class, "mAttachInfo", FloatingGroupListView.this);
+            mViewAttachInfo = getFieldValue(View.class, "mAttachInfo", GroupListView.this);
         }
     }
 
@@ -492,10 +492,10 @@ public class FloatingGroupListView extends ExpandableListView {
         if (mShouldPositionSelector && mFloatingGroupView != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 final int floatingGroupFlatPosition = getFlatListPosition(getPackedPositionForGroup(mFloatingGroupPosition));
-                invokeMethod(AbsListView.class, "positionSelector", new Class<?>[]{int.class, View.class}, FloatingGroupListView.this,
+                invokeMethod(AbsListView.class, "positionSelector", new Class<?>[]{int.class, View.class}, GroupListView.this,
                         floatingGroupFlatPosition, mFloatingGroupView);
             } else {
-                invokeMethod(AbsListView.class, "positionSelector", new Class<?>[]{View.class}, FloatingGroupListView.this, mFloatingGroupView);
+                invokeMethod(AbsListView.class, "positionSelector", new Class<?>[]{View.class}, GroupListView.this, mFloatingGroupView);
             }
             invalidate();
         }
@@ -538,14 +538,14 @@ public class FloatingGroupListView extends ExpandableListView {
     }
 
     private void drawFloatingGroupIndicator(Canvas canvas) {
-        final Drawable groupIndicator = (Drawable) getFieldValue(ExpandableListView.class, "mGroupIndicator", FloatingGroupListView.this);
+        final Drawable groupIndicator = (Drawable) getFieldValue(ExpandableListView.class, "mGroupIndicator", GroupListView.this);
         if (groupIndicator != null) {
             final int stateSetIndex = (isGroupExpanded(mFloatingGroupPosition) ? 1 : 0) | // Expanded?
                     (mAdapter.getChildrenCount(mFloatingGroupPosition) > 0 ? 2 : 0); // Empty?
             groupIndicator.setState(GROUP_STATE_SETS[stateSetIndex]);
 
-            final int indicatorLeft = (Integer) getFieldValue(ExpandableListView.class, "mIndicatorLeft", FloatingGroupListView.this);
-            final int indicatorRight = (Integer) getFieldValue(ExpandableListView.class, "mIndicatorRight", FloatingGroupListView.this);
+            final int indicatorLeft = (Integer) getFieldValue(ExpandableListView.class, "mIndicatorLeft", GroupListView.this);
+            final int indicatorRight = (Integer) getFieldValue(ExpandableListView.class, "mIndicatorRight", GroupListView.this);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 mIndicatorRect.set(indicatorLeft + getPaddingLeft(), mFloatingGroupView.getTop(), indicatorRight + getPaddingLeft(), mFloatingGroupView.getBottom());

@@ -37,12 +37,12 @@ import lib.ys.view.swipeRefresh.interfaces.OnSRListener;
  *
  * @author yuansui
  */
-public class SROpt<T> implements OnSRListener {
+public class SROpt<T, V extends View> implements OnSRListener {
 
     private static final String TAG = SROpt.class.getSimpleName();
 
     private OnSROptListener mSROptListener;
-    private IScrollable<T> mScrollable;
+    private IScrollable<T, V> mScrollable;
 
     // 翻页标识
     private String mLastId = ListConstants.KDefaultInitLastId;
@@ -64,7 +64,7 @@ public class SROpt<T> implements OnSRListener {
     private Handler mHandler;
 
 
-    public SROpt(@NonNull OnSROptListener<T> l) {
+    public SROpt(@NonNull OnSROptListener<T, V> l) {
         mSROptListener = l;
         mScrollable = l.getScrollable();
 

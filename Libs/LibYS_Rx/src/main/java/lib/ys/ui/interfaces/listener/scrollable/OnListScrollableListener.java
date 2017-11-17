@@ -1,6 +1,7 @@
 package lib.ys.ui.interfaces.listener.scrollable;
 
 import android.support.annotation.NonNull;
+import android.view.View;
 
 import lib.ys.adapter.MultiAdapterEx.OnAdapterClickListener;
 import lib.ys.adapter.interfaces.IAdapter;
@@ -12,8 +13,8 @@ import lib.ys.ui.other.NavBar;
  *
  * @author yuansui
  */
-public interface OnListScrollableListener<T, A extends IAdapter<T>>
-        extends BaseOnScrollableListener<T> {
+public interface OnListScrollableListener<T, V extends View, A extends IAdapter<T>>
+        extends OnScrollableListener<T, V> {
 
     @NonNull
     A getAdapter();

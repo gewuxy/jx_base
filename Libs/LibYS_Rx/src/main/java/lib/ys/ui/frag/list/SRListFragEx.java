@@ -2,6 +2,7 @@ package lib.ys.ui.frag.list;
 
 import android.support.annotation.CallSuper;
 import android.view.View;
+import android.widget.ListView;
 
 import java.util.List;
 
@@ -22,9 +23,11 @@ import lib.ys.ui.interfaces.listener.scrollable.OnSROptListener;
  *
  * @author yuansui
  */
-abstract public class SRListFragEx<T, A extends IAdapter<T>> extends ListFragEx<T, A> implements OnSROptListener<T> {
+abstract public class SRListFragEx<T, A extends IAdapter<T>>
+        extends ListFragEx<T, A>
+        implements OnSROptListener<T, ListView> {
 
-    private SROpt<T> mSROpt = new SROpt<>(this);
+    private SROpt<T, ListView> mSROpt = new SROpt<>(this);
 
     @Override
     public int getContentViewId() {

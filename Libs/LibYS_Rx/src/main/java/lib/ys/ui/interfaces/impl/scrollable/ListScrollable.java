@@ -1,9 +1,7 @@
 package lib.ys.ui.interfaces.impl.scrollable;
 
 import android.database.DataSetObserver;
-import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.widget.AbsListView;
@@ -31,19 +29,18 @@ import lib.ys.util.UIUtil;
  *
  * @author yuansui
  */
-public class ListScrollable<T, A extends IAdapter<T>> extends BaseScrollable<T>
+public class ListScrollable<T, V extends ListView, A extends IAdapter<T>>
+        extends BaseScrollable<T, V>
         implements OnItemClickListener, OnItemLongClickListener {
-
-    private ListView mLv;
 
     private Class<A> mAdapterClass;
     private A mAdapter;
 
     private DataSetObserver mDataSetObserver;
 
-    protected OnListScrollableListener<T, A> mListener;
+    protected OnListScrollableListener<T, V, A> mListener;
 
-    public ListScrollable(@NonNull OnListScrollableListener<T, A> l) {
+    public ListScrollable(@NonNull OnListScrollableListener<T, V, A> l) {
         super(l);
 
         mListener = l;
@@ -53,27 +50,16 @@ public class ListScrollable<T, A extends IAdapter<T>> extends BaseScrollable<T>
     }
 
     @Override
-    public <VIEW extends View> VIEW getScrollableView() {
-        return (VIEW) mLv;
-    }
-
-    @Override
-    public void findViews(@NonNull View contentView, @IdRes int scrollableId, @Nullable View header, @Nullable View footer, @Nullable View empty) {
-        super.findViews(contentView, scrollableId, header, footer, empty);
-        mLv = contentView.findViewById(scrollableId);
-    }
-
-    @Override
     public void setViews() {
         createAdapter();
 
-        UIUtil.setOverScrollNever(mLv);
+        UIUtil.setOverScrollNever(getScrollableView());
 
-        mLv.setAdapter((ListAdapter) mAdapter);
-        mLv.setOnItemClickListener(this);
+        getScrollableView().setAdapter((ListAdapter) mAdapter);
+        getScrollableView().setOnItemClickListener(this);
 
         if (mListener.enableLongClick()) {
-            mLv.setOnItemLongClickListener(this);
+            getScrollableView().setOnItemLongClickListener(this);
         }
 
         if (!mListener.needDelayAddEmptyView()) {
@@ -204,27 +190,27 @@ public class ListScrollable<T, A extends IAdapter<T>> extends BaseScrollable<T>
     }
 
     public void setOnScrollListener(OnScrollListener listener) {
-        mLv.setOnScrollListener(listener);
+        getScrollableView().setOnScrollListener(listener);
     }
 
     public int getItemRealPosition(int position) {
-        return position - mLv.getHeaderViewsCount();
+        return position - getScrollableView().getHeaderViewsCount();
     }
 
     public int getFirstVisiblePosition() {
-        return mLv.getFirstVisiblePosition();
+        return getScrollableView().getFirstVisiblePosition();
     }
 
     public int getHeaderViewPosition() {
-        return mLv.getHeaderViewsCount();
+        return getScrollableView().getHeaderViewsCount();
     }
 
     public void setSelection(int position) {
-        mLv.setSelection(position);
+        getScrollableView().setSelection(position);
     }
 
     public void smoothScrollToPosition(int position) {
-        mLv.smoothScrollToPosition(position);
+        getScrollableView().smoothScrollToPosition(position);
     }
 
     public A getAdapter() {
@@ -235,7 +221,7 @@ public class ListScrollable<T, A extends IAdapter<T>> extends BaseScrollable<T>
     }
 
     public void setDividerHeight(int height) {
-        mLv.setDividerHeight(height);
+        getScrollableView().setDividerHeight(height);
     }
 
     /**

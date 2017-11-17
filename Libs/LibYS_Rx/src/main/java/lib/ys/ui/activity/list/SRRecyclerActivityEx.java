@@ -15,13 +15,16 @@ import lib.ys.config.ListConfig.PageDownType;
 import lib.ys.ui.interfaces.impl.scrollable.SROpt;
 import lib.ys.ui.interfaces.listener.OnScrollMixListener;
 import lib.ys.ui.interfaces.listener.scrollable.OnSROptListener;
+import lib.ys.view.recycler.WrapRecyclerView;
 
 /**
  * @author yuansui
  */
-abstract public class SRRecyclerActivityEx<T, A extends IAdapter<T>> extends RecyclerActivityEx<T, A> implements OnSROptListener {
+abstract public class SRRecyclerActivityEx<T, A extends IAdapter<T>>
+        extends RecyclerActivityEx<T, A>
+        implements OnSROptListener<T, WrapRecyclerView> {
 
-    private SROpt<T> mSROpt = new SROpt<>(this);
+    private SROpt<T, WrapRecyclerView> mSROpt = new SROpt<>(this);
 
     @Override
     public int getContentViewId() {

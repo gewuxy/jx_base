@@ -19,11 +19,11 @@ import lib.ys.ui.interfaces.IScrollable;
  *
  * @author yuansui
  */
-public interface OnSROptListener<T> {
+public interface OnSROptListener<T, V extends View> {
 
     int getSRLayoutResId();
 
-    IScrollable<T> getScrollable();
+    IScrollable<T, V> getScrollable();
 
     void refresh();
 

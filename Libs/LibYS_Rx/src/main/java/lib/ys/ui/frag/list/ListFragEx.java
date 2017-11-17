@@ -3,6 +3,7 @@ package lib.ys.ui.frag.list;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ListView;
 
 import java.util.List;
 
@@ -17,9 +18,11 @@ import lib.ys.ui.interfaces.listener.scrollable.OnListScrollableListener;
 import lib.ys.ui.other.NavBar;
 
 
-abstract public class ListFragEx<T, A extends IAdapter<T>> extends FragEx implements OnListScrollableListener<T, A> {
+abstract public class ListFragEx<T, A extends IAdapter<T>>
+        extends FragEx
+        implements OnListScrollableListener<T, ListView, A> {
 
-    private ListScrollable<T, A> mScrollable = new ListScrollable<>(this);
+    private ListScrollable<T, ListView, A> mScrollable = new ListScrollable<>(this);
 
 
     @Override
@@ -257,12 +260,12 @@ abstract public class ListFragEx<T, A extends IAdapter<T>> extends FragEx implem
     }
 
     @Override
-    public View getScrollableView() {
-        return mScrollable.getScrollableView();
+    public IScrollable<T, ListView> getScrollable() {
+        return mScrollable;
     }
 
     @Override
-    public IScrollable<T> getScrollable() {
-        return mScrollable;
+    public ListView getScrollableView() {
+        return mScrollable.getScrollableView();
     }
 }

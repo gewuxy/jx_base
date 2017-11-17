@@ -11,13 +11,13 @@ import lib.ys.ui.interfaces.IScrollable;
  * @auther yuansui
  * @since 2017/7/20
  */
-public interface BaseOnScrollableListener<T> {
+public interface OnScrollableListener<T, V extends View> {
 
     int getScrollableViewId();
 
-    View getScrollableView();
+    V getScrollableView();
 
-    IScrollable<T> getScrollable();
+    IScrollable<T, V> getScrollable();
 
     @Nullable
     View createHeaderView();

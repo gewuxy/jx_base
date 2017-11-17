@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author yuansui
  */
-public interface IScrollable<T> {
+public interface IScrollable<T, V extends View> {
 
     void findViews(@NonNull View contentView,
                    @IdRes int scrollableId,
@@ -22,7 +22,7 @@ public interface IScrollable<T> {
 
     void setViews();
 
-    <VIEW extends View> VIEW getScrollableView();
+    V getScrollableView();
 
     void addFooterView(View v);
 

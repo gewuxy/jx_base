@@ -1,8 +1,6 @@
 package lib.ys.ui.interfaces.impl.scrollable;
 
-import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView.AdapterDataObserver;
 import android.support.v7.widget.RecyclerView.ItemAnimator;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
@@ -26,9 +24,7 @@ import lib.ys.view.recycler.WrapRecyclerView;
  *
  * @author yuansui
  */
-public class RecyclerScrollable<T, A extends IAdapter<T>> extends BaseScrollable<T> {
-
-    private WrapRecyclerView mRv;
+public class RecyclerScrollable<T, A extends IAdapter<T>> extends BaseScrollable<T, WrapRecyclerView> {
 
     private Class<A> mAdapterClass;
     private A mAdapter;
@@ -83,45 +79,34 @@ public class RecyclerScrollable<T, A extends IAdapter<T>> extends BaseScrollable
         };
     }
 
-    @Override
-    public void findViews(@NonNull View contentView, @IdRes int scrollableId, @Nullable View header, @Nullable View footer, @Nullable View empty) {
-        super.findViews(contentView, scrollableId, header, footer, empty);
-        mRv = contentView.findViewById(scrollableId);
-    }
-
     /**
      * do nothing
      *
      * @deprecated use {@link #setViews(LayoutManager, ItemDecoration, ItemAnimator)} instead
      */
     @Override
-    public void setViews() {
-    }
-
-    @Override
-    public <VIEW extends View> VIEW getScrollableView() {
-        return (VIEW) mRv;
+    public final void setViews() {
     }
 
     public void setViews(LayoutManager manager, ItemDecoration decoration, ItemAnimator animator) {
         createAdapter();
 
-        mRv.setLayoutManager(manager);
+        getScrollableView().setLayoutManager(manager);
 
         MultiRecyclerAdapterEx adapter = (MultiRecyclerAdapterEx) mAdapter;
-        mRv.setAdapter(adapter);
+        getScrollableView().setAdapter(adapter);
         adapter.setOnItemClickListener(mClickLsn);
         adapter.setEnableLongClick(mListener.enableLongClick());
 
         // 有bug, 暂时不使用
-//        mRv.addOnItemTouchListener(new RecyclerItemClickListener(this, mListener.enableLongClick()));
+//        getScrollableView().addOnItemTouchListener(new RecyclerItemClickListener(this, mListener.enableLongClick()));
 
         if (animator != null) {
-            mRv.setItemAnimator(animator);
+            getScrollableView().setItemAnimator(animator);
         }
 
         if (decoration != null) {
-            mRv.addItemDecoration(decoration);
+            getScrollableView().addItemDecoration(decoration);
         }
 
         if (!mListener.needDelayAddEmptyView()) {
@@ -220,27 +205,27 @@ public class RecyclerScrollable<T, A extends IAdapter<T>> extends BaseScrollable
     }
 
     public void addOnScrollListener(OnScrollListener listener) {
-        mRv.addOnScrollListener(listener);
+        getScrollableView().addOnScrollListener(listener);
     }
 
     public int getItemRealPosition(int position) {
-        return position - mRv.getHeadersCount();
+        return position - getScrollableView().getHeadersCount();
     }
 
     public int getFirstVisiblePosition() {
-        return mRv.getFirstVisiblePosition();
+        return getScrollableView().getFirstVisiblePosition();
     }
 
     public int getHeaderViewPosition() {
-        return mRv.getHeadersCount();
+        return getScrollableView().getHeadersCount();
     }
 
     public void setSelection(int position) {
-        mRv.scrollToPosition(position);
+        getScrollableView().scrollToPosition(position);
     }
 
     public void smoothScrollToPosition(int position) {
-        mRv.smoothScrollToPosition(position);
+        getScrollableView().smoothScrollToPosition(position);
     }
 
     public A getAdapter() {

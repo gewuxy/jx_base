@@ -16,6 +16,7 @@ import lib.ys.config.ListConfig.PageDownType;
 import lib.ys.ui.interfaces.impl.scrollable.SROpt;
 import lib.ys.ui.interfaces.listener.OnScrollMixListener;
 import lib.ys.ui.interfaces.listener.scrollable.OnSROptListener;
+import lib.ys.view.GroupListView;
 
 /**
  * 下拉刷新 group list
@@ -26,7 +27,7 @@ abstract public class SRGroupListFragEx<GROUP, CHILD, A extends IGroupAdapter<GR
         extends GroupListFragEx<GROUP, CHILD, A>
         implements OnSROptListener {
 
-    private SROpt<GROUP> mSROpt = new SROpt<>(this);
+    private SROpt<GROUP, GroupListView> mSROpt = new SROpt<>(this);
 
     @Override
     public int getContentViewId() {

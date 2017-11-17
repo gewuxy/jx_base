@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import lib.ys.R;
-import lib.ys.view.FloatingGroupListView;
+import lib.ys.view.GroupListView;
 import lib.ys.view.swipeRefresh.base.BaseSRLoadMoreLayout;
 
 /**
@@ -13,15 +13,15 @@ import lib.ys.view.swipeRefresh.base.BaseSRLoadMoreLayout;
  *
  * @author yuansui
  */
-public class SRGroupListLayout extends BaseSRLoadMoreLayout<FloatingGroupListView> {
+public class SRGroupListLayout extends BaseSRLoadMoreLayout<GroupListView> {
 
     public SRGroupListLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     @Override
-    protected FloatingGroupListView initContentView(Context context, AttributeSet attrs) {
-        FloatingGroupListView lv = new FloatingGroupListView(context, attrs);
+    protected GroupListView initContentView(Context context, AttributeSet attrs) {
+        GroupListView lv = new GroupListView(context, attrs);
         lv.setId(R.id.scrollable_view);
         return lv;
     }
