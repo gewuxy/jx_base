@@ -41,8 +41,7 @@ import lib.ys.AppEx;
 import lib.ys.R;
 import lib.ys.YSLog;
 import lib.ys.config.AppConfig.RefreshWay;
-import lib.ys.fitter.DpFitter;
-import lib.ys.fitter.LayoutFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.impl.LoadingDialogImpl;
 import lib.ys.network.image.NetworkImageView;
 import lib.ys.stats.Stats;
@@ -220,7 +219,7 @@ abstract public class ActivityEx extends SwipeBackActivity implements
     protected void onDestroy() {
         super.onDestroy();
 
-        LayoutFitter.clearFitSet();
+        Fitter.reset();
 
         if (mExitHandler != null) {
             mExitHandler.removeMessages(0);
@@ -474,20 +473,14 @@ abstract public class ActivityEx extends SwipeBackActivity implements
      * 适配相关
      */
     @Override
-    public int fitDp(float dp) {
-        return DpFitter.dp(dp);
-    }
-
-    @Override
-    public void fitAbsByPx(View v, int x, int y) {
-        LayoutFitter.fitAbsByPx(v, x, y);
+    public int fit(float dp) {
+        return Fitter.dp(dp);
     }
 
     @Override
     public void fit(View v) {
-        LayoutFitter.fit(v);
+        Fitter.view(v);
     }
-
 
     /**************************
      * common opt相关

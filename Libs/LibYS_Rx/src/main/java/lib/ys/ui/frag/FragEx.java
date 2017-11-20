@@ -34,8 +34,7 @@ import lib.ys.AppEx;
 import lib.ys.R;
 import lib.ys.YSLog;
 import lib.ys.config.AppConfig.RefreshWay;
-import lib.ys.fitter.DpFitter;
-import lib.ys.fitter.LayoutFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.impl.LoadingDialogImpl;
 import lib.ys.stats.Stats;
 import lib.ys.ui.decor.DecorViewEx;
@@ -197,7 +196,7 @@ abstract public class FragEx extends Fragment implements
 
             if (mInitComplete) {
                 // 在切换fragment的时候清除掉fitter的set, 保证内存能顺利回收
-                LayoutFitter.clearFitSet();
+                Fitter.reset();
             }
         }
     }
@@ -507,18 +506,13 @@ abstract public class FragEx extends Fragment implements
      * 适配相关
      */
     @Override
-    public int fitDp(float dp) {
-        return DpFitter.dp(dp);
-    }
-
-    @Override
-    public void fitAbsByPx(View v, int x, int y) {
-        LayoutFitter.fitAbsByPx(v, x, y);
+    public int fit(float dp) {
+        return Fitter.dp(dp);
     }
 
     @Override
     public void fit(View v) {
-        LayoutFitter.fit(v);
+        Fitter.view(v);
     }
 
     protected void setBackgroundColor(@ColorInt int color) {

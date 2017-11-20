@@ -14,7 +14,7 @@ import java.util.List;
 import lib.ys.R;
 import lib.ys.adapter.FragPagerAdapterEx;
 import lib.ys.adapter.interfaces.IPagerTitle;
-import lib.ys.fitter.DpFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.util.res.ResLoader;
 import lib.ys.view.pager.indicator.TabStripIndicator;
 import lib.ys.view.scrollableLayout.ScrollableHelper.ScrollableContainer;
@@ -211,7 +211,7 @@ abstract public class TabViewPagerActivityEx<TITLE extends IPagerTitle> extends 
             }
 
             if (mTextSizeDp != 0) {
-                indicator.setTextSize(DpFitter.dp(mTextSizeDp));
+                indicator.setTextSize(Fitter.dp(mTextSizeDp));
             }
 
             if (mBgColorRes != 0) {
@@ -223,7 +223,7 @@ abstract public class TabViewPagerActivityEx<TITLE extends IPagerTitle> extends 
             }
 
             if (mPaddingDp != 0) {
-                indicator.setTabPaddingLeftRight(DpFitter.dp(mPaddingDp));
+                indicator.setTabPaddingLeftRight(Fitter.dp(mPaddingDp));
             }
         }
     }

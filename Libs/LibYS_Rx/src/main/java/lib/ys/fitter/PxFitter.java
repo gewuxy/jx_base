@@ -14,12 +14,12 @@ import lib.ys.util.view.LayoutUtil;
  *
  * @author yuansui
  */
-public class PxFitter {
-    public static void fitRelateParams(final View v, final int w, final int h) {
+class PxFitter {
+    protected static void fitRelateParams(final View v, final int w, final int h) {
         fitRelateParams(v, w, h, null);
     }
 
-    public static void fitRelateParams(final View v, final int w, final int h, final int[] margins) {
+    protected static void fitRelateParams(final View v, final int w, final int h, final int[] margins) {
         if (v.getViewTreeObserver().isAlive()) {
             v.getViewTreeObserver().addOnPreDrawListener(new OnPreDrawListener() {
 
@@ -42,11 +42,11 @@ public class PxFitter {
         }
     }
 
-    public static void fitLinerParams(final View v, final int w, final int h) {
+    protected static void fitLinerParams(final View v, final int w, final int h) {
         fitLinerParams(v, w, h, null);
     }
 
-    public static void fitLinerParams(final View v, final int w, final int h, final int[] margins) {
+    protected static void fitLinerParams(final View v, final int w, final int h, final int[] margins) {
         if (v.getViewTreeObserver().isAlive()) {
             v.getViewTreeObserver().addOnPreDrawListener(new OnPreDrawListener() {
 
@@ -69,11 +69,11 @@ public class PxFitter {
         }
     }
 
-    public static void fitAbsParams(final View v, final int w, final int h, final int x, final int y) {
+    protected static void fitAbsParams(final View v, final int w, final int h, final int x, final int y) {
         v.setLayoutParams(LayoutUtil.getAbsParams(w, h, x, y));
     }
 
-    public static void fitTvTextSize(TextView v, int size) {
+    protected static void fitTvTextSize(TextView v, int size) {
         v.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
     }
 }

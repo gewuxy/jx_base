@@ -24,7 +24,7 @@ import android.widget.TextView;
 import java.lang.reflect.Field;
 
 import lib.ys.AppEx;
-import lib.ys.fitter.DpFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.util.DeviceUtil;
 import lib.ys.util.UIUtil;
 import lib.ys.util.bmp.BmpUtil;
@@ -40,7 +40,7 @@ public class ViewUtil {
     }
 
     public static View inflateSpaceViewDpFit(int dp) {
-        return inflateSpaceViewPx(DpFitter.dp(dp));
+        return inflateSpaceViewPx(Fitter.dp(dp));
     }
 
     public static View inflateSpaceViewPx(int px) {

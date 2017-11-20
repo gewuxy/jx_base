@@ -29,12 +29,12 @@ import lib.ys.util.DeviceUtil;
  * @author yuansui
  */
 @SuppressWarnings("deprecation")
-public class LayoutFitter {
-    public static final int MATCH_PARENT = LayoutParams.MATCH_PARENT;
-    public static final int WRAP_CONTENT = LayoutParams.WRAP_CONTENT;
+class LayoutFitter {
+    protected static final int MATCH_PARENT = LayoutParams.MATCH_PARENT;
+    protected static final int WRAP_CONTENT = LayoutParams.WRAP_CONTENT;
 
-    public static final int CENTER_HORIZONTAL = -11;
-    public static final int CENTER_VERTICAL = -12;
+    protected static final int CENTER_HORIZONTAL = -11;
+    protected static final int CENTER_VERTICAL = -12;
 
     private static Set<View> mSetFit = new HashSet<>();
 
@@ -45,7 +45,7 @@ public class LayoutFitter {
      * @param x x坐标, 如果为CENTER_HORIZONTAL, 则动态计算居中
      * @param y y坐标, 如果为CENTER_VERTICAL, 则动态计算居中
      */
-    public static void fitAbsByPx(final View v, final int x, final int y) {
+    protected static void fitAbsByPx(final View v, final int x, final int y) {
         if (v.getViewTreeObserver().isAlive()) {
             v.getViewTreeObserver().addOnPreDrawListener(new OnPreDrawListener() {
 
@@ -276,7 +276,7 @@ public class LayoutFitter {
      *
      * @param v
      */
-    public static void fit(View v) {
+    protected static void fit(View v) {
         if (v instanceof ViewGroup) {
             fit((ViewGroup) v);
         } else if (v instanceof TextView) {
@@ -285,7 +285,7 @@ public class LayoutFitter {
         }
     }
 
-    public static void clearFitSet() {
+    protected static void clearFitSet() {
         mSetFit.clear();
     }
 }

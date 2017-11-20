@@ -24,8 +24,7 @@ import java.util.Map;
 import lib.ys.AppEx;
 import lib.ys.adapter.interfaces.IAdapter;
 import lib.ys.adapter.interfaces.IViewHolder;
-import lib.ys.fitter.DpFitter;
-import lib.ys.fitter.LayoutFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.ui.interfaces.opt.ICommonOpt;
 import lib.ys.ui.interfaces.opt.IFitOpt;
 import lib.ys.util.GenericUtil;
@@ -361,7 +360,7 @@ abstract public class MultiAdapterEx<T, VH extends IViewHolder> extends BaseAdap
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-           onCompoundBtnCheck(mPosition, buttonView, isChecked);
+            onCompoundBtnCheck(mPosition, buttonView, isChecked);
         }
     }
 
@@ -475,18 +474,13 @@ abstract public class MultiAdapterEx<T, VH extends IViewHolder> extends BaseAdap
      */
 
     @Override
-    public void fitAbsByPx(View v, int x, int y) {
-        LayoutFitter.fitAbsByPx(v, x, y);
-    }
-
-    @Override
-    public int fitDp(float dp) {
-        return DpFitter.dp(dp);
+    public int fit(float dp) {
+        return Fitter.dp(dp);
     }
 
     @Override
     public void fit(View v) {
-        LayoutFitter.fit(v);
+        Fitter.view(v);
     }
 
     @Override

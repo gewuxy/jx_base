@@ -29,14 +29,5 @@ public interface IFitOpt {
      */
     void fit(View v);
 
-    /**
-     * 只有绝对布局需要传x,y(Px)
-     *
-     * @param v
-     * @param x
-     * @param y
-     */
-    void fitAbsByPx(View v, int x, int y);
-
-    int fitDp(float dp);
+    int fit(float dp);
 }

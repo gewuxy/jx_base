@@ -15,7 +15,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.Transformation;
 
 import lib.ys.AppEx;
-import lib.ys.fitter.DpFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.util.ReflectUtil;
 import lib.ys.util.view.LayoutUtil;
 import lib.ys.view.scrollableLayout.ScrollableLayout;
@@ -73,7 +73,7 @@ abstract public class BaseSRLayout<T extends View> extends ViewGroup {
 
         mDecelerateInterpolator = new DecelerateInterpolator(KFactor);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-        mTotalDragDistance = DpFitter.dp(KDragMaxDistanceDp);
+        mTotalDragDistance = Fitter.dp(KDragMaxDistanceDp);
 
         mHeader = ReflectUtil.newInst(AppEx.getListConfig().getHeaderClz(), getContext(), this);
         if (mHeader == null) {

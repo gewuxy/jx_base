@@ -26,7 +26,7 @@ import java.util.List;
 
 import lib.ys.AppEx;
 import lib.ys.adapter.interfaces.IViewHolder;
-import lib.ys.fitter.LayoutFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.util.GenericUtil;
 import lib.ys.util.ReflectUtil;
 
@@ -74,7 +74,7 @@ abstract public class AbstractWheelAdapter<T, VH extends IViewHolder> implements
          */
         if (convertView == null) {
             convertView = getLayoutInflater().inflate(getConvertViewResId(), null);
-            LayoutFitter.fit(convertView);
+            Fitter.view(convertView);
 
             VH holder = ReflectUtil.newInst(mVHClass, convertView);
             convertView.setTag(holder);

@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import lib.ys.R;
-import lib.ys.fitter.LayoutFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.ui.interfaces.IScrollable;
 import lib.ys.ui.interfaces.listener.scrollable.OnScrollableListener;
 import lib.ys.util.view.LayoutUtil;
@@ -58,7 +58,7 @@ abstract public class BaseScrollable<T, V extends View> implements IScrollable<T
 
             RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.layout_scrollable_extend, null);
             layout.addView(header, LayoutUtil.getRelativeParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
-            LayoutFitter.fit(layout);
+            Fitter.view(layout);
             nativeAddHeader(layout);
         }
 
@@ -67,7 +67,7 @@ abstract public class BaseScrollable<T, V extends View> implements IScrollable<T
 
             RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.layout_scrollable_extend, null);
             layout.addView(footer, LayoutUtil.getRelativeParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
-            LayoutFitter.fit(layout);
+            Fitter.view(layout);
             nativeAddFooter(layout);
         }
 
@@ -84,7 +84,7 @@ abstract public class BaseScrollable<T, V extends View> implements IScrollable<T
     private void nativeAddHeader(View v) {
         if (mSv instanceof ListView) {
             ((ListView) mSv).addHeaderView(v);
-    } else if (mSv instanceof ExpandableListView) {
+        } else if (mSv instanceof ExpandableListView) {
             ((ExpandableListView) mSv).addHeaderView(v);
         } else if (mSv instanceof WrapRecyclerView) {
             ((WrapRecyclerView) mSv).addHeaderView(v);

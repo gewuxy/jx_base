@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import lib.ys.fitter.LayoutFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.ui.interfaces.listener.OnRetryClickListener;
 import lib.ys.util.view.LayoutUtil;
 import lib.ys.util.view.ViewUtil;
@@ -31,7 +31,7 @@ abstract public class BaseFooter extends LinearLayout implements IExtend {
     private void init(Context context) {
         mContentView = LayoutInflater.from(context).inflate(getContentViewId(), null);
         addView(mContentView, LayoutUtil.getLinearParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        LayoutFitter.fit(mContentView);
+        Fitter.view(mContentView);
 
         findViews();
         setViews();

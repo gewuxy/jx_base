@@ -14,7 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import lib.ys.ConstantsEx;
-import lib.ys.fitter.DpFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.util.DrawUtil;
 
 
@@ -56,7 +56,7 @@ public class SideBar extends View {
     public SideBar(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mTextSize = DpFitter.dp(KDefaultTextSizeDp);
+        mTextSize = Fitter.dp(KDefaultTextSizeDp);
         mPaint = new Paint();
 
         mGravity = Gravity.TOP;

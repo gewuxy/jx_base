@@ -20,7 +20,7 @@ import android.view.WindowManager.LayoutParams;
 
 import lib.ys.AppEx;
 import lib.ys.R;
-import lib.ys.fitter.LayoutFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.ui.interfaces.opt.ICommonOpt;
 import lib.ys.ui.interfaces.opt.IInitOpt;
 import lib.ys.ui.other.NavBar;
@@ -73,7 +73,7 @@ abstract public class DialogEx implements
             mDialog.setContentView(mContentView);
         }
 
-        LayoutFitter.fit(mContentView);
+        Fitter.view(mContentView);
     }
 
     @Nullable

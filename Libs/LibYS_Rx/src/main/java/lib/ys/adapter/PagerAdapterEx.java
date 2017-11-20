@@ -15,8 +15,7 @@ import java.util.List;
 import lib.ys.AppEx;
 import lib.ys.YSLog;
 import lib.ys.adapter.interfaces.IViewHolder;
-import lib.ys.fitter.DpFitter;
-import lib.ys.fitter.LayoutFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.ui.interfaces.opt.ICommonOpt;
 import lib.ys.ui.interfaces.opt.IFitOpt;
 import lib.ys.util.GenericUtil;
@@ -262,18 +261,13 @@ abstract public class PagerAdapterEx<T, VH extends IViewHolder> extends PagerAda
      */
 
     @Override
-    public void fitAbsByPx(View v, int x, int y) {
-        LayoutFitter.fitAbsByPx(v, x, y);
-    }
-
-    @Override
-    public int fitDp(float dp) {
-        return DpFitter.dp(dp);
+    public int fit(float dp) {
+        return Fitter.dp(dp);
     }
 
     @Override
     public void fit(View v) {
-        LayoutFitter.fit(v);
+        Fitter.view(v);
     }
 
     abstract public int getConvertViewResId();

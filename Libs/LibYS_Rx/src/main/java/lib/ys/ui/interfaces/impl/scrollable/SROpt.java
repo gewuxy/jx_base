@@ -19,7 +19,7 @@ import lib.ys.R;
 import lib.ys.YSLog;
 import lib.ys.config.AppConfig.RefreshWay;
 import lib.ys.config.ListConfig.PageDownType;
-import lib.ys.fitter.LayoutFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.ui.decor.DecorViewEx.ViewState;
 import lib.ys.ui.interfaces.IScrollable;
 import lib.ys.ui.interfaces.listener.OnScrollMixListener;
@@ -94,7 +94,7 @@ public class SROpt<T, V extends View> implements OnSRListener {
             View container = inflater.inflate(R.layout.layout_scrollable_empty_footer_container, null);
             mLayoutEmptyFooter = container.findViewById(R.id.empty_footer_container);
             mLayoutEmptyFooter.addView(footerEmpty, LayoutUtil.getFrameParams(LayoutUtil.MATCH_PARENT, LayoutUtil.WRAP_CONTENT));
-            LayoutFitter.fit(container);
+            Fitter.view(container);
             mScrollable.addFooterView(container);
         }
     }

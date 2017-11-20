@@ -21,7 +21,7 @@ import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.animation.LinearInterpolator;
 
 import lib.ys.R;
-import lib.ys.fitter.DpFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.util.AnimateUtil;
 import lib.ys.util.UIUtil;
 
@@ -150,7 +150,7 @@ public class ToggleButton extends View implements OnClickListener {
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Style.FILL);
 
-        mEdgeStrokeWidth = DpFitter.dp(1);
+        mEdgeStrokeWidth = Fitter.dp(1);
         mCircleEdgeP = new Paint();
         mCircleEdgeP.setColor(mColorUnCheck);
         mCircleEdgeP.setStrokeWidth(mEdgeStrokeWidth);

@@ -16,7 +16,7 @@ import lib.ys.util.res.ResLoader;
  *
  * @author yuansui
  */
-public class DpFitter {
+class DpFitter {
     // 基于屏幕分辨率的缩放
     private static float mScaleResolution = ConstantsEx.KInvalidValue;
     private static float mDensity = ConstantsEx.KInvalidValue;
@@ -27,7 +27,7 @@ public class DpFitter {
      * @param dp
      * @return
      */
-    public static int dp(float dp) {
+    protected static int dp(float dp) {
         return (int) (dp * FitConfig.getDpBaseScale() * getScale());
     }
 
@@ -37,7 +37,7 @@ public class DpFitter {
      * @param dimenResId R.dimen.xxx
      * @return
      */
-    public static int dimen(@DimenRes int dimenResId) {
+    protected static int dimen(@DimenRes int dimenResId) {
         return (int) (getDimensionDp(dimenResId) * FitConfig.getDpBaseScale() * getScale());
     }
 
@@ -47,7 +47,7 @@ public class DpFitter {
      * @param px
      * @return
      */
-    public static float densityPx(float px) {
+    protected static float densityPx(float px) {
         float dp = px / getDensity(); // 转换为dp
         return dp(dp);
     }
@@ -58,22 +58,22 @@ public class DpFitter {
      * @param px
      * @return
      */
-    public static int densityPx(int px) {
+    protected static int densityPx(int px) {
         return (int) densityPx((float) px);
     }
 
-    public static float getDensity() {
+    protected static float getDensity() {
         if (mDensity == ConstantsEx.KInvalidValue) {
             mDensity = Screen.getDensity();
         }
         return mDensity;
     }
 
-    public static void relateParams(final View v, final int w, final int h) {
+    protected static void relateParams(final View v, final int w, final int h) {
         relateParams(v, w, h, null);
     }
 
-    public static void relateParams(final View v, final int w, final int h, final int[] margins) {
+    protected static void relateParams(final View v, final int w, final int h, final int[] margins) {
         if (margins != null && margins.length == 4) {
             margins[0] = dp(margins[0]);
             margins[1] = dp(margins[1]);
@@ -83,11 +83,11 @@ public class DpFitter {
         PxFitter.fitRelateParams(v, getRealValue(w), getRealValue(h), margins);
     }
 
-    public static void linerParams(final View v, final int w, final int h) {
+    protected static void linerParams(final View v, final int w, final int h) {
         linerParams(v, w, h, null);
     }
 
-    public static void linerParams(final View v, final int w, final int h, final int[] margins) {
+    protected static void linerParams(final View v, final int w, final int h, final int[] margins) {
         if (margins != null && margins.length == 4) {
             margins[0] = dp(margins[0]);
             margins[1] = dp(margins[1]);
@@ -97,11 +97,11 @@ public class DpFitter {
         PxFitter.fitLinerParams(v, getRealValue(w), getRealValue(h), margins);
     }
 
-    public static void absParams(View v, int w, int h, int x, int y) {
+    protected static void absParams(View v, int w, int h, int x, int y) {
         PxFitter.fitAbsParams(v, dp(w), dp(h), dp(x), dp(y));
     }
 
-    public static void textSize(TextView tv, int textSizeDp) {
+    protected static void textSize(TextView tv, int textSizeDp) {
         PxFitter.fitTvTextSize(tv, dp(textSizeDp));
     }
 
@@ -121,7 +121,7 @@ public class DpFitter {
         return realValue;
     }
 
-    public static float getScale() {
+    protected static float getScale() {
         if (mScaleResolution == ConstantsEx.KInvalidValue) {
             float scaleW = 0;
             float scaleH = 0;
@@ -147,7 +147,7 @@ public class DpFitter {
      * @param id
      * @return
      */
-    public static int getDimensionDp(@DimenRes int id) {
+    protected static int getDimensionDp(@DimenRes int id) {
         float px = ResLoader.getDimension(id);
         float dp = px / getDensity();
         return (int) dp;

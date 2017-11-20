@@ -31,7 +31,7 @@ import lib.ys.AppEx;
 import lib.ys.ConstantsEx;
 import lib.ys.R;
 import lib.ys.config.NavBarConfig;
-import lib.ys.fitter.DpFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.util.UIUtil;
 import lib.ys.util.bmp.BmpUtil;
 import lib.ys.util.res.ResLoader;
@@ -522,7 +522,7 @@ public class NavBar extends RelativeLayout {
         TextView tv = createTextView(mConfig.getTextSizeMid(), id, 0, null);
 
         if (maxLength != 0) {
-            tv.setMaxWidth((int) ((maxLength) * mConfig.getTextSizeMid() * DpFitter.getDensity()));
+            tv.setMaxWidth((int) ((maxLength) * mConfig.getTextSizeMid() * Fitter.getDensity()));
             tv.setSingleLine();
             tv.setEllipsize(TruncateAt.END);
         }

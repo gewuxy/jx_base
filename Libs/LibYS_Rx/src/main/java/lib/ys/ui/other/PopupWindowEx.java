@@ -29,13 +29,13 @@ import lib.network.Network;
 import lib.network.model.NetworkError;
 import lib.network.model.NetworkReq;
 import lib.network.model.NetworkResp;
-import lib.network.model.interfaces.OnNetworkListener;
 import lib.network.model.interfaces.IResult;
+import lib.network.model.interfaces.OnNetworkListener;
 import lib.ys.AppEx;
 import lib.ys.ConstantsEx;
 import lib.ys.YSLog;
 import lib.ys.config.AppConfig.RefreshWay;
-import lib.ys.fitter.LayoutFitter;
+import lib.ys.fitter.Fitter;
 import lib.ys.impl.LoadingDialogImpl;
 import lib.ys.ui.decor.DecorViewEx;
 import lib.ys.ui.decor.DecorViewEx.ViewState;
@@ -104,7 +104,7 @@ abstract public class PopupWindowEx implements
         mDecorView.setContentView(getContentViewId(), getContentHeaderViewId(), getContentFooterViewId());
         mDecorView.setOnRetryClickListener(this);
 
-        LayoutFitter.fit(mDecorView);
+        Fitter.view(mDecorView);
 
         mPopupWindow.setContentView(mDecorView);
 //        mPopupWindow.setWidth(getWindowWidth());
