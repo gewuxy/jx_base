@@ -5,10 +5,13 @@ import android.support.v7.widget.GridLayoutManager.SpanSizeLookup;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import lib.ys.YSLog;
 
 /**
  * 网上代码, 未整理
@@ -235,6 +238,12 @@ public class WrapAdapter<T extends RecyclerView.Adapter> extends RecyclerView.Ad
         } else if (isFooter(viewType)) {
             int whichFooter = Math.abs(viewType - BASE_FOOTER_VIEW_TYPE);
             View footerView = mFooterViewInfos.get(whichFooter).view;
+            footerView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    YSLog.d("www", "onClick: click = " + v.getId());
+                }
+            });
             return createHeaderFooterViewHolder(footerView);
 
         } else {

@@ -4,6 +4,10 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.LayoutManager;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -382,6 +386,26 @@ abstract public class BaseSRLayout<T extends View> extends ViewGroup {
     private boolean canChildScrollUp() {
         if (mContentView instanceof ScrollableLayout) {
             return mContentView.getScrollY() > 0;
+        } else if (mContentView instanceof RecyclerView) {
+            RecyclerView rv = (RecyclerView) mContentView;
+            LayoutManager manager = rv.getLayoutManager();
+            if (manager instanceof LinearLayoutManager) {
+                if (((LinearLayoutManager) manager).getOrientation() == LinearLayoutManager.VERTICAL) {
+                    // FIXME: 计算精确的offset
+                    return false;
+                } else {
+                    // 不支持横向拉伸
+                    return true;
+                }
+            } else if (manager instanceof StaggeredGridLayoutManager) {
+                if (((StaggeredGridLayoutManager) manager).getOrientation() == StaggeredGridLayoutManager.VERTICAL) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
         } else {
             return ViewCompat.canScrollVertically(mContentView, -1);
         }
