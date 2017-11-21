@@ -4,6 +4,7 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
 import lib.network.model.NetworkError;
+import lib.network.model.NetworkResp;
 import lib.network.model.interfaces.IResult;
 import lib.ys.R;
 import lib.ys.adapter.VH.ViewHolderEx;
@@ -88,7 +89,7 @@ abstract public class SRFormFragEx<T extends FormEx<T, VH>, VH extends ViewHolde
             return;
         }
 
-        if (r == null || !r.isSucceed() || r.getData() == null) {
+        if (r == null || !r.isSucceed() || r.getList() == null) {
             // 表示数据列表返回为null, 解析失败
             stopRefresh();
 
@@ -123,6 +124,14 @@ abstract public class SRFormFragEx<T extends FormEx<T, VH>, VH extends ViewHolde
 
         return true;
     }
+
+    @CallSuper
+    @Override
+    public IResult onNetworkResponse(int id, NetworkResp r) throws Exception {
+        return parseNetworkResponse(id, r.getText());
+    }
+
+    abstract public IResult<T> parseNetworkResponse(int id, String text) throws Exception;
 
     @Override
     public void swipeRefresh() {

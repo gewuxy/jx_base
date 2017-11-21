@@ -213,12 +213,12 @@ abstract public class FormFragEx<T extends FormEx<T, VH>, VH extends IViewHolder
         return mLayoutFooter;
     }
 
-    public void setItems(List<T> TS) {
+    public void setItems(List<T> ts) {
         mItems.clear();
         mRemandItems.clear();
         removeAllItem();
 
-        Observable.fromIterable(TS).subscribe(T -> addItem(T));
+        Observable.fromIterable(ts).subscribe(T -> addItem(T));
     }
 
     public final T addItem(T T) {
