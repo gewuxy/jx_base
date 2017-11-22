@@ -33,6 +33,12 @@ public class LaunchUtil {
             ((Activity) host).startActivity(intent);
         } else if (host instanceof Fragment) {
             ((Fragment) host).startActivity(intent);
+        } else if (host instanceof Context) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            ((Context) host).startActivity(intent);
+        } else {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            AppEx.getContext().startActivity(intent);
         }
     }
 
@@ -53,6 +59,8 @@ public class LaunchUtil {
             ((Activity) host).startActivityForResult(intent, code);
         } else if (host instanceof Fragment) {
             ((Fragment) host).startActivityForResult(intent, code);
+        } else {
+            throw new IllegalArgumentException("host can only be one of activity or fragment");
         }
     }
 
