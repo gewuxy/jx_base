@@ -30,6 +30,7 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
     private PageIndicator mIndicator;
 
     private boolean mFakeDrag;
+    private boolean mHasTransformer;
 
     @Override
     public int getContentViewId() {
@@ -119,6 +120,7 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
 
     protected void add(Fragment frag) {
         getAdapter().add(frag);
+        mFakeDrag = true;
     }
 
     protected final FragPagerAdapterEx getAdapter() {
@@ -196,8 +198,12 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
      * @param reverseDrawingOrder
      * @param transformer
      */
-    protected void setPageTransformer(boolean reverseDrawingOrder, BaseTransformer transformer) {
+    protected void setPageTransformer(boolean reverseDrawingOrder, @NonNull BaseTransformer transformer) {
+        if (transformer == null) {
+            return;
+        }
         mVp.setPageTransformer(reverseDrawingOrder, transformer);
+        mHasTransformer = true;
         mFakeDrag = true;
     }
 
@@ -207,7 +213,7 @@ abstract public class ViewPagerActivityEx extends ActivityEx {
 
     protected void invalidate() {
         getAdapter().notifyDataSetChanged();
-        if (mFakeDrag && !isEmpty()) {
+        if (mHasTransformer && mFakeDrag && !isEmpty()) {
             /**
              * 必须模拟一次fake的拖动, 才能在初始化的时候调起transformer的效果
              */

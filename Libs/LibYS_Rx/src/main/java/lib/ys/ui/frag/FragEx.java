@@ -848,16 +848,4 @@ abstract public class FragEx extends Fragment implements
         }
         return false;
     }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        YSLog.d(TAG, "onViewStateRestored:  = " + savedInstanceState);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        YSLog.d(TAG, "onSaveInstanceState: out = " + outState);
-    }
 }
