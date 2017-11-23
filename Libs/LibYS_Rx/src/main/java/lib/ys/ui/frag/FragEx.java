@@ -105,9 +105,6 @@ abstract public class FragEx extends Fragment implements
 
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            YSLog.d("www", "onCreateView: state = " + savedInstanceState);
-        }
         mInflater = inflater;
         mSavedInstanceState = savedInstanceState;
         if (mDecorView != null) {

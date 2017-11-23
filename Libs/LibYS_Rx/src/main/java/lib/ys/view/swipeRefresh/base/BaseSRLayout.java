@@ -126,7 +126,7 @@ abstract public class BaseSRLayout<T extends View> extends ViewGroup {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (!mEnabled || !isEnabled() || canChildScrollUp() || mRefreshing || mIsAnimating) {
+        if (!mEnabled || !isEnabled() || mRefreshing || mIsAnimating || canChildScrollUp()) {
             return false;
         }
 
@@ -393,10 +393,15 @@ abstract public class BaseSRLayout<T extends View> extends ViewGroup {
                 if (((LinearLayoutManager) manager).getOrientation() == LinearLayoutManager.VERTICAL) {
                     LinearLayoutManager lm = (LinearLayoutManager) manager;
                     int position = lm.findFirstVisibleItemPosition();
+                    // FIXME: 无数据只有一个footer的时候, position == 1, 原因未知, 暂时这样处理
+                    position -= 1;
+                    if (position < 0) {
+                        position = 0;
+                    }
                     View firstVisibleItemView = lm.findViewByPosition(position);
                     int itemHeight = firstVisibleItemView.getHeight();
-                    int dis = (position) * itemHeight - firstVisibleItemView.getTop();
-                    return dis != 0;
+                    int dis = position * itemHeight - firstVisibleItemView.getTop();
+                    return dis > 0;
                 } else {
                     // 不支持横向拉伸
                     return true;
