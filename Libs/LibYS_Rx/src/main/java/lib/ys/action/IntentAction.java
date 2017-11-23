@@ -141,28 +141,16 @@ public class IntentAction {
 
         abstract public void launch();
 
-        private ACTION getThis() {
+        protected ACTION getThis() {
             return (ACTION) this;
         }
 
-        /**
-         * 要求子类重写, 方便外部链式调用
-         *
-         * @param title
-         * @return
-         */
         public ACTION createChooser(String title) {
             mCreateChooser = true;
             mChooserTitle = title;
             return getThis();
         }
 
-        /**
-         * 要求子类重写, 方便外部链式调用
-         *
-         * @param a
-         * @return
-         */
         public ACTION alert(String a) {
             mAlert = a;
             return getThis();
@@ -174,7 +162,7 @@ public class IntentAction {
          * @param intent
          */
         protected void chooserLaunch(Intent intent) {
-            LaunchUtil.startActivity(AppEx.ct(), Intent.createChooser(intent, mChooserTitle));
+            LaunchUtil.startActivity(Intent.createChooser(intent, mChooserTitle));
         }
 
         /**
@@ -184,7 +172,7 @@ public class IntentAction {
          */
         protected void normalLaunch(Intent intent) {
             try {
-                LaunchUtil.startActivity(AppEx.ct(), intent);
+                LaunchUtil.startActivity(intent);
             } catch (Exception e) {
                 YSLog.e(TAG, "normalLaunch", e);
                 if (mAlert != null) {
@@ -209,22 +197,22 @@ public class IntentAction {
 
         public MailAction address(String a) {
             mAddress = a;
-            return this;
+            return getThis();
         }
 
         public MailAction subject(String s) {
             mSubject = s;
-            return this;
+            return getThis();
         }
 
         public MailAction subject(@StringRes int id) {
             mSubjectId = id;
-            return this;
+            return getThis();
         }
 
         public MailAction text(String t) {
             mText = t;
-            return this;
+            return getThis();
         }
 
         @Override
@@ -259,7 +247,7 @@ public class IntentAction {
 
         public BrowserAction url(String url) {
             mUrl = url;
-            return this;
+            return getThis();
         }
 
         @Override
@@ -319,7 +307,7 @@ public class IntentAction {
          */
         public MapAction latitude(double latitude) {
             mLatitude = latitude;
-            return this;
+            return getThis();
         }
 
         /**
@@ -327,7 +315,7 @@ public class IntentAction {
          */
         public MapAction longitude(double longitude) {
             mLongitude = longitude;
-            return this;
+            return getThis();
         }
 
         /**
@@ -338,7 +326,7 @@ public class IntentAction {
          */
         public MapAction name(String name) {
             mName = name;
-            return this;
+            return getThis();
         }
 
         @Override
@@ -372,7 +360,7 @@ public class IntentAction {
 
         public AppAction url(String url) {
             mUrl = url;
-            return this;
+            return getThis();
         }
 
         @Override
@@ -391,7 +379,7 @@ public class IntentAction {
 
         public AnyAction intent(Intent i) {
             mIntent = i;
-            return this;
+            return getThis();
         }
 
         @Override
@@ -412,7 +400,7 @@ public class IntentAction {
 
         public WordAction filePath(String filePath) {
             mFilePath = filePath;
-            return this;
+            return getThis();
         }
 
         @Override
@@ -438,7 +426,7 @@ public class IntentAction {
 
         public PptAction filePath(String filePath) {
             mFilePath = filePath;
-            return this;
+            return getThis();
         }
 
         @Override
@@ -464,7 +452,7 @@ public class IntentAction {
 
         public ExcelAction filePath(String filePath) {
             mFilePath = filePath;
-            return this;
+            return getThis();
         }
 
         @Override
@@ -494,7 +482,7 @@ public class IntentAction {
 
         public PhoneCallAction tellNum(String tellNum) {
             mTellNum = tellNum;
-            return this;
+            return getThis();
         }
 
         @Override
@@ -535,22 +523,22 @@ public class IntentAction {
          */
         public PhotoAction path(String p) {
             mPath = p;
-            return this;
+            return getThis();
         }
 
         public PhotoAction host(Object host) {
             mHost = host;
-            return this;
+            return getThis();
         }
 
         public PhotoAction code(int code) {
             mCode = code;
-            return this;
+            return getThis();
         }
 
         public PhotoAction source(@PhotoSource int s) {
             mSource = s;
-            return this;
+            return getThis();
         }
 
         @Override

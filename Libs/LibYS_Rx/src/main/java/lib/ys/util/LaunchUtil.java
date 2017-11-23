@@ -15,6 +15,20 @@ import lib.ys.AppEx;
  */
 public class LaunchUtil {
 
+    public static void startActivity(Intent intent, Bundle... extras) {
+        putExtras(intent, extras);
+
+        Context context = AppEx.ct();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Class<?> clz, Bundle... extras) {
+        Context context = AppEx.ct();
+        Intent intent = new Intent(context, clz);
+        startActivity(intent, extras);
+    }
+
     public static void startActivity(Context context, Intent intent, Bundle... extras) {
         putExtras(intent, extras);
 

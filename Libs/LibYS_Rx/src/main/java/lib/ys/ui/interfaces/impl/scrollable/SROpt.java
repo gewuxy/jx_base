@@ -68,19 +68,7 @@ public class SROpt<T, V extends View> implements OnSRListener {
         mSROptListener = l;
         mScrollable = l.getScrollable();
 
-        mHandler = new Handler() {
-
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-
-                if (mRefreshLocal) {
-                    refreshLocal();
-                } else {
-                    refresh();
-                }
-            }
-        };
+        mHandler = new MyHandler();
 
         mOffset = getInitOffset();
     }
@@ -501,5 +489,20 @@ public class SROpt<T, V extends View> implements OnSRListener {
     public void onDestroy() {
         mHandler.removeMessages(0);
         mHandler = null;
+    }
+
+    private class MyHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            if (mRefreshLocal) {
+                refreshLocal();
+            } else {
+                refresh();
+            }
+        }
+
     }
 }

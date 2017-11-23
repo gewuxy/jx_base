@@ -65,9 +65,14 @@ abstract public class SRFormFragEx<T extends FormEx<T, VH>, VH extends ViewHolde
         });
 
         if (enableInitRefresh()) {
-            refresh(RefreshWay.embed);
-            getDataFromNet();
+            refresh(getInitRefreshWay());
         }
+    }
+
+    @Override
+    public void embedRefresh() {
+        super.embedRefresh();
+        getDataFromNet();
     }
 
     abstract public void getDataFromNet();
