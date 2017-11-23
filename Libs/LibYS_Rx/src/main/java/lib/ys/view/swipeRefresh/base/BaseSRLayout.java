@@ -391,14 +391,19 @@ abstract public class BaseSRLayout<T extends View> extends ViewGroup {
             LayoutManager manager = rv.getLayoutManager();
             if (manager instanceof LinearLayoutManager) {
                 if (((LinearLayoutManager) manager).getOrientation() == LinearLayoutManager.VERTICAL) {
-                    // FIXME: 计算精确的offset
-                    return false;
+                    LinearLayoutManager lm = (LinearLayoutManager) manager;
+                    int position = lm.findFirstVisibleItemPosition();
+                    View firstVisibleItemView = lm.findViewByPosition(position);
+                    int itemHeight = firstVisibleItemView.getHeight();
+                    int dis = (position) * itemHeight - firstVisibleItemView.getTop();
+                    return dis != 0;
                 } else {
                     // 不支持横向拉伸
                     return true;
                 }
             } else if (manager instanceof StaggeredGridLayoutManager) {
                 if (((StaggeredGridLayoutManager) manager).getOrientation() == StaggeredGridLayoutManager.VERTICAL) {
+                    // FIXME: 计算精确的offset, 可能需要监听滑动...??暂缺
                     return false;
                 } else {
                     return true;
