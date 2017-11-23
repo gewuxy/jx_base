@@ -23,6 +23,7 @@ import lib.ys.fitter.Fitter;
 import lib.ys.util.ReflectUtil;
 import lib.ys.util.view.LayoutUtil;
 import lib.ys.view.scrollableLayout.ScrollableLayout;
+import lib.ys.view.swipeRefresh.footer.EmptyFooter;
 import lib.ys.view.swipeRefresh.header.BaseHeader;
 import lib.ys.view.swipeRefresh.header.DefaultLayoutHeader;
 import lib.ys.view.swipeRefresh.interfaces.IExtend.IExtendStatus;
@@ -393,12 +394,17 @@ abstract public class BaseSRLayout<T extends View> extends ViewGroup {
                 if (((LinearLayoutManager) manager).getOrientation() == LinearLayoutManager.VERTICAL) {
                     LinearLayoutManager lm = (LinearLayoutManager) manager;
                     int position = lm.findFirstVisibleItemPosition();
-                    // FIXME: 无数据只有一个footer的时候, position == 1, 原因未知, 暂时这样处理
-                    position -= 1;
-                    if (position < 0) {
-                        position = 0;
-                    }
                     View firstVisibleItemView = lm.findViewByPosition(position);
+                    if (firstVisibleItemView instanceof EmptyFooter) {
+                        /**
+                         * 无数据只有一个load more footer和empty footer的时候, position == 1
+                         * 这时候如果不 -1 操作的话, 计算出来的dis恒大于0, 就无法下拉了
+                         */
+                        position -= 1;
+                        if (position < 0) {
+                            position = 0;
+                        }
+                    }
                     int itemHeight = firstVisibleItemView.getHeight();
                     int dis = position * itemHeight - firstVisibleItemView.getTop();
                     return dis > 0;
