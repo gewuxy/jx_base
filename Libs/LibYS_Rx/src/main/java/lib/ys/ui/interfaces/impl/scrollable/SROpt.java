@@ -215,6 +215,7 @@ public class SROpt<T, V extends View> implements OnSRListener {
             mScrollable.addAll(mTsNet);
             mScrollable.invalidate();
             stopLoadMore(true);
+            mSROptListener.onNetRefreshSuccess();
 
             if (mTsNet.size() < getLimit()) {
                 // 数据不够
