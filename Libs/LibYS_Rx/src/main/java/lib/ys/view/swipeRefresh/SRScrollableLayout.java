@@ -134,4 +134,9 @@ public class SRScrollableLayout extends BaseSRLoadMoreLayout<ScrollableLayout> i
     public View getScrollableView() {
         return mScrollableView;
     }
+
+    @Override
+    protected boolean canChildScrollUp() {
+        return getContentView().getScrollY() > 0;
+    }
 }

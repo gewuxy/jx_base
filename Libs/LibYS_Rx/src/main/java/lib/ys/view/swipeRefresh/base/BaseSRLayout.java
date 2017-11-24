@@ -4,10 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.LayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,8 +18,6 @@ import lib.ys.AppEx;
 import lib.ys.fitter.Fitter;
 import lib.ys.util.ReflectUtil;
 import lib.ys.util.view.LayoutUtil;
-import lib.ys.view.scrollableLayout.ScrollableLayout;
-import lib.ys.view.swipeRefresh.footer.EmptyFooter;
 import lib.ys.view.swipeRefresh.header.BaseHeader;
 import lib.ys.view.swipeRefresh.header.DefaultLayoutHeader;
 import lib.ys.view.swipeRefresh.interfaces.IExtend.IExtendStatus;
@@ -384,47 +378,8 @@ abstract public class BaseSRLayout<T extends View> extends ViewGroup {
         }
     }
 
-    private boolean canChildScrollUp() {
-        if (mContentView instanceof ScrollableLayout) {
-            return mContentView.getScrollY() > 0;
-        } else if (mContentView instanceof RecyclerView) {
-            RecyclerView rv = (RecyclerView) mContentView;
-            LayoutManager manager = rv.getLayoutManager();
-            if (manager instanceof LinearLayoutManager) {
-                if (((LinearLayoutManager) manager).getOrientation() == LinearLayoutManager.VERTICAL) {
-                    LinearLayoutManager lm = (LinearLayoutManager) manager;
-                    int position = lm.findFirstVisibleItemPosition();
-                    View firstVisibleItemView = lm.findViewByPosition(position);
-                    if (firstVisibleItemView instanceof EmptyFooter) {
-                        /**
-                         * 无数据只有一个load more footer和empty footer的时候, position == 1
-                         * 这时候如果不 -1 操作的话, 计算出来的dis恒大于0, 就无法下拉了
-                         */
-                        position -= 1;
-                        if (position < 0) {
-                            position = 0;
-                        }
-                    }
-                    int itemHeight = firstVisibleItemView.getHeight();
-                    int dis = position * itemHeight - firstVisibleItemView.getTop();
-                    return dis > 0;
-                } else {
-                    // 不支持横向拉伸
-                    return true;
-                }
-            } else if (manager instanceof StaggeredGridLayoutManager) {
-                if (((StaggeredGridLayoutManager) manager).getOrientation() == StaggeredGridLayoutManager.VERTICAL) {
-                    // FIXME: 计算精确的offset, 可能需要监听滑动...??暂缺
-                    return false;
-                } else {
-                    return true;
-                }
-            } else {
-                return false;
-            }
-        } else {
-            return ViewCompat.canScrollVertically(mContentView, -1);
-        }
+    protected boolean canChildScrollUp() {
+        return mContentView.canScrollVertically(-1);
     }
 
     @Override
