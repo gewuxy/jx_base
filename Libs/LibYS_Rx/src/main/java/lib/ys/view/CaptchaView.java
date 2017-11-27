@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
+import lib.ys.AppEx;
 
 /**
  * 验证码的view
@@ -27,6 +28,8 @@ public class CaptchaView extends TextView {
     private static final int KMaxCount = 60;
 
     private String mResendText = KDefaultResendText;
+
+    private String mSecond = KSecond;
 
     private int mMaxCount = KMaxCount;
 
@@ -60,7 +63,7 @@ public class CaptchaView extends TextView {
             @Override
             public void onNext(@NonNull Long aLong) {
                 //setText(mResendText + KPrefix + aLong + KSuffix);
-                setText(aLong + KSecond);
+                setText(aLong + mSecond);
             }
 
             @Override
@@ -102,6 +105,10 @@ public class CaptchaView extends TextView {
 
     public void setResendText(@StringRes int resId) {
         mResendText = getContext().getResources().getString(resId);
+    }
+
+    public void setSymbol(@StringRes int id) {
+        mSecond = AppEx.getContext().getString(id);
     }
 
     /**
