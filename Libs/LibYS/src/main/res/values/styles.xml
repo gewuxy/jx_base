@@ -20,9 +20,9 @@
 
     <style name="AppTheme_SwipeBack">
         <item name="edge_size">50dp</item>
-        <item name="shadow_left">@mipmap/shadow_ic_left</item>
-        <item name="shadow_right">@mipmap/shadow_ic_right</item>
-        <item name="shadow_bottom">@mipmap/shadow_ic_bottom</item>
+        <item name="shadow_left">@drawable/shadow_ic_left</item>
+        <item name="shadow_right">@drawable/shadow_ic_right</item>
+        <item name="shadow_bottom">@drawable/shadow_ic_bottom</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
