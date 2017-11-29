@@ -42,7 +42,7 @@ public @interface Permission {
 
     /**
      * {@link permission#ACCESS_COARSE_LOCATION}
-     * {@link permission#ACCESS_COARSE_LOCATION}
+     * {@link permission#ACCESS_FINE_LOCATION}
      */
     String location = permission.ACCESS_COARSE_LOCATION;
 
