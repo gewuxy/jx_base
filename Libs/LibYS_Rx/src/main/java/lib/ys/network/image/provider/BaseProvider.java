@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
+import android.widget.ImageView.ScaleType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ abstract public class BaseProvider implements Functions {
     private int mPlaceHolder = ConstantsEx.KInvalidValue;
     private int mFade = ConstantsEx.KInvalidValue;
     private Renderer mRenderer;
+    private ScaleType mScaleType;
 
     private List<Interceptor> mInterceptors;
 
@@ -175,6 +177,12 @@ abstract public class BaseProvider implements Functions {
         return mIv;
     }
 
+    @Override
+    public NetworkImageView scaleType(ScaleType type) {
+        mScaleType = type;
+        return mIv;
+    }
+
     protected String getHttpUrl() {
         return mHttpUrl;
     }
@@ -226,6 +234,10 @@ abstract public class BaseProvider implements Functions {
 
     protected NetworkImageListener getListener() {
         return mListener;
+    }
+
+    protected ScaleType getScaleType() {
+        return mScaleType;
     }
 
     abstract public void clearFromCache(String url);

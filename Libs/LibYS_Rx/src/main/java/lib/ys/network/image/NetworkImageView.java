@@ -131,6 +131,11 @@ public class NetworkImageView extends SimpleDraweeView implements Functions {
         return mProvider.resize(w, h);
     }
 
+    @Override
+    public NetworkImageView scaleType(ScaleType type) {
+        return mProvider.scaleType(type);
+    }
+
     public void load() {
         mProvider.load();
     }

@@ -3,6 +3,7 @@ package lib.ys.network.image;
 import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
+import android.widget.ImageView.ScaleType;
 
 import lib.ys.network.image.interceptor.Interceptor;
 import lib.ys.network.image.renderer.Renderer;
@@ -43,5 +44,7 @@ public interface Functions {
     NetworkImageView fade(int duration);
 
     NetworkImageView resize(@IntRange(from = 1, to = Integer.MAX_VALUE) int w, @IntRange(from = 1, to = Integer.MAX_VALUE) int h);
+
+    NetworkImageView scaleType(ScaleType type);
 
 }

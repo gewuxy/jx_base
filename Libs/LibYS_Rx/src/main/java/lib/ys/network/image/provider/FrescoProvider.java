@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.widget.ImageView;
 
 import com.facebook.common.references.CloseableReference;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -158,6 +159,22 @@ public class FrescoProvider extends BaseProvider {
         }
 
         return iv;
+    }
+
+    @Override
+    public NetworkImageView scaleType(ImageView.ScaleType type) {
+        switch (type) {
+            case CENTER_CROP: {
+                mSdv.getHierarchy().setActualImageScaleType(ScaleType.CENTER_CROP);
+            }
+            break;
+            case FIT_CENTER: {
+                mSdv.getHierarchy().setActualImageScaleType(ScaleType.FIT_CENTER);
+            }
+            break;
+        }
+
+        return (NetworkImageView) mSdv;
     }
 
     /**
