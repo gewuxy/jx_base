@@ -140,7 +140,7 @@ abstract public class FormFragEx<T extends FormEx<T, VH>, VH extends IViewHolder
             return;
         }
 
-        mLayoutItems.addView(v, LayoutUtil.getLinearParams(MATCH_PARENT, WRAP_CONTENT));
+        mLayoutItems.addView(v, position, LayoutUtil.getLinearParams(MATCH_PARENT, WRAP_CONTENT));
         fit(v);
 
         VH holder = ReflectUtil.newInst(mVHClass, v);
@@ -221,28 +221,32 @@ abstract public class FormFragEx<T extends FormEx<T, VH>, VH extends IViewHolder
         Observable.fromIterable(ts).subscribe(T -> addItem(T));
     }
 
-    public final T addItem(T T) {
-        if (T == null || T.getContentViewResId() <= 0) {
-            return T;
+    public final T addItem(T t, int position) {
+        if (t == null || t.getContentViewResId() <= 0) {
+            return t;
         }
 
-        T.host(this);
+        t.host(this);
 
         if (mLayoutItems == null) {
-            mRemandItems.add(T);
-            return T;
+            mRemandItems.add(t);
+            return t;
         } else {
-            mItems.add(T);
-            Object related = T.getRelated();
+            mItems.add(t);
+            Object related = t.getRelated();
             if (related != null) {
-                mMapRelated.put(related, T);
+                mMapRelated.put(related, t);
             }
         }
 
-        View v = inflate(T.getContentViewResId(), null);
-        addItemView(T, v, getLastItemPosition());
+        View v = inflate(t.getContentViewResId(), null);
+        addItemView(t, v, position);
 
-        return T;
+        return t;
+    }
+
+    public final T addItem(T t) {
+        return addItem(t, getCount());
     }
 
     @Override

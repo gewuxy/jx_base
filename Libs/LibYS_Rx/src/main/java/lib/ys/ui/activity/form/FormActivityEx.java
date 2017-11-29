@@ -222,7 +222,7 @@ abstract public class FormActivityEx<T extends FormEx<T, VH>, VH extends IViewHo
         Observable.fromIterable(ts).subscribe(t -> addItem(t));
     }
 
-    public final T addItem(T t) {
+    public final T addItem(T t, int position) {
         if (t == null || t.getContentViewResId() <= 0) {
             return t;
         }
@@ -240,10 +240,14 @@ abstract public class FormActivityEx<T extends FormEx<T, VH>, VH extends IViewHo
             }
         }
 
-        View v = getLayoutInflater().inflate(t.getContentViewResId(), null);
-        addItemView(t, v, getLastItemPosition());
+        View v = inflate(t.getContentViewResId(), null);
+        addItemView(t, v, position);
 
         return t;
+    }
+
+    public final T addItem(T t) {
+        return addItem(t, getLastItemPosition());
     }
 
     @Override
