@@ -141,7 +141,7 @@ abstract public class FormActivityEx<T extends FormEx<T, VH>, VH extends IViewHo
             return;
         }
 
-        mLayoutItems.addView(v, LayoutUtil.getLinearParams(MATCH_PARENT, WRAP_CONTENT));
+        mLayoutItems.addView(v, position, LayoutUtil.getLinearParams(MATCH_PARENT, WRAP_CONTENT));
         fit(v);
 
         VH holder = ReflectUtil.newInst(mVHClass, v);
@@ -247,7 +247,7 @@ abstract public class FormActivityEx<T extends FormEx<T, VH>, VH extends IViewHo
     }
 
     public final T addItem(T t) {
-        return addItem(t, getLastItemPosition());
+        return addItem(t, getCount());
     }
 
     @Override
