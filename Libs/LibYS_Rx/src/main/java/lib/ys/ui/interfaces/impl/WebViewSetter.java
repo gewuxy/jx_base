@@ -158,6 +158,11 @@ public class WebViewSetter {
         // if (resultCode != RESULT_OK) {1
         // return;
         // }
+        if (data == null) {
+            mUploadMsgs.onReceiveValue(null);
+            return;
+        }
+
         if (requestCode == 1) {
             if (null != mUploadMessage) {
                 Uri result = data == null || resultCode != Activity.RESULT_OK ? null : Uri.fromFile(new File(decodePicUri(data.getData())));
