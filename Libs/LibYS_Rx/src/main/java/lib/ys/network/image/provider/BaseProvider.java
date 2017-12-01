@@ -1,6 +1,5 @@
 package lib.ys.network.image.provider;
 
-import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
@@ -23,7 +22,6 @@ import lib.ys.network.image.renderer.Renderer;
  */
 abstract public class BaseProvider implements Functions {
 
-    private Context mContext;
     private NetworkImageView mIv;
 
     /**
@@ -50,8 +48,7 @@ abstract public class BaseProvider implements Functions {
     private NetworkImageListener mListener;
 
 
-    public BaseProvider(Context context, NetworkImageView iv) {
-        mContext = context;
+    public BaseProvider(NetworkImageView iv) {
         mIv = iv;
         mInterceptors = new ArrayList<>();
     }
@@ -208,11 +205,11 @@ abstract public class BaseProvider implements Functions {
         return mUri;
     }
 
-    protected int getW() {
+    public int getW() {
         return mW;
     }
 
-    protected int getH() {
+    public int getH() {
         return mH;
     }
 

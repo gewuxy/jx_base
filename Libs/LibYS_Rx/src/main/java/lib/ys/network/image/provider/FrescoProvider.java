@@ -1,6 +1,5 @@
 package lib.ys.network.image.provider;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
@@ -54,8 +53,9 @@ public class FrescoProvider extends BaseProvider {
 
     private Renderer mRendererKeeper;
 
-    public FrescoProvider(Context context, NetworkImageView iv) {
-        super(context, iv);
+    public FrescoProvider(NetworkImageView iv) {
+        super(iv);
+
         mBuilder = Fresco.newDraweeControllerBuilder();
         mSdv = iv;
         mSdv.getHierarchy().setActualImageScaleType(ScaleType.CENTER_CROP);

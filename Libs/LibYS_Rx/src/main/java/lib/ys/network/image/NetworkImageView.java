@@ -63,7 +63,7 @@ public class NetworkImageView extends SimpleDraweeView implements Functions {
     }
 
     private void init(Context context) {
-        mProvider = new FrescoProvider(context, this);
+        mProvider = new FrescoProvider(this);
     }
 
     @Override
