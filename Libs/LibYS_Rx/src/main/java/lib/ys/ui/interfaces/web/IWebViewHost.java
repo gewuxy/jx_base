@@ -20,7 +20,7 @@ public interface IWebViewHost {
      *
      * @param h5Title
      */
-    void setH5Title(String h5Title);
+    void onReceivedWebTitle(String h5Title);
 
 
     /**

@@ -92,7 +92,7 @@ public class WebViewSetter {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                mHost.setH5Title(title);
+                mHost.onReceivedWebTitle(title);
             }
 
             // 4.0以上（除4.4 4.4暂时没有系统发放）

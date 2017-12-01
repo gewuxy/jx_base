@@ -61,7 +61,7 @@ abstract public class WebViewFragEx extends FragEx implements IWebViewHost {
      *
      * @param mH5Title
      */
-    public void setH5Title(String mH5Title) {
+    public void onReceivedWebTitle(String mH5Title) {
     }
 
     @Override
