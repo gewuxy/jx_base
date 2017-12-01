@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import java.io.File;
 
 import lib.ys.AppEx;
+import lib.ys.YSLog;
 import lib.ys.ui.interfaces.web.IWebViewHost;
 import lib.ys.util.LaunchUtil;
 import lib.ys.util.TextUtil;
@@ -114,11 +115,11 @@ public class WebViewSetter {
             }
 
             // 5.0以上使用（目前发现不写也可以）
-//			@Override
-//			public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
-//				updateFileForLollipop(filePathCallback);
-//				return true;
-//			}
+			@Override
+			public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+				updateFileForLollipop(filePathCallback);
+				return true;
+			}
         });
     }
 
@@ -129,6 +130,7 @@ public class WebViewSetter {
      */
     @JavascriptInterface
     public void updateFile(ValueCallback<Uri> uploadMsg) {
+        YSLog.d("www", "updateFile: msg = " + uploadMsg);
         mUploadMessage = uploadMsg;
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -143,6 +145,7 @@ public class WebViewSetter {
      */
     @JavascriptInterface
     public void updateFileForLollipop(ValueCallback<Uri[]> uploadMsg) {
+        YSLog.d("www", "updateFile: msg5.0 = " + uploadMsg);
         mUploadMsgs = uploadMsg;
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);

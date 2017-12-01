@@ -56,9 +56,9 @@ abstract public class WebViewActivityEx extends ActivityEx implements IWebViewHo
     /**
      * 抓取h5链接中的title
      *
-     * @param title
+     * @param mH5Title
      */
-    public void onReceivedWebTitle(String title) {
+    public void onReceivedWebTitle(String mH5Title) {
     }
 
     @Override
