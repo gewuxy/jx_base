@@ -226,7 +226,7 @@ abstract public class FragEx extends Fragment implements
         InjectUtil.bind(this);
 
         // 数据的初始化提前, 可以根据数据来装载不同的view id
-        initData(mSavedInstanceState);
+        initData();
 
         mDecorView = new DecorViewEx(getActivity(), getNavBarState(), getInitRefreshWay(), initLoadingDialog(), this);
         mDecorView.setContentView(getContentViewId(), getContentHeaderViewId(), getContentFooterViewId());
@@ -255,6 +255,10 @@ abstract public class FragEx extends Fragment implements
 
         mInitComplete = true;
         afterInitCompleted();
+    }
+
+    protected Bundle getSavedInstanceState() {
+        return mSavedInstanceState;
     }
 
     protected View getHeaderView() {

@@ -94,7 +94,7 @@ abstract public class ErrorDecorEx extends RelativeLayout implements IInitialize
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void initData() {
     }
 
     @Override

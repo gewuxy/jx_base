@@ -31,7 +31,7 @@ public class LoadingDialogInst extends MatchScreenDialog implements OnCancelList
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void initData() {
     }
 
     @Override

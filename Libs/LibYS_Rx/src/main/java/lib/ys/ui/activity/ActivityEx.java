@@ -114,6 +114,8 @@ abstract public class ActivityEx extends SwipeBackActivity implements
     private PermissionOpt mPermission;
     private TouchDelegateImpl mTouchDelegateImpl;
 
+    private Bundle mSavedInstanceState;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         if (AppEx.getConfig().isFlatBarEnabled()) {
@@ -123,14 +125,16 @@ abstract public class ActivityEx extends SwipeBackActivity implements
         getWindow().setFormat(PixelFormat.TRANSPARENT);
 
         if (savedInstanceState != null) {
+            mSavedInstanceState = savedInstanceState;
             // 清除所有fragment的保存
             savedInstanceState.putParcelable(FRAGMENTS_TAG, null);
         }
         super.onCreate(savedInstanceState);
 
         InjectUtil.bind(this);
+
         // 数据的初始化提前, 可以根据数据来装载不同的view id
-        initData(savedInstanceState);
+        initData();
         setContentView(getContentViewId());
 
         if (enableSwipeFinish() == null) {
@@ -175,6 +179,10 @@ abstract public class ActivityEx extends SwipeBackActivity implements
         setViews();
 
         mInitComplete = true;
+    }
+
+    protected Bundle getSavedInstanceState() {
+        return mSavedInstanceState;
     }
 
     protected View getHeaderView() {

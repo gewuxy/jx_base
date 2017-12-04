@@ -111,7 +111,7 @@ abstract public class PopupWindowEx implements
 //        mPopupWindow.setHeight(getWindowHeight());
         mPopupWindow.setBackgroundDrawable(null);
 
-        initData(null);
+        initData();
         findViews();
         setViews();
 

@@ -63,7 +63,7 @@ abstract public class FormFragEx<T extends FormItemEx<VH>, VH extends ViewHolder
 
     @CallSuper
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void initData() {
         mItems = new ArrayList<>();
 
         mMapClick = new HashMap<>();

@@ -62,7 +62,7 @@ abstract public class DialogEx implements
         mDialog = new Dialog(mContext, R.style.dialog);
         mContentView = getLayoutInflater().inflate(getContentViewId(), null);
 
-        initData(null);
+        initData();
         findViews();
         setViews();
 
