@@ -54,7 +54,7 @@ abstract public class RunnableEx implements Runnable, INetwork {
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
     }
 
     @Override

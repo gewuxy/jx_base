@@ -115,7 +115,7 @@ abstract public class IntentServiceEx extends IntentService implements INetwork 
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
     }
 
     @Override

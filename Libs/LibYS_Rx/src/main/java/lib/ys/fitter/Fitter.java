@@ -50,6 +50,10 @@ public class Fitter {
         return DpFitter.getDensity();
     }
 
+    public static float getScale() {
+        return DpFitter.getScale();
+    }
+
     public static void reset() {
         LayoutFitter.clearFitSet();
     }

@@ -109,7 +109,7 @@ abstract public class ServiceEx extends Service implements INetwork {
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
     }
 
     @Override

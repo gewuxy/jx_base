@@ -235,7 +235,7 @@ abstract public class SRRecyclerFragEx<T> extends RecyclerFragEx<T> implements O
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
         mSRWidget.onNetworkSuccess((IListResponse) result);
     }
 

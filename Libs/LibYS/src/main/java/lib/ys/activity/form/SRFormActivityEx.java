@@ -76,7 +76,7 @@ abstract public class SRFormActivityEx<T extends FormItemEx<VH>, VH extends View
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
         IListResponse<T> r = (IListResponse<T>) result;
         if (r == null || !r.isSucceed() || r.getData() == null) {
             // 表示数据列表返回为null, 解析失败

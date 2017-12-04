@@ -178,7 +178,7 @@ abstract public class PopupWindowEx implements
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
     }
 
     @Override

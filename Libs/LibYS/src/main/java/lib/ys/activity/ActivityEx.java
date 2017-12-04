@@ -259,7 +259,7 @@ abstract public class ActivityEx extends SwipeBackActivity implements IFitParams
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
     }
 
     @Override

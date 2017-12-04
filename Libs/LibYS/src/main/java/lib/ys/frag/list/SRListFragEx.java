@@ -238,7 +238,7 @@ abstract public class SRListFragEx<T> extends ListFragEx<T> implements OnSRWidge
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
         mSRWidget.onNetworkSuccess((IListResponse) result);
     }
 

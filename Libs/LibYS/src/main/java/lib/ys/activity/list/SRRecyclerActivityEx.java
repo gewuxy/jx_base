@@ -235,7 +235,7 @@ abstract public class SRRecyclerActivityEx<T> extends RecyclerActivityEx<T> impl
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
         mSRWidget.onNetworkSuccess((IListResponse) result);
     }
 

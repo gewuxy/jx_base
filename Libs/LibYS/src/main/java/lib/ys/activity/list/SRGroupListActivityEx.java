@@ -231,7 +231,7 @@ abstract public class SRGroupListActivityEx<T> extends GroupListActivityEx<T> im
     }
 
     @Override
-    public void onNetworkSuccess(int id, Object result) {
+    public void onNetworkSuccess(int id, IResult r) {
         mSRWidget.onNetworkSuccess((IListResponse) result);
     }
 
