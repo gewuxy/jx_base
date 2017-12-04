@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import lib.ys.AppEx;
@@ -15,7 +17,7 @@ import lib.ys.AppEx;
  */
 public class LaunchUtil {
 
-    public static void startActivity(Intent intent, Bundle... extras) {
+    public static void startActivity(@NonNull Intent intent, Bundle... extras) {
         putExtras(intent, extras);
 
         Context context = AppEx.ct();
@@ -23,13 +25,13 @@ public class LaunchUtil {
         context.startActivity(intent);
     }
 
-    public static void startActivity(Class<?> clz, Bundle... extras) {
+    public static void startActivity(@NonNull Class<?> clz, @Nullable Bundle... extras) {
         Context context = AppEx.ct();
         Intent intent = new Intent(context, clz);
         startActivity(intent, extras);
     }
 
-    public static void startActivity(Context context, Intent intent, Bundle... extras) {
+    public static void startActivity(@NonNull Context context, @NonNull Intent intent, @Nullable Bundle... extras) {
         putExtras(intent, extras);
 
         if (context instanceof Activity) {
@@ -40,7 +42,7 @@ public class LaunchUtil {
         }
     }
 
-    public static void startActivity(Object host, Intent intent, Bundle... extras) {
+    public static void startActivity(@NonNull Object host, @NonNull Intent intent, @Nullable Bundle... extras) {
         putExtras(intent, extras);
 
         if (host instanceof Activity) {
@@ -56,17 +58,17 @@ public class LaunchUtil {
         }
     }
 
-    public static void startActivity(Context context, Class<?> clz, Bundle... extras) {
+    public static void startActivity(@NonNull Context context, @NonNull Class<?> clz, @Nullable Bundle... extras) {
         Intent intent = new Intent(context, clz);
         startActivity(context, intent, extras);
     }
 
-    public static void startActivity(Object host, Class<?> clz, Bundle... extras) {
+    public static void startActivity(@NonNull Object host, @NonNull Class<?> clz, @Nullable Bundle... extras) {
         Intent intent = new Intent(AppEx.ct(), clz);
         startActivity(host, intent, extras);
     }
 
-    public static void startActivityForResult(Object host, Intent intent, int code, Bundle... extras) {
+    public static void startActivityForResult(@NonNull Object host, @NonNull Intent intent, int code, @Nullable Bundle... extras) {
         putExtras(intent, extras);
 
         if (host instanceof Activity) {
@@ -78,23 +80,23 @@ public class LaunchUtil {
         }
     }
 
-    public static void startActivityForResult(Object host, Class<?> clz, int code, Bundle... extras) {
+    public static void startActivityForResult(@NonNull Object host, @NonNull Class<?> clz, int code, Bundle... extras) {
         Intent intent = new Intent(AppEx.ct(), clz);
         startActivityForResult(host, intent, code, extras);
     }
 
-    public static void startService(Context context, Class<?> clz, Bundle... extras) {
+    public static void startService(@NonNull Context context, @NonNull Class<?> clz, @Nullable Bundle... extras) {
         Intent intent = new Intent(context, clz);
         putExtras(intent, extras);
         context.startService(intent);
     }
 
-    public static void startService(Context context, Intent intent, Bundle... extras) {
+    public static void startService(@NonNull Context context, @NonNull Intent intent, @Nullable Bundle... extras) {
         putExtras(intent, extras);
         context.startService(intent);
     }
 
-    private static void putExtras(Intent intent, Bundle... extras) {
+    private static void putExtras(@NonNull Intent intent, @Nullable Bundle... extras) {
         if (extras != null) {
             for (int i = 0; i < extras.length; ++i) {
                 intent.putExtras(extras[i]);

@@ -135,11 +135,13 @@ public class IntentAction {
     }
 
     abstract static public class BaseAction<ACTION extends BaseAction<ACTION>> {
-        protected boolean mCreateChooser;
-        protected String mChooserTitle;
-        protected String mAlert;
+        private boolean mCreateChooser;
+        private String mChooserTitle;
+        private String mAlert;
 
         abstract public void launch();
+
+        abstract public Intent getIntent();
 
         protected ACTION getThis() {
             return (ACTION) this;
@@ -154,6 +156,10 @@ public class IntentAction {
         public ACTION alert(String a) {
             mAlert = a;
             return getThis();
+        }
+
+        protected String getAlert() {
+            return mAlert;
         }
 
         /**
@@ -178,6 +184,14 @@ public class IntentAction {
                 if (mAlert != null) {
                     AppEx.showToast(mAlert);
                 }
+            }
+        }
+
+        protected void autoLaunch(Intent intent) {
+            if (mCreateChooser) {
+                chooserLaunch(intent);
+            } else {
+                normalLaunch(intent);
             }
         }
     }
@@ -217,6 +231,11 @@ public class IntentAction {
 
         @Override
         public void launch() {
+            autoLaunch(getIntent());
+        }
+
+        @Override
+        public Intent getIntent() {
             Intent intent = new Intent(Intent.ACTION_SEND)
                     .setType("plain/text") // don't use final define
                     .putExtra(Intent.EXTRA_EMAIL, new String[]{mAddress})
@@ -226,12 +245,7 @@ public class IntentAction {
             } else {
                 intent.putExtra(Intent.EXTRA_SUBJECT, mSubject);
             }
-
-            if (mCreateChooser) {
-                chooserLaunch(intent);
-            } else {
-                normalLaunch(intent);
-            }
+            return intent;
         }
     }
 
@@ -256,12 +270,14 @@ public class IntentAction {
                 YSLog.e(TAG, "launch", new IllegalStateException("url can not be null"));
                 return;
             }
+            normalLaunch(getIntent());
+        }
 
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_VIEW);
-            Uri uri = Uri.parse(mUrl);
-            intent.setData(uri);
-            normalLaunch(intent);
+        @Override
+        public Intent getIntent() {
+            return new Intent()
+                    .setAction(Intent.ACTION_VIEW)
+                    .setData(Uri.parse(mUrl));
         }
     }
 
@@ -277,16 +293,16 @@ public class IntentAction {
             PackageManager packageManager = AppEx.ct().getPackageManager();
             List<ResolveInfo> shareAppList = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
             if (shareAppList == null || shareAppList.size() == 0) {
-                AppEx.showToast(mAlert);
+                AppEx.showToast(getAlert());
             } else {
                 normalLaunch(intent);
             }
         }
 
-        public static Intent getIntent() {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse("market://details?id=" + AppEx.ct().getPackageName()));
-            return intent;
+        @Override
+        public Intent getIntent() {
+            return new Intent(Intent.ACTION_VIEW)
+                    .setData(Uri.parse("market://details?id=" + AppEx.ct().getPackageName()));
         }
     }
 
@@ -330,7 +346,7 @@ public class IntentAction {
         }
 
         @Override
-        public void launch() {
+        public Intent getIntent() {
             StringBuffer buffer = new StringBuffer()
                     .append("geo:")
                     .append(mLatitude)
@@ -342,9 +358,13 @@ public class IntentAction {
                         .append(mName);
             }
 
-            Uri mUri = Uri.parse(buffer.toString());
-            Intent mIntent = new Intent(Intent.ACTION_VIEW, mUri);
-            normalLaunch(mIntent);
+            Uri uri = Uri.parse(buffer.toString());
+            return new Intent(Intent.ACTION_VIEW, uri);
+        }
+
+        @Override
+        public void launch() {
+            normalLaunch(getIntent());
         }
     }
 
@@ -364,9 +384,18 @@ public class IntentAction {
         }
 
         @Override
+        public Intent getIntent() {
+            return new Intent(Intent.ACTION_VIEW, Uri.parse(mUrl));
+        }
+
+        @Override
         public void launch() {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mUrl));
-            normalLaunch(intent);
+            if (mUrl == null) {
+                YSLog.e(TAG, "launch", new IllegalStateException("url can not be null"));
+                AppEx.showToast("url不能为空");
+                return;
+            }
+            normalLaunch(getIntent());
         }
     }
 
@@ -380,6 +409,11 @@ public class IntentAction {
         public AnyAction intent(Intent i) {
             mIntent = i;
             return getThis();
+        }
+
+        @Override
+        public Intent getIntent() {
+            return mIntent;
         }
 
         @Override
@@ -404,13 +438,22 @@ public class IntentAction {
         }
 
         @Override
-        public void launch() {
+        public Intent getIntent() {
             Uri uri = Uri.fromFile(new File(mFilePath));
-            Intent intent = new Intent(Intent.ACTION_VIEW)
+            return new Intent(Intent.ACTION_VIEW)
                     .addCategory(Intent.CATEGORY_DEFAULT)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .setDataAndType(uri, "application/msword");
-            normalLaunch(intent);
+        }
+
+        @Override
+        public void launch() {
+            if (mFilePath == null) {
+                YSLog.d(TAG, "launch: file path can not be null");
+                AppEx.showToast("文件路径不能为空");
+                return;
+            }
+            normalLaunch(getIntent());
         }
     }
 
@@ -430,13 +473,22 @@ public class IntentAction {
         }
 
         @Override
-        public void launch() {
+        public Intent getIntent() {
             Uri uri = Uri.fromFile(new File(mFilePath));
-            Intent intent = new Intent(Intent.ACTION_VIEW)
+            return new Intent(Intent.ACTION_VIEW)
                     .addCategory(Intent.CATEGORY_DEFAULT)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .setDataAndType(uri, "application/vnd.ms-powerpoint");
-            normalLaunch(intent);
+        }
+
+        @Override
+        public void launch() {
+            if (mFilePath == null) {
+                YSLog.d(TAG, "launch: file path can not be null");
+                AppEx.showToast("文件路径不能为空");
+                return;
+            }
+            normalLaunch(getIntent());
         }
     }
 
@@ -456,23 +508,36 @@ public class IntentAction {
         }
 
         @Override
-        public void launch() {
+        public Intent getIntent() {
             Uri uri = Uri.fromFile(new File(mFilePath));
-            Intent intent = new Intent(Intent.ACTION_VIEW)
+            return new Intent(Intent.ACTION_VIEW)
                     .addCategory(Intent.CATEGORY_DEFAULT)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .setDataAndType(uri, "application/vnd.ms-excel");
-            normalLaunch(intent);
+        }
+
+        @Override
+        public void launch() {
+            if (mFilePath == null) {
+                YSLog.d(TAG, "launch: file path can not be null");
+                AppEx.showToast("文件路径不能为空");
+                return;
+            }
+            normalLaunch(getIntent());
         }
     }
 
     public static class AppSetupAction extends BaseAction<AppSetupAction> {
 
         @Override
-        public void launch() {
+        public Intent getIntent() {
             Uri uri = Uri.parse("package:" + AppEx.ct().getPackageName());
-            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, uri);
-            normalLaunch(intent);
+            return new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, uri);
+        }
+
+        @Override
+        public void launch() {
+            normalLaunch(getIntent());
         }
     }
 
@@ -486,11 +551,15 @@ public class IntentAction {
         }
 
         @Override
-        public void launch() {
+        public Intent getIntent() {
             Uri data = Uri.parse("tel:" + mTellNum);
-            Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(data);
-            normalLaunch(intent);
+            return new Intent(Intent.ACTION_DIAL)
+                    .setData(data);
+        }
+
+        @Override
+        public void launch() {
+            normalLaunch(getIntent());
         }
     }
 
@@ -542,21 +611,25 @@ public class IntentAction {
         }
 
         @Override
+        public Intent getIntent() {
+            Intent intent = null;
+            if (mSource == PhotoSource.camera) {
+                intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        .putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(mPath)));
+            } else {
+                // 从图库里选择照片 返回的数据在 intent.getData()里, 是Uri的形式
+                intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            }
+            return intent;
+        }
+
+        @Override
         public void launch() {
             if (mHost == null || mCode == -1 || mSource == PhotoSource.unknown) {
                 AppEx.showToast("配置不正确");
                 return;
             }
-
-            if (mSource == PhotoSource.camera) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(mPath)));
-                LaunchUtil.startActivityForResult(mHost, intent, mCode);
-            } else {
-                // 从图库里选择照片 返回的数据在 intent.getData()里, 是Uri的形式
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                LaunchUtil.startActivityForResult(mHost, intent, mCode);
-            }
+            LaunchUtil.startActivityForResult(mHost, getIntent(), mCode);
         }
     }
 }
