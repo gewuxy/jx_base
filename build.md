@@ -1,4 +1,3 @@
-### 在总环境的 build.gradle 写法
     buildscript {
         repositories {
             jcenter()
@@ -11,7 +10,7 @@
                 compileSdk    : 26,
                 buildTools    : '26.0.2',
     
-                androidPlugin : '3.0.0',
+                androidPlugin : '3.0.1',
     
                 versionCode   : 100,
                 versionName   : '1.0',
@@ -39,6 +38,7 @@
                         v4          : "com.android.support:support-v4:${versions.supportLibrary}",
                         recyclerview: "com.android.support:recyclerview-v7:${versions.supportLibrary}",
                         gridlayout  : "com.android.support:gridlayout-v7:${versions.supportLibrary}",
+                        cardview    : "com.android.support:cardview-v7:${versions.supportLibrary}",
                         test        : [
                                 runner: 'com.android.support.test:runner:1.0.0',
                         ],
@@ -80,8 +80,8 @@
                          */
                         gson   : 'com.google.code.gson:gson:2.8.1',
                         dagger : [
-                                core    : 'com.google.dagger:dagger:2.+',
-                                compiler: 'com.google.dagger:dagger-compiler:2.+'
+                                core    : 'com.google.dagger:dagger:2.12',
+                                compiler: 'com.google.dagger:dagger-compiler:2.12'
                         ],
                         /**
                          * java
