@@ -105,6 +105,7 @@ public class AnimateUtil {
 
     /**
      * view在X轴方向移动
+     *
      * @param view
      * @return
      */

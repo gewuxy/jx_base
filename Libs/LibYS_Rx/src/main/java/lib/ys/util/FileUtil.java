@@ -4,7 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +18,7 @@ public class FileUtil {
 
     private static final String TAG = FileUtil.class.getSimpleName();
 
-    private final static int BUFFER_SIZE = 4096;
+    private final static int KBufferSize = 4096;
 
     /**
      * 删除文件夹下所有内容包括文件夹本身
@@ -109,7 +108,7 @@ public class FileUtil {
     public static String inputStreamToString(InputStream in) throws Exception {
 
         StringBuffer out = new StringBuffer();
-        byte[] b = new byte[BUFFER_SIZE];
+        byte[] b = new byte[KBufferSize];
         int n;
         while ((n = in.read(b)) != -1) {
             out.append(new String(b, 0, n));
@@ -274,8 +273,8 @@ public class FileUtil {
         try {
             File file = new File(filePath);
             FileInputStream fis = new FileInputStream(file);
-            ByteArrayOutputStream bos = new ByteArrayOutputStream(BUFFER_SIZE);
-            byte[] b = new byte[BUFFER_SIZE];
+            ByteArrayOutputStream bos = new ByteArrayOutputStream(KBufferSize);
+            byte[] b = new byte[KBufferSize];
             int n;
             while ((n = fis.read(b)) != -1) {
                 bos.write(b, 0, n);
@@ -283,10 +282,8 @@ public class FileUtil {
             fis.close();
             bos.close();
             buffer = bos.toByteArray();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            YSLog.e(TAG, "fileToBytes", e);
         }
         return buffer;
     }
@@ -298,34 +295,34 @@ public class FileUtil {
      * @param filePath
      * @param fileName
      */
-    public static void bytesToFile(byte[] bfile, String filePath,String fileName) {
+    public static void bytesToFile(byte[] bfile, String filePath, String fileName) {
         BufferedOutputStream bos = null;
         FileOutputStream fos = null;
         File file = null;
         try {
             File dir = new File(filePath);
-            if(!dir.exists()&&dir.isDirectory()){//判断文件目录是否存在
+            if (!dir.exists() && dir.isDirectory()) {//判断文件目录是否存在
                 dir.mkdirs();
             }
-            file = new File(filePath+"\\"+fileName);
+            file = new File(filePath + File.separator + fileName);
             fos = new FileOutputStream(file);
             bos = new BufferedOutputStream(fos);
             bos.write(bfile);
         } catch (Exception e) {
-            e.printStackTrace();
+            YSLog.e(TAG, "bytesToFile", e);
         } finally {
             if (bos != null) {
                 try {
                     bos.close();
                 } catch (IOException e1) {
-                    e1.printStackTrace();
+                    YSLog.e(TAG, "bytesToFile", e1);
                 }
             }
             if (fos != null) {
                 try {
                     fos.close();
                 } catch (IOException e1) {
-                    e1.printStackTrace();
+                    YSLog.e(TAG, "bytesToFile", e1);
                 }
             }
         }

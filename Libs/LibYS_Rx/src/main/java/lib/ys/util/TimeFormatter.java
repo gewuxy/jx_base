@@ -47,7 +47,7 @@ public class TimeFormatter {
         String only_MM = "MM";
         String only_dd = "dd";
         String only_ss = "ss";
-        String form_MM_dd_24= "MM月dd日 HH:mm"; // 06月12日 15:00
+        String form_MM_dd_24 = "MM月dd日 HH:mm"; // 06月12日 15:00
     }
 
     /**
