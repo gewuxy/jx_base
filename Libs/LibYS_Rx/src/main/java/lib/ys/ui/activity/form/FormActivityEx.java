@@ -1,7 +1,6 @@
 package lib.ys.ui.activity.form;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.ColorInt;
 import android.view.View;

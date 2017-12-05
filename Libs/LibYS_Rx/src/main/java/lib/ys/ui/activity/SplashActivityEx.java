@@ -1,6 +1,5 @@
 package lib.ys.ui.activity;
 
-import android.os.Bundle;
 import android.view.ViewTreeObserver.OnPreDrawListener;
 
 import java.util.concurrent.TimeUnit;

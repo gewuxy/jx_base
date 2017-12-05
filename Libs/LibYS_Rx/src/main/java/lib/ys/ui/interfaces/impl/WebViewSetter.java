@@ -115,11 +115,11 @@ public class WebViewSetter {
             }
 
             // 5.0以上使用（目前发现不写也可以）
-			@Override
-			public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
-				updateFileForLollipop(filePathCallback);
-				return true;
-			}
+            @Override
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+                updateFileForLollipop(filePathCallback);
+                return true;
+            }
         });
     }
 
