@@ -183,7 +183,8 @@ abstract public class MultiRecyclerAdapterEx<T, VH extends RecyclerViewHolderEx>
 
     @Override
     public int getLastItemPosition() {
-        return 0;
+        int count = getCount();
+        return count == 0 ? 0 : count - 1;
     }
 
     @Override
