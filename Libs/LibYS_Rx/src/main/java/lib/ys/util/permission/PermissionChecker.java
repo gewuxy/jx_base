@@ -1,30 +1,26 @@
 package lib.ys.util.permission;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Process;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-import lib.ys.ConstantsEx;
+import lib.ys.AppEx;
 import lib.ys.YSLog;
-import lib.ys.util.DeviceUtil;
+import lib.ys.util.TextUtil;
 
 public class PermissionChecker {
 
     private static final String TAG = PermissionChecker.class.getSimpleName();
 
-    private Map<Integer, CheckTask> mMap;
-
     private static PermissionChecker mInst;
 
     private PermissionChecker() {
-        mMap = new HashMap<>();
     }
 
     public static PermissionChecker inst() {
@@ -36,37 +32,28 @@ public class PermissionChecker {
 
     public boolean check(CheckTask t) {
         int code = t.getCode();
-
-        mMap.put(code, t);
-
         OnPermissionListener l = t.getListener();
         String[] ps = t.getPermissions();
 
-        boolean check = false;
-        if (l instanceof Activity) {
-            check = allow((Context) l, ps);
-        } else if (l instanceof Fragment) {
-            check = allow((((Fragment) l).getContext()), ps);
+        if (checkMiUiSms(ps)) {
+            l.onPermissionResult(code, PermissionResult.never_ask);
+            return false;
         }
 
-        if (!DeviceUtil.isOverMarshmallow()) {
-            // 用v4包里的方法检测6.0以下的版本
-            if (check) {
-                l.onPermissionResult(code, PermissionResult.granted);
-                return true;
-            } else {
-                l.onPermissionResult(code, PermissionResult.denied);
-                return false;
-            }
-        } else {
-            if (!check) {
-                requestPermission(t);
-                return false;
-            } else {
-                l.onPermissionResult(code, PermissionResult.granted);
-                return true;
-            }
+        if (l instanceof Activity) {
+            return PermissionUtil.with((Activity) l)
+                    .addRequestCode(code)
+                    .permissions(ps)
+                    .listener(l)
+                    .request();
+        } else if (l instanceof Fragment) {
+            return PermissionUtil.with((Fragment) l)
+                    .addRequestCode(code)
+                    .permissions(ps)
+                    .listener(l)
+                    .request();
         }
+        return false;
     }
 
     /**
@@ -77,15 +64,15 @@ public class PermissionChecker {
      * @return
      */
     public static boolean allow(@NonNull Context context, String... permissions) {
-        for (String p : permissions) {
-            int check = ContextCompat.checkSelfPermission(context, p);
-            if (check == PackageManager.PERMISSION_GRANTED) {
-                continue;
-            } else {
-                return false;
-            }
+        if (checkMiUiSms(permissions)) {
+            return false;
         }
-        return true;
+        List<String> list = PermissionUtil.findDeniedPermissions(PermissionUtil.getActivity(context), permissions);
+        if (list == null || list.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -97,75 +84,42 @@ public class PermissionChecker {
      * @param grantResults
      */
     public void onRequestPermissionsResult(Object host, int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        int len = grantResults.length;
-        if (len <= 0) {
-            return;
-        }
-
-        // 寻找没有被允许的下标
-        int idx = ConstantsEx.KErrNotFound;
-        for (int i = 0; i < len; ++i) {
-            int result = grantResults[i];
-            if (result == PackageManager.PERMISSION_GRANTED) {
-                continue;
-            } else {
-                idx = i;
-                break;
-            }
-        }
-
-        CheckTask task = mMap.get(requestCode);
-        if (idx == ConstantsEx.KErrNotFound) {
-            // 全部都允许
-            YSLog.d(TAG, "onRequestPermissionsResult()" + "通过");
-            mMap.remove(requestCode);
-            task.getListener().onPermissionResult(task.getCode(), PermissionResult.granted);
-        } else {
-            // 含有不允许的
-            Activity act = null;
-            if (host instanceof Activity) {
-                act = (Activity) host;
-            } else if (host instanceof Fragment) {
-                act = ((Fragment) host).getActivity();
-            }
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(act, permissions[idx])) {
-                YSLog.d(TAG, "onRequestPermissionsResult()" + "再次询问");
-                requestPermission(task);
-            } else {
-                YSLog.d(TAG, "onRequestPermissionsResult()" + "不通过");
-                task.getListener().onPermissionResult(task.getCode(), PermissionResult.denied);
-            }
+        if (host instanceof Activity) {
+            PermissionUtil.onRequestPermissionsResult((Activity) host, requestCode, permissions, grantResults);
+        } else if (host instanceof Fragment) {
+            PermissionUtil.onRequestPermissionsResult((Fragment) host, requestCode, permissions, grantResults);
         }
     }
 
-    /**
-     * 请求权限
-     *
-     * @param task
-     */
-    private void requestPermission(CheckTask task) {
-        OnPermissionListener l = task.getListener();
-        String[] ps = task.getPermissions();
-        int code = task.getCode();
+    private static final String KXiaoMi = "Xiaomi";
 
-        for (String p : ps) {
-            if (l instanceof Activity) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) l, p)) {
-                    l.onPermissionResult(code, PermissionResult.never_ask);
-                } else {
-                    ActivityCompat.requestPermissions((Activity) l, ps, code);
-                }
-            } else if (l instanceof Fragment) {
-                Fragment frag = (Fragment) l;
-                if (frag.shouldShowRequestPermissionRationale(p)) {
-                    l.onPermissionResult(code, PermissionResult.never_ask);
-                } else {
-                    frag.requestPermissions(ps, code);
+    /**
+     *
+     * @param permissions
+     * @return true 没有小米的短信权限
+     */
+    private static boolean checkMiUiSms(String... permissions) {
+        String manufacturer = Build.MANUFACTURER;
+        boolean miUiSms = false; // 不是小米短信
+        if (TextUtil.isNotEmpty(manufacturer) && manufacturer.equals(KXiaoMi)) {
+            for (String permission : permissions) {
+                if (TextUtil.isNotEmpty(permission) &&
+                        (permission.equals(Manifest.permission.SEND_SMS) ||
+                                permission.equals(Manifest.permission.READ_SMS) ||
+                                permission.equals(Manifest.permission.RECEIVE_SMS) ||
+                                permission.equals(Manifest.permission.BROADCAST_SMS))) {
+                    YSLog.d(TAG, "checkMiUiSms : have Sms");
+                    miUiSms = checkSmsPermission(permission); // false 有权限
+                    break;
                 }
             }
         }
+        return miUiSms;
+    }
 
+    private static boolean checkSmsPermission(String permission) {
+        int result = android.support.v4.content.PermissionChecker.checkPermission(AppEx.getContext(), permission, Process.myPid(), Process.myUid(), AppEx.getContext().getPackageName());
+        return result != android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
     }
 
 }
