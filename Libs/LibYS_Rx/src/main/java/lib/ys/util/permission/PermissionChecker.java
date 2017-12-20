@@ -40,6 +40,9 @@ public class PermissionChecker {
             return false;
         }
 
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
         if (l instanceof Activity) {
             return PermissionUtil.with((Activity) l)
                     .addRequestCode(code)
@@ -66,6 +69,9 @@ public class PermissionChecker {
     public static boolean allow(@NonNull Context context, String... permissions) {
         if (checkMiUiSms(permissions)) {
             return false;
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
         }
         List<String> list = PermissionUtil.findDeniedPermissions(PermissionUtil.getActivity(context), permissions);
         if (list == null || list.isEmpty()) {
