@@ -1,4 +1,4 @@
-package lib.ys.network.image.renderer;
+package lib.ys.network.image.shape;
 
 import android.graphics.Color;
 import android.support.annotation.ColorInt;

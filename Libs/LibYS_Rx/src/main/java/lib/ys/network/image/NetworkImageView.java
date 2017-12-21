@@ -29,7 +29,7 @@ import lib.ys.R;
 import lib.ys.network.image.interceptor.Interceptor;
 import lib.ys.network.image.provider.BaseProvider;
 import lib.ys.network.image.provider.FrescoProvider;
-import lib.ys.network.image.renderer.Renderer;
+import lib.ys.network.image.shape.Renderer;
 import lib.ys.util.res.ResLoader;
 import lib.ys.util.view.ViewUtil;
 

@@ -6,7 +6,7 @@ import android.support.annotation.IntRange;
 import android.widget.ImageView.ScaleType;
 
 import lib.ys.network.image.interceptor.Interceptor;
-import lib.ys.network.image.renderer.Renderer;
+import lib.ys.network.image.shape.Renderer;
 
 /**
  * @auther yuansui

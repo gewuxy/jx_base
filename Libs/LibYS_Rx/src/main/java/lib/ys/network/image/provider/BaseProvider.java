@@ -13,7 +13,7 @@ import lib.ys.network.image.Functions;
 import lib.ys.network.image.NetworkImageListener;
 import lib.ys.network.image.NetworkImageView;
 import lib.ys.network.image.interceptor.Interceptor;
-import lib.ys.network.image.renderer.Renderer;
+import lib.ys.network.image.shape.Renderer;
 
 /**
  * 图片内容提供者
