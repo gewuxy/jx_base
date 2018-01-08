@@ -16,6 +16,8 @@ import java.lang.annotation.RetentionPolicy;
         FileSuffix.pptx,
         FileSuffix.pdf,
         FileSuffix.amr,
+        FileSuffix.mp4,
+        FileSuffix.mp3,
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface FileSuffix {
@@ -30,4 +32,5 @@ public @interface FileSuffix {
     String pdf = ".pdf";
     String amr = ".amr";
     String mp4 = ".mp4";
+    String mp3 = ".mp3";
 }
