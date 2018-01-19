@@ -20,6 +20,8 @@ public interface ConstantsEx {
     int KChildOffset = 9;
 
     String KEncoding_utf8 = "utf-8";
+    String KSystemSetting = "android.settings.APPLICATION_DETAILS_SETTINGS";
+    String KPackage = "package";
 
     interface ListConstants {
         int KDefaultLimit = 20;
