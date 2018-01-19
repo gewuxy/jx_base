@@ -12,6 +12,7 @@ import java.lang.annotation.RetentionPolicy;
 
 import inject.annotation.builder.Builder;
 import lib.ys.ui.decor.ErrorDecorEx;
+import lib.ys.ui.interfaces.listener.onInterceptNetListener;
 
 /**
  * App整体配置
@@ -66,6 +67,8 @@ public class AppConfig {
      */
     boolean mEnableFlatBar = false;
 
+    onInterceptNetListener mListener = null;
+
     public Class<? extends ErrorDecorEx> getErrorDecorClz() {
         return mErrorDecorClz;
     }
@@ -96,6 +99,10 @@ public class AppConfig {
 
     public boolean isSwipeFinishEnabled() {
         return mEnableSwipeFinish;
+    }
+
+    public onInterceptNetListener getInterceptNetListener() {
+        return mListener;
     }
 
     public static AppConfigBuilder newBuilder() {

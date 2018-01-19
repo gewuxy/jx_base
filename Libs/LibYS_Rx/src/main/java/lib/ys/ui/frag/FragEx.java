@@ -46,6 +46,7 @@ import lib.ys.ui.interfaces.impl.NetworkOpt;
 import lib.ys.ui.interfaces.impl.PermissionOpt;
 import lib.ys.ui.interfaces.impl.TouchDelegateImpl;
 import lib.ys.ui.interfaces.listener.OnRetryClickListener;
+import lib.ys.ui.interfaces.listener.onInterceptNetListener;
 import lib.ys.ui.interfaces.opt.ICommonOpt;
 import lib.ys.ui.interfaces.opt.IFitOpt;
 import lib.ys.ui.interfaces.opt.IInitOpt;
@@ -310,6 +311,16 @@ abstract public class FragEx extends Fragment implements
     @Override
     public IResult onNetworkResponse(int id, NetworkResp resp) throws Exception {
         return null;
+    }
+
+    @Override
+    public boolean interceptNetSuccess(int id, IResult r) {
+        onInterceptNetListener listener = AppEx.getConfig().getInterceptNetListener();
+        if (listener != null) {
+            return listener.onIntercept(r, this);
+        } else {
+            return false;
+        }
     }
 
     @Override

@@ -13,8 +13,8 @@ public interface OnNetworkListener {
     /**
      * 任务数据回调
      *
-     * @param id 编号
-     * @param resp  返回的数据
+     * @param id   编号
+     * @param resp 返回的数据
      * @return
      */
     IResult onNetworkResponse(int id, NetworkResp resp) throws Exception;
@@ -22,10 +22,19 @@ public interface OnNetworkListener {
     /**
      * 任务成功
      *
-     * @param id     编号
-     * @param r 解析后的数据
+     * @param id 编号
+     * @param r  解析后的数据
      */
     void onNetworkSuccess(int id, IResult r);
+
+    /**
+     * 是否拦截任务成功
+     *
+     * @param id 编号
+     * @param r  解析后的数据
+     * @return true 不执行onNetworkSuccess
+     */
+    boolean interceptNetSuccess(int id, IResult r);
 
     /**
      * 任务错误
