@@ -3,6 +3,7 @@ package lib.ys.ui.activity;
 import android.content.Intent;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
@@ -38,6 +39,9 @@ abstract public class WebViewActivityEx extends ActivityEx implements IWebViewHo
     public void setViews() {
         mSetter = new WebViewSetter(this);
         mSetter.set(mWebView, mProgressBar);
+
+        WebSettings settings = mWebView.getSettings();
+        settings.setUseWideViewPort(true);
 
         onLoadStart();
     }
