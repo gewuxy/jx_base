@@ -44,7 +44,7 @@ public class WebOption {
     boolean mEnableBuiltInZoomControls;
 
     /**
-     * 允许缩放
+     * 允许缩放,是否支持HTML的"viewport"标签或者使用wide viewport
      */
     boolean mEnableScale;
     boolean mEnableJs;
@@ -58,14 +58,30 @@ public class WebOption {
     @Ignore
     WebViewClient mClient;
 
+    /**
+     * 是否使用预览模式加载界面
+     */
+    boolean mEnableLoad;
+    /**
+     * 是否通过手势触发播放媒体,默认是true，需要手势触发
+     */
+    boolean mEnablePlayGesture;
+    /**
+     * 是否允许访问文件,默认是true
+     */
+    boolean mEnableFile;
+
     protected WebOption() {
         mScrollBarStyle = WebView.SCROLLBARS_INSIDE_OVERLAY;
         mCacheMode = WebSettings.LOAD_DEFAULT;
 
         mEnableDomStorage = true;
         mEnableBuiltInZoomControls = true;
-        mEnableScale = true;
+        mEnableLoad = true;
         mEnableJs = true;
+        mEnableFile = true;
+        mEnableScale = false;
+        mEnablePlayGesture = true;
 
         mClient = new WebViewClient() {
 
@@ -136,5 +152,17 @@ public class WebOption {
 
     public WebViewClient getClient() {
         return mClient;
+    }
+
+    public boolean isLoadEnable() {
+        return mEnableLoad;
+    }
+
+    public boolean isPlayGesture() {
+        return mEnablePlayGesture;
+    }
+
+    public boolean isFileEnable() {
+        return mEnableFile;
     }
 }

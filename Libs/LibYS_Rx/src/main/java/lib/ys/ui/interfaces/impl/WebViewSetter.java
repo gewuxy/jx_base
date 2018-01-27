@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.webkit.JavascriptInterface;
@@ -64,16 +65,16 @@ public class WebViewSetter {
 
         settings.setCacheMode(option.getCacheMode());
         settings.setJavaScriptEnabled(option.isJsEnabled());
-
-//        settings.setUseWideViewPort(option.isScaleEnabled());
-        settings.setLoadWithOverviewMode(option.isScaleEnabled());
-
+        settings.setUseWideViewPort(option.isScaleEnabled());
+        settings.setLoadWithOverviewMode(option.isLoadEnable());
         settings.setBuiltInZoomControls(option.isBuiltInZoomControlsEnabled());
         settings.setDomStorageEnabled(option.isDomStorageEnabled());
-        settings.setAllowFileAccess(true);
+        settings.setAllowFileAccess(option.isFileEnable());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            settings.setMediaPlaybackRequiresUserGesture(option.isPlayGesture());
+        }
 
         webView.setScrollBarStyle(option.getScrollBarStyle());
-
         webView.setWebViewClient(option.getClient());
 
         // 自己管理进度条的展现形式, 暂时不对外开放

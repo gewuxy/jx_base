@@ -43,12 +43,6 @@ abstract public class WebViewActivityEx extends ActivityEx implements IWebViewHo
         mSetter = new WebViewSetter(this);
         mSetter.set(mWebView, mProgressBar);
 
-        WebSettings settings = mWebView.getSettings();
-        settings.setUseWideViewPort(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            settings.setMediaPlaybackRequiresUserGesture(false);
-        }
-
         onLoadStart();
     }
 
