@@ -1,6 +1,7 @@
 package lib.ys.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
@@ -44,6 +45,9 @@ abstract public class WebViewActivityEx extends ActivityEx implements IWebViewHo
 
         WebSettings settings = mWebView.getSettings();
         settings.setUseWideViewPort(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            settings.setMediaPlaybackRequiresUserGesture(false);
+        }
 
         onLoadStart();
     }
