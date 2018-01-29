@@ -192,7 +192,7 @@ public class FrescoProvider extends BaseProvider {
     }
 
     private void render(@DrawableRes int placeHolderRid, @Nullable Renderer renderer) {
-        if (placeHolderRid > 0 && getHolderState()) {
+        if (placeHolderRid > 0) {
             if (mPlaceHolderKeeper == null || mPlaceHolderKeeper != placeHolderRid) {
                 /**
                  * 注意一定要加这个判断(鄙视一下开发文档), 不然某些view自动放一会就会产生OOM, 比如auto viewpager
