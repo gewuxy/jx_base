@@ -42,6 +42,7 @@ abstract public class BaseProvider implements Functions {
     private int mFade = ConstantsEx.KInvalidValue;
     private Renderer mRenderer;
     private ScaleType mScaleType;
+    private boolean mHolder;
 
     private List<Interceptor> mInterceptors;
 
@@ -50,6 +51,7 @@ abstract public class BaseProvider implements Functions {
 
     public BaseProvider(NetworkImageView iv) {
         mIv = iv;
+        mHolder = true;
         mInterceptors = new ArrayList<>();
     }
 
@@ -150,6 +152,12 @@ abstract public class BaseProvider implements Functions {
     }
 
     @Override
+    public NetworkImageView holder(boolean flag) {
+        mHolder = flag;
+        return mIv;
+    }
+
+    @Override
     public NetworkImageView listener(NetworkImageListener listener) {
         mListener = listener;
         return mIv;
@@ -215,6 +223,10 @@ abstract public class BaseProvider implements Functions {
 
     protected int getPlaceHolder() {
         return mPlaceHolder;
+    }
+
+    protected boolean getHolderState() {
+        return mHolder;
     }
 
     protected int getFade() {

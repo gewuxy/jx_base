@@ -112,6 +112,11 @@ public class NetworkImageView extends SimpleDraweeView implements Functions {
     }
 
     @Override
+    public NetworkImageView holder(boolean flag) {
+        return mProvider.holder(flag);
+    }
+
+    @Override
     public NetworkImageView listener(NetworkImageListener listener) {
         return mProvider.listener(listener);
     }

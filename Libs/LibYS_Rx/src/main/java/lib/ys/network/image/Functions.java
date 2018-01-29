@@ -32,6 +32,8 @@ public interface Functions {
 
     NetworkImageView removeInterceptor(Interceptor i);
 
+    NetworkImageView holder(boolean flag);
+
     /**
      * 设置图片加载监听
      *
