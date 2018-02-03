@@ -1,6 +1,7 @@
 package lib.ys.util;
 
 import android.annotation.TargetApi;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,6 +12,10 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import lib.ys.ConstantsEx;
 import lib.ys.action.IntentAction;
 import lib.ys.action.IntentAction.PhotoAction.PhotoSource;
 
@@ -142,5 +147,23 @@ public class PhotoUtil {
             }
         }
         return null;
+    }
+
+    public static List<String> getPhotos(Context context) {
+        List<String> images = new ArrayList<>();
+        Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        ContentResolver contentResolver = context.getContentResolver();
+        //获取jpeg和png格式的文件，并且按照时间进行倒序
+        Cursor cursor = contentResolver.query(uri, null, MediaStore.Images.Media.MIME_TYPE + "=\"image/jpeg\" or " +
+                MediaStore.Images.Media.MIME_TYPE + "=\"image/png\"", null, MediaStore.Images.Media.DATE_MODIFIED + " desc");
+        if (cursor != null) {
+            String path = ConstantsEx.KEmpty;
+            while (cursor.moveToNext()) {
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                images.add(path);
+            }
+            cursor.close();
+        }
+        return images;
     }
 }
