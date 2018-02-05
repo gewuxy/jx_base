@@ -153,9 +153,10 @@ public class PhotoUtil {
         List<String> images = new ArrayList<>();
         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         ContentResolver contentResolver = context.getContentResolver();
-        //获取jpeg和png格式的文件，并且按照时间进行倒序
+        //获取jpeg和jpg和png格式的文件，并且按照时间进行倒序
         Cursor cursor = contentResolver.query(uri, null, MediaStore.Images.Media.MIME_TYPE + "=\"image/jpeg\" or " +
-                MediaStore.Images.Media.MIME_TYPE + "=\"image/png\"", null, MediaStore.Images.Media.DATE_MODIFIED + " desc");
+                        MediaStore.Images.Media.MIME_TYPE + "=\"image/jpg\" or " + MediaStore.Images.Media.MIME_TYPE + "=\"image/png\"",
+                null, MediaStore.Images.Media.DATE_MODIFIED + " desc");
         if (cursor != null) {
             String path = ConstantsEx.KEmpty;
             while (cursor.moveToNext()) {

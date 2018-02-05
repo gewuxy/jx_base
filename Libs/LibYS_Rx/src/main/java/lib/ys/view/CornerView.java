@@ -21,6 +21,11 @@ import lib.ys.util.XmlAttrUtil;
 import lib.ys.util.view.ViewUtil;
 
 
+/**
+ * <p>
+ * 不能设置background,否则没有圆角效果
+ * </p>
+ */
 public class CornerView extends FrameLayout {
 
     private static final int KDefaultRadiusDp = 5;
