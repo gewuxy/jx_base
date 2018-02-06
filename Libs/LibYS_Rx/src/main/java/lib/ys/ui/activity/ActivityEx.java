@@ -321,6 +321,13 @@ abstract public class ActivityEx extends SwipeBackActivity implements
     public void onNetworkProgress(int id, float progress, long totalSize) {
     }
 
+    public boolean retryNetworkRequest(int id) {
+        if (mNetworkImpl != null) {
+            return mNetworkImpl.retryNetworkRequest(id);
+        }
+        return false;
+    }
+
     protected NavBar getNavBar() {
         return mDecorView.getNavBar();
     }
