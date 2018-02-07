@@ -106,6 +106,7 @@ public class OkProvider extends BaseProvider {
                 .flatMap(integerTaskMap -> Flowable.fromIterable(integerTaskMap.values()))
                 .filter(task -> task != null)
                 .subscribe(task -> task.cancel());
+        m.clear();
     }
 
     @Override
