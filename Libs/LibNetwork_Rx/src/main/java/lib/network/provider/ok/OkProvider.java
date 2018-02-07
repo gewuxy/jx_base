@@ -107,6 +107,7 @@ public class OkProvider extends BaseProvider {
                 .filter(task -> task != null)
                 .subscribe(task -> task.cancel());
         m.clear();
+        mMapTag.remove(m);
     }
 
     @Override
