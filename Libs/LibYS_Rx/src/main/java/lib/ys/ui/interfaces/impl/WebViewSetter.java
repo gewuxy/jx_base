@@ -73,6 +73,9 @@ public class WebViewSetter {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             settings.setMediaPlaybackRequiresUserGesture(option.isPlayGesture());
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
 
         webView.setScrollBarStyle(option.getScrollBarStyle());
         webView.setWebViewClient(option.getClient());
