@@ -25,7 +25,6 @@ public class ConnectionReceiver extends BaseReceiver {
     private ConnectivityManager mCm;
     private OnConnectListener mListener;
 
-
     public ConnectionReceiver(Context context) {
         super(context);
     }
