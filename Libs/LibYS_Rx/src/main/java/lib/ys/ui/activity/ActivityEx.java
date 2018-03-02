@@ -31,6 +31,7 @@ import android.widget.EditText;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import lib.network.Network;
 import lib.network.model.NetworkError;
 import lib.network.model.NetworkReq;
@@ -231,7 +232,7 @@ abstract public class ActivityEx extends SwipeBackActivity implements
         Fitter.reset();
 
         if (mExitHandler != null) {
-            mExitHandler.removeMessages(0);
+            mExitHandler.removeCallbacksAndMessages(null);
             mExitHandler = null;
         }
 
@@ -668,8 +669,11 @@ abstract public class ActivityEx extends SwipeBackActivity implements
         UtilEx.runOnUIThread(r, ResLoader.getInteger(R.integer.anim_default_duration));
     }
 
-    protected void runOnUIThread(Runnable r, long delayMillis) {
-        UtilEx.runOnUIThread(r, delayMillis);
+    protected Disposable runOnUIThread(Runnable r, long delayMillis) {
+        Disposable disposable = UtilEx.runOnUIThread(r, delayMillis);
+        disposable.dispose();
+        return disposable;
+
     }
 
     /***********************************************************

@@ -170,19 +170,19 @@ public class ViewUtil {
     }
 
     public static void showView(View v) {
-        if (v.getVisibility() != View.VISIBLE) {
+        if (v != null && v.getVisibility() != View.VISIBLE) {
             v.setVisibility(View.VISIBLE);
         }
     }
 
     public static void goneView(View v) {
-        if (v.getVisibility() != View.GONE) {
+        if (v != null && v.getVisibility() != View.GONE) {
             v.setVisibility(View.GONE);
         }
     }
 
     public static void hideView(View v) {
-        if (v.getVisibility() != View.INVISIBLE) {
+        if (v != null && v.getVisibility() != View.INVISIBLE) {
             v.setVisibility(View.INVISIBLE);
         }
     }

@@ -6,10 +6,13 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import lib.ys.ui.dialog.DialogEx;
 import lib.ys.ui.other.NavBar;
 
 abstract public class SplashActivityEx extends ActivityEx {
+
+    private Disposable mSubscribe;
 
     @Override
     public void initData() {
@@ -38,7 +41,7 @@ abstract public class SplashActivityEx extends ActivityEx {
     }
 
     private void pass() {
-        Observable.just((Runnable) () -> {
+        mSubscribe = Observable.just((Runnable) () -> {
             goPast();
             finish();
         }).delay(getPastDelay(), TimeUnit.MILLISECONDS)
@@ -70,5 +73,12 @@ abstract public class SplashActivityEx extends ActivityEx {
      */
     protected long getPastDelay() {
         return 800;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mSubscribe.dispose();
     }
 }
