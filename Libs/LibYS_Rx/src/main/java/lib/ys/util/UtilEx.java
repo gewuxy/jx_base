@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import lib.ys.AppEx;
 
@@ -76,8 +75,8 @@ public class UtilEx {
                 .subscribe(Runnable::run);
     }
 
-    public static Disposable runOnUIThread(Runnable r, long delayMillis) {
-       return  Observable.just(r)
+    public static void runOnUIThread(Runnable r, long delayMillis) {
+        Observable.just(r)
                 .delay(delayMillis, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Runnable::run);
