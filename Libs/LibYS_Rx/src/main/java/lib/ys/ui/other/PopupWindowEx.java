@@ -128,7 +128,12 @@ abstract public class PopupWindowEx implements
         return (T) mDecorView.findViewById(id);
     }
 
-    @Nullable
+     @Override
+     public void initData() {
+
+     }
+
+     @Nullable
     @Override
     public int getContentHeaderViewId() {
         return 0;
@@ -213,7 +218,12 @@ abstract public class PopupWindowEx implements
     public void onNetworkSuccess(int id, IResult r) {
     }
 
-    @Override
+     @Override
+     public boolean interceptNetSuccess(int id, IResult r) {
+         return false;
+     }
+
+     @Override
     public void onNetworkError(int id, NetworkError error) {
         Exception e = error.getException();
         if (e != null) {
