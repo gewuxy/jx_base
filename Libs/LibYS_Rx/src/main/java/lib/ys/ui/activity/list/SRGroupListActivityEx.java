@@ -255,4 +255,11 @@ abstract public class SRGroupListActivityEx<GROUP, CHILD, A extends IGroupAdapte
     public void onDataSetChanged() {
         mSROpt.onDataSetChanged();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mSROpt.onDestroy();
+    }
 }
