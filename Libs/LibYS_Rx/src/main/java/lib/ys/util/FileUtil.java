@@ -252,11 +252,13 @@ public class FileUtil {
     public static long getFolderSize(File file) throws Exception {
         long size = 0;
         File[] fileList = file.listFiles();
-        for (int i = 0; i < fileList.length; i++) {
-            if (fileList[i].isDirectory()) {
-                size += getFolderSize(fileList[i]);
-            } else {
-                size += fileList[i].length();
+        if (fileList != null && fileList.length >0) {
+            for (int i = 0; i < fileList.length; i++) {
+                if (fileList[i].isDirectory()) {
+                    size += getFolderSize(fileList[i]);
+                } else {
+                    size += fileList[i].length();
+                }
             }
         }
         return size;
